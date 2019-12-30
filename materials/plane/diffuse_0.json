@@ -1,0 +1,19 @@
+{
+	"passes" : 
+	[
+		{
+			"blending" : "normal",
+			"combos" : {},
+			"constantshadervalues" : 
+			{
+				"Alpha" : 1,
+				"Color" : "0.800 0.800 0.800"
+			},
+			"cullmode" : "normal",
+			"depthtest" : "disabled",
+			"depthwrite" : "disabled",
+			"shader" : "ps2menu",
+			"textures" : [ "noise" ]
+		}
+	]
+}

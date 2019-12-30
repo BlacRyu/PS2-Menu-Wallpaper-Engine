@@ -1,0 +1,60 @@
+{
+	"camera" : 
+	{
+		"center" : "0.016 16.510 0.279",
+		"eye" : "0.021 17.510 0.281",
+		"paths" : [ "scripts/camera_00.json" ],
+		"up" : "0.000 1.000 0.000"
+	},
+	"general" : 
+	{
+		"ambientcolor" : "0.300 0.300 0.300",
+		"bloom" : true,
+		"bloomstrength" : 2.0,
+		"bloomthreshold" : 0.64999997615814209,
+		"camerafade" : false,
+		"cameraparallax" : false,
+		"cameraparallaxamount" : 0.5,
+		"cameraparallaxdelay" : 0.10000000149011612,
+		"cameraparallaxmouseinfluence" : 0.0,
+		"camerapreview" : false,
+		"camerashake" : false,
+		"camerashakeamplitude" : 0.5,
+		"camerashakeroughness" : 1.0,
+		"camerashakespeed" : 3.0,
+		"clearcolor" : "0.125 0.098 0.204",
+		"clearenabled" : true,
+		"farz" : 10000.0,
+		"fov" : 50.0,
+		"nearz" : 0.10000000149011612,
+		"orthogonalprojection" : null,
+		"skylightcolor" : "0.300 0.300 0.300"
+	},
+	"objects" : 
+	[
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 24,
+			"locktransforms" : false,
+			"model" : "models/plane/plane.mdl",
+			"name" : "Background",
+			"origin" : "0.000 -1000.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"scale" : "1000.000 1.000 1000.000"
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 20,
+			"locktransforms" : false,
+			"model" : "models/prism/prism.mdl",
+			"name" : "prism",
+			"origin" : 
+			{
+				"script" : "'use strict';\nimport * as WEVector from 'WEVector';\nimport * as WEMath from 'WEMath';\n\nconst prismAsset = \"models/prism/prism.mdl\";\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tthisObject.angles = new Vec3(0,0,90);\n\tfor (let i = 0; i < 7; i++)\n\t{\n\t\tlet newPrism = thisScene.createLayer(prismAsset);\n\t\tif(newPrism) \n\t\t{\n\t\t\tlet newX = (i+1) * 45;\n\t\t\tnewPrism.name = \"prism\" + i;\n\t\t\tnewPrism.angles = new Vec3((i+1) * 45, 0, 90);\n\t\t\tconsole.log(\"newPrism.angles.x\", newPrism.angles.x);\n\t\t\tnewPrism.scale = newPrism.scale.multiply(0.1);\n\t\t}\n\t\telse\n\t\t\tconsole.log(\"whoopsie\");\n\t}\n\n\treturn value;\n}",
+				"value" : "0.000 0.000 0.000"
+			},
+			"parallaxDepth" : "1.000 1.000",
+			"scale" : "0.100 0.100 0.100"
+		}
+	]
+}

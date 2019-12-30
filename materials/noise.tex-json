@@ -1,0 +1,6 @@
+{
+	"bleedtransparentcolors" : true,
+	"clampuvs" : false,
+	"format" : "rg88",
+	"nonpoweroftwo" : true
+}
