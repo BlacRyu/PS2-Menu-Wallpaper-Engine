@@ -1,6 +1,7 @@
 {
 	"bleedtransparentcolors" : true,
 	"clampuvs" : false,
-	"format" : "rg88",
+	"format" : "dxt5",
+	"nomip" : false,
 	"nonpoweroftwo" : true
 }

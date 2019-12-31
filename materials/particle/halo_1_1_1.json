@@ -3,11 +3,16 @@
 	[
 		{
 			"blending" : "additive",
+			"combos" : {},
+			"constantshadervalues" : 
+			{
+				"ui_editor_properties_overbright" : 0.29999999999999999
+			},
 			"cullmode" : "nocull",
 			"depthtest" : "enabled",
 			"depthwrite" : "disabled",
 			"shader" : "genericparticle",
-			"textures" : [ "particle/halo" ]
+			"textures" : [ "particle/beam/beam_1" ]
 		}
 	]
 }

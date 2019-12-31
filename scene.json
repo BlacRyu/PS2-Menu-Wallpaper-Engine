@@ -1,17 +1,16 @@
 {
 	"camera" : 
 	{
-		"center" : "0.016 16.510 0.279",
-		"eye" : "0.021 17.510 0.281",
-		"paths" : [ "scripts/camera_00.json" ],
+		"center" : "-0.156 -0.239 41.850",
+		"eye" : "-0.175 -0.279 42.849",
 		"up" : "0.000 1.000 0.000"
 	},
 	"general" : 
 	{
-		"ambientcolor" : "0.300 0.300 0.300",
-		"bloom" : true,
-		"bloomstrength" : 2.0,
-		"bloomthreshold" : 0.64999997615814209,
+		"ambientcolor" : "0.302 0.302 0.302",
+		"bloom" : false,
+		"bloomstrength" : 3.0099999904632568,
+		"bloomthreshold" : 0.69999998807907104,
 		"camerafade" : false,
 		"cameraparallax" : false,
 		"cameraparallaxamount" : 0.5,
@@ -28,33 +27,41 @@
 		"fov" : 50.0,
 		"nearz" : 0.10000000149011612,
 		"orthogonalprojection" : null,
-		"skylightcolor" : "0.300 0.300 0.300"
+		"skylightcolor" : "0.494 0.494 0.494"
 	},
 	"objects" : 
 	[
 		{
 			"angles" : "0.000 0.000 0.000",
-			"id" : 24,
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 16,
+			"image" : "models/ps2menu.json",
 			"locktransforms" : false,
-			"model" : "models/plane/plane.mdl",
-			"name" : "Background",
-			"origin" : "0.000 -1000.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"scale" : "1000.000 1.000 1000.000"
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 20,
-			"locktransforms" : false,
-			"model" : "models/prism/prism.mdl",
-			"name" : "prism",
+			"name" : "Background_2",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEVector from 'WEVector';\nimport * as WEMath from 'WEMath';\n\nconst prismAsset = \"models/prism/prism.mdl\";\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tthisObject.angles = new Vec3(0,0,90);\n\tfor (let i = 0; i < 7; i++)\n\t{\n\t\tlet newPrism = thisScene.createLayer(prismAsset);\n\t\tif(newPrism) \n\t\t{\n\t\t\tlet newX = (i+1) * 45;\n\t\t\tnewPrism.name = \"prism\" + i;\n\t\t\tnewPrism.angles = new Vec3((i+1) * 45, 0, 90);\n\t\t\tconsole.log(\"newPrism.angles.x\", newPrism.angles.x);\n\t\t\tnewPrism.scale = newPrism.scale.multiply(0.1);\n\t\t}\n\t\telse\n\t\t\tconsole.log(\"whoopsie\");\n\t}\n\n\treturn value;\n}",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n//import * as WEVector from 'WEVector';\n\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\t// Child particle systems\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\nlet prisms = [];\nconst numPrisms = 12;\nconst prismDist = 8;\n\nlet orbs = [];\nconst numOrbs = 7;\nconst orbDist = 5;\n\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tprisms[i] = thisScene.createLayer(prismAsset);\n\t\tprisms[i].scale = prisms[i].scale.multiply(0.1);\n\t}\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = thisScene.createLayer(orbAsset);\n\t\torbs[i].color = new Vec3(1, 0, 0);\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tlet newAngle = i * 360 / prisms.length - engine.runtime * 2.0;\n\t\tlet newAngleRad = newAngle * WEMath.deg2rad;\n\t\tprisms[i].angles = new Vec3(\n\t\t\tprisms[i].angles.x, \n\t\t\tprisms[i].angles.y + 15.0 * engine.frametime, \n\t\t\tnewAngle);\n\t\tprisms[i].origin = new Vec3(\n\t\t\t-Math.sin(newAngleRad) * prismDist, \n\t\t\tMath.cos(newAngleRad) * prismDist, \n\t\t\t0);\n\t}\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet newAngle = (i+1) * engine.runtime * 360. * 0.016666666667 * 2.0;\n\t\tlet newAngleRad = newAngle * WEMath.deg2rad;\n\t\torbs[i].origin = new Vec3(\n\t\t\t-Math.sin(newAngleRad) * orbDist, \n\t\t\tMath.cos(newAngleRad) * orbDist, \n\t\t\t0);\n\t}\n}",
 				"value" : "0.000 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
-			"scale" : "0.100 0.100 0.100"
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : true
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 33,
+			"instanceoverride" : null,
+			"locktransforms" : false,
+			"name" : "orb",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"particle" : "particles/orbTrail.json",
+			"scale" : "0.010 0.010 0.010",
+			"visible" : true
 		}
 	]
 }
