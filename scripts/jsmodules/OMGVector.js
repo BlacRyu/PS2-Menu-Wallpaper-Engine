@@ -1,24 +1,47 @@
 'use strict';
 
 export function rotX(vector, angle){
+	let cos = Math.cos(angle);
+	let sin = Math.sin(angle);
 	return new Vec3(
 		vector.x, 
-		vector.y * Math.cos(angle) - vector.z * Math.sin(angle),
-		vector.y * Math.sin(angle) + vector.z * Math.cos(angle))
+		vector.y * cos - vector.z * sin,
+		vector.y * sin + vector.z * cos)
 }
 
 export function rotY(vector, angle){
+	let cos = Math.cos(angle);
+	let sin = Math.sin(angle);
 	return new Vec3(
-		vector.x * Math.cos(angle) + vector.z * Math.sin(angle),
+		vector.x * cos + vector.z * sin,
 		vector.y, 
-		-vector.x * Math.sin(angle) + vector.z * Math.cos(angle))
+		-vector.x * sin + vector.z * cos)
 }
 
 export function rotZ(vector, angle){
+	let cos = Math.cos(angle);
+	let sin = Math.sin(angle);
 	return new Vec3(
-		vector.x * Math.cos(angle) - vector.y * Math.sin(angle),
-		vector.x * Math.sin(angle) + vector.y * Math.cos(angle),
+		vector.x * cos - vector.y * sin,
+		vector.x * sin + vector.y * cos,
 		vector.z)
+}
+
+export function rotAxis(vec, angle, axis){
+	let cos = Math.cos(angle);
+	let sin = Math.sin(angle);
+	return new Vec3(
+		(cos + (1 - cos) * axis.x * axis.x) * vec.x +
+		((1 - cos) * axis.x * axis.y - axis.z * sin) * vec.y +
+  	((1 - cos) * axis.x * axis.z + axis.y * sin) * vec.z,
+
+  	((1 - cos) * axis.x * axis.y + axis.z * sin) * vec.x +
+  	(cos + (1 - cos) * axis.y * axis.y) * vec.y +
+  	((1 - cos) * axis.y * axis.z - axis.x * sin) * vec.z,
+
+  	((1 - cos) * axis.x * axis.z - axis.y * sin) * vec.x +
+  	((1 - cos) * axis.y * axis.z + axis.x * sin) * vec.y +
+  	(cos + (1 - cos) * axis.z * axis.z) * vec.z);
 }
 
 export function rotVec(vector, angles){
