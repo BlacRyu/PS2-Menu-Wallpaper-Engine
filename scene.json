@@ -1,8 +1,8 @@
 {
 	"camera" : 
 	{
-		"center" : "-0.156 -0.239 41.850",
-		"eye" : "-0.175 -0.279 42.849",
+		"center" : "-0.153 -0.284 42.225",
+		"eye" : "-0.182 -0.294 43.225",
 		"up" : "0.000 1.000 0.000"
 	},
 	"general" : 
@@ -41,7 +41,7 @@
 			"name" : "Background_2",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n//import * as WEVector from 'WEVector';\n\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\t// Child particle systems\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\nlet prisms = [];\nconst numPrisms = 12;\nconst prismDist = 8;\n\nlet orbs = [];\nconst numOrbs = 7;\nconst orbDist = 5;\n\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tprisms[i] = thisScene.createLayer(prismAsset);\n\t\tprisms[i].scale = prisms[i].scale.multiply(0.1);\n\t}\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = thisScene.createLayer(orbAsset);\n\t\torbs[i].color = new Vec3(1, 0, 0);\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tlet newAngle = i * 360 / prisms.length - engine.runtime * 2.0;\n\t\tlet newAngleRad = newAngle * WEMath.deg2rad;\n\t\tprisms[i].angles = new Vec3(\n\t\t\tprisms[i].angles.x, \n\t\t\tprisms[i].angles.y + 15.0 * engine.frametime, \n\t\t\tnewAngle);\n\t\tprisms[i].origin = new Vec3(\n\t\t\t-Math.sin(newAngleRad) * prismDist, \n\t\t\tMath.cos(newAngleRad) * prismDist, \n\t\t\t0);\n\t}\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet newAngle = (i+1) * engine.runtime * 360. * 0.016666666667 * 2.0;\n\t\tlet newAngleRad = newAngle * WEMath.deg2rad;\n\t\torbs[i].origin = new Vec3(\n\t\t\t-Math.sin(newAngleRad) * orbDist, \n\t\t\tMath.cos(newAngleRad) * orbDist, \n\t\t\t0);\n\t}\n}",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\n\n// Consts\nconst sec2Min = 0.016666666667\n\n// Register assets and their children\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismRotSpeed = new Vec3(0, 0, 30);\nconst prismScale = new Vec3(0.1, 0.09, 0.1);\nconst prismLocalRotSpeed = new Vec3(0, 60, 0);\n\nconst numOrbs = 7;\nconst orbDist = 5;\nconst orbRotSpeed = new Vec3(30, 60, 90);\n\n\n// Globals\nlet prisms = [];\nlet prismRot = new Vec3(0, 0, 0);\nlet orbs = [];\nlet orbRot = new Vec3(0, 0, 0);\n\n\n// Classes\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n\nclass Orb {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(orbAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tprisms[i] = new Prism();\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms - engine.runtime * 2.0;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\t\tlet angleRad = angle * WEMath.deg2rad;\n\t\tprisms[i].layer.angles = new Vec3(\n\t\t\tprisms[i].layer.angles.x, \n\t\t\tprisms[i].layer.angles.y + 15.0 * engine.frametime, \n\t\t\tangle);\n\t\tlet angles = prisms[i].layer.angles.multiply(WEMath.deg2rad);\n\t\tlet forward = OMGVector.forwardY(angles);\n\t\tprisms[i].offset = forward.multiply(prismDist);\n\t\tprisms[i].layer.origin = prisms[i].offset;\n\t}\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = new Orb();\n\t\t// Initialize position so there aren't trail smears at the start\n\t\tlet angle = (i+1) * engine.runtime * 360. * sec2Min * 2.0;\n\t\torbs[i].angles = new Vec3(0, 0, angle);\n\t\tlet angleRad = angle * WEMath.deg2rad;\n\t\torbs[i].offset = OMGVector.rotZ(new Vec3(0, orbDist, 0), angleRad);\n\t\torbs[i].layer.origin = orbs[i].offset;\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tprismRot = prismRot.add(prismRotSpeed.multiply(engine.frametime));\n\torbRot = orbRot.add(orbRotSpeed.multiply(engine.frametime));\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].layer.origin = OMGVector.rotVec(prisms[i].offset, prismRot.multiply(WEMath.deg2rad));\n\t\tprisms[i].angles = prisms[i].angles.add(prismLocalRotSpeed.multiply(engine.frametime));\n\t\t//let localRot = OMGVector.unrotVec(prisms[i].angles, prismRot.multiply(WEMath.deg2rad));\n\t\tprisms[i].layer.angles = prisms[i].angles.add(prismRot);\n\t\t// let angle = i * 360 / prisms.length - engine.runtime * 2.0;\n\t\t// let angleRad = angle * WEMath.deg2rad;\n\t\t// prisms[i].layer.angles = new Vec3(\n\t\t// \tprisms[i].layer.angles.x, \n\t\t// \tprisms[i].layer.angles.y + 15.0 * engine.frametime, \n\t\t// \tangle);\n\t\t// let angles = prisms[i].layer.angles.multiply(WEMath.deg2rad);\n\t\t// let forward = OMGVector.forwardY(angles);\n\t\t// prisms[i].layer.origin = forward.multiply(prismDist);\n\t}\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet angle = (i+1) * engine.runtime * 360. * sec2Min * 2.0;\n\t\tlet angleRad = angle * WEMath.deg2rad;\n\t\torbs[i].layer.origin = OMGVector.rotZ(new Vec3(0, orbDist, 0), angleRad);\n\t}\n\treturn value;\n}",
 				"value" : "0.000 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
@@ -49,18 +49,6 @@
 			"scale" : "10.000 10.000 10.000",
 			"size" : "64.000 64.000",
 			"solid" : true,
-			"visible" : true
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 33,
-			"instanceoverride" : null,
-			"locktransforms" : false,
-			"name" : "orb",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"particle" : "particles/orbTrail.json",
-			"scale" : "0.010 0.010 0.010",
 			"visible" : true
 		}
 	]

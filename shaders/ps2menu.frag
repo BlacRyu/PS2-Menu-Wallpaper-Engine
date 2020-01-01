@@ -21,9 +21,15 @@ const vec3 tint = vec3(.68, .54, 1);
 //Noise Texture Sample Iterations: (UV Scale, Weight)
 const int numIters = 3;
 #if HLSL
-    const vec2 noiseIters[3] = { vec2(0.75,3.0), vec2(2.0,1.0), vec2(3.4,0.5) };
+    const vec2 noiseIters[3] = {
 #else
-    const vec2 noiseIters[3] = vec2[]( vec2(0.75,3.0), vec2(2.0,1.0), vec2(3.4,0.5) );
+    const vec2 noiseIters[3] = vec2[]( 
+#endif
+    vec2(0.75,3.0), vec2(2.0,1.0), vec2(3.4,0.5)
+#if HLSL
+    };
+#else
+    );
 #endif
 
 void main( )
