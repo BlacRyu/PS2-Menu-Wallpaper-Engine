@@ -4,7 +4,6 @@ varying vec4 v_Position;
 uniform float     g_Time;                // Application time, starts with 0
 uniform vec2 g_TexelSize;
 uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_noise","default":"util/noise"}
-uniform vec3 g_BackgroundColor; // {"material":"background_color","default":"0.68 0.54 1.0","type":"color"}
 
 #define ZOOM 0.6
 #define TIMESCALE 0.4
@@ -16,6 +15,8 @@ uniform vec3 g_BackgroundColor; // {"material":"background_color","default":"0.6
     #define dFdy ddy
     #define textureGrad(s, uv, dx, dy) s.SampleGrad(s ## SamplerState, uv, dx, dy)
 #endif
+
+const vec3 tint = vec3(.68, .54, 1);
     
 //Noise Texture Sample Iterations: (UV Scale, Weight)
 const int numIters = 3;
@@ -71,7 +72,7 @@ void main( )
     noise *= (MAXBRIGHTNESS-MINBRIGHTNESS) / totalWeight;
     noise += MINBRIGHTNESS;
     
-    vec3 col = g_BackgroundColor * noise * (.05 + .95*r) * 0.3 / ZOOM;
+    vec3 col = tint * noise * (.05 + .95*r) * 0.3 / ZOOM;
     
     gl_FragColor  = vec4(col, 1.0);
 }

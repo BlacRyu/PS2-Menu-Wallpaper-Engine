@@ -1,0 +1,39 @@
+Tasks:
+Crystal Material
+	Diffuse (cloudy noise)
+	Refraction
+	Reflection (maybe just specular)
+	Emissive
+
+
+Crystal Rotation
+	three.js
+		local rotation
+		translation
+		group rotation
+
+	Parented rotation
+		parentMat = rotMatX * rotMatY * rotMatZ
+		localMat = rotMatZ (dynamic, shared) * rotMatY (static, individual per prism) * translate (static, individual per prism)
+		finalMat = localMat * parentMat
+
+
+
+
+
+Try clouds as a tessellated cylinder (or cone) with vertex offsets
+
+
+Customization
+
+	Modes
+		Clock mode
+			One prism lights up based on the hour, additional emissive value added to a fraction of the prism based on the minutes (uv.y * minute / 60)
+
+		Audio-responsive mode
+			? Global screenshake / fov-jolt based on jumps in overall amplitude
+
+	Colors
+		Clouds color
+		Crystal Color
+

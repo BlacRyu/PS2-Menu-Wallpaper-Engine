@@ -2,17 +2,17 @@
 	"passes" : 
 	[
 		{
-			"blending" : "translucent",
+			"blending" : "normal",
 			"combos" : {},
 			"constantshadervalues" : 
 			{
-				"Alpha" : 0.75,
-				"Color" : "0.9137254901960784 0.42745098039215684 1",
+				"Alpha" : 0.5,
+				"Color" : "0 0.6431372549019608 0.7058823529411765",
 				"Light" : 0,
 				"Metal" : 0,
 				"Rough" : 0
 			},
-			"cullmode" : "normal",
+			"cullmode" : "nocull",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
 			"shader" : "generic2",

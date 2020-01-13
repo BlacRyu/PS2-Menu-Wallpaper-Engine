@@ -89,6 +89,13 @@
 			"fadeouttime" : 0,
 			"id" : 6,
 			"name" : "alphafade"
+		},
+		{
+			"endvalue" : "0 0 1",
+			"id" : 7,
+			"name" : "colorchange",
+			"starttime" : 0.25,
+			"startvalue" : "0.6666666666666666 0.8235294117647058 1"
 		}
 	],
 	"renderer" : 

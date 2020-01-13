@@ -10,7 +10,7 @@
 			},
 			"cullmode" : "nocull",
 			"depthtest" : "enabled",
-			"depthwrite" : "disabled",
+			"depthwrite" : "enabled",
 			"shader" : "genericparticle",
 			"textures" : [ "particle/halo_2" ]
 		}
