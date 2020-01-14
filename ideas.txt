@@ -5,6 +5,29 @@ Crystal Material
 	Reflection (maybe just specular)
 	Emissive
 
+Try clouds as a tessellated cylinder (or cone) with vertex offsets
+
+
+User Customization
+
+	Modes
+		Clock mode
+			One prism lights up based on the hour, additional emissive value added to a fraction of the prism based on the minutes (uv.y * minute / 60)
+
+		Audio-responsive mode
+			Prisms light up based on audio channels
+			? Global screenshake / fov-jolt based on jumps in overall amplitude
+
+	Colors
+		Clouds color
+		Crystal Color
+
+
+
+
+
+
+Done:
 
 Crystal Rotation
 	three.js
@@ -16,24 +39,3 @@ Crystal Rotation
 		parentMat = rotMatX * rotMatY * rotMatZ
 		localMat = rotMatZ (dynamic, shared) * rotMatY (static, individual per prism) * translate (static, individual per prism)
 		finalMat = localMat * parentMat
-
-
-
-
-
-Try clouds as a tessellated cylinder (or cone) with vertex offsets
-
-
-Customization
-
-	Modes
-		Clock mode
-			One prism lights up based on the hour, additional emissive value added to a fraction of the prism based on the minutes (uv.y * minute / 60)
-
-		Audio-responsive mode
-			? Global screenshake / fov-jolt based on jumps in overall amplitude
-
-	Colors
-		Clouds color
-		Crystal Color
-
