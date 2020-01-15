@@ -67,12 +67,18 @@ void main( )
     // Refraction
     vec2 screenRefractionOffset = refract(viewDir, normal, 0.5) / v_ScreenPos.z;
     vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
-    refract = refract * 4.0 * (1.0 + emissive);
+    refract = refract * 4.0 * (1.0 + emissive * 4.0);
+
+    // "Reflection"
+    float reflect = texSample2D(g_Texture0, normal.xy).r;
+    reflect = reflect * reflect;
+    reflect = reflect * reflect * .25;
 
     vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .5); // blend between diffuse and (refracted) scene
     float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);
     finalColor *= mix(g_Color1, g_Color2, tintLerp); // tint color by blending two input colors over time
     finalColor = finalColor + specularResult; // add specular highlights
+    finalColor = finalColor + reflect; // add "reflections"
     
     gl_FragColor = vec4(finalColor, 1.0);
 }
