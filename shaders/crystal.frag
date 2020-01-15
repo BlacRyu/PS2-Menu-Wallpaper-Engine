@@ -1,78 +1,78 @@
+#include "common_fragment.h"
+
+#if HLSL
+    #define mod fmod
+#endif
+
+uniform vec4 g_LightsColorRadius[4];
+
+uniform float g_Metallic; // {"material":"Metal","default":0,"range":[0,1]}
+uniform float g_Roughness; // {"material":"Rough","default":0,"range":[0,1]}
+uniform float g_Light; // {"material":"Light","default":0,"range":[0,1]}
+
+uniform float g_Time;
+uniform vec3 g_Color1; // {"material":"ui_editor_properties_color_start", "type":"color", "default":"1.0 0.25 1.0"}
+uniform vec3 g_Color2; // {"material":"ui_editor_properties_color_end", "type":"color", "default":"0.25 1.0 1.0"}
+const float colorPeriod = 40.0; // time in seconds to cycle from color 1 to 2 and back
+
+uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_albedo","default":"util/clouds_256"}
+uniform sampler2D g_Texture1; // {"material":"ui_editor_properties_normal", "format":"normalmap", "combo":"NORMALMAP"}
+uniform sampler2D g_Texture2; // {"material":"ui_editor_properties_framebuffer","default":"_rt_FullFrameBuffer","hidden":true}
+uniform sampler2D g_Texture3; // {"material":"Reflection","default":"_rt_Reflection","hidden":true}
+
+#ifndef NORMALMAP
+varying vec3 v_Normal;
+#endif
+
+varying vec3 v_ScreenPos;
+uniform vec2 g_TexelSizeHalf;
+
 varying vec2 v_TexCoord;
-varying vec4 v_Position;
-
-uniform float     g_Time;                // Application time, starts with 0
-uniform vec2 g_TexelSize;
-uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_noise","default":"util/noise"}
-
-#define ZOOM 0.6
-#define TIMESCALE 0.4
-#define MINBRIGHTNESS 0.7
-#define MAXBRIGHTNESS 1.0
-
-#if HLSL
-    #define dFdx ddx
-    #define dFdy ddy
-    #define textureGrad(s, uv, dx, dy) s.SampleGrad(s ## SamplerState, uv, dx, dy)
-#endif
-
-const vec3 tint = vec3(.68, .54, 1);
-    
-//Noise Texture Sample Iterations: (UV Scale, Weight)
-const int numIters = 3;
-#if HLSL
-    const vec2 noiseIters[3] = {
-#else
-    const vec2 noiseIters[3] = vec2[]( 
-#endif
-    vec2(0.2,4.0), 
-    vec2(0.5,2.0), 
-    vec2(1.0,2.0)
-#if HLSL
-    };
-#else
-    );
-#endif
+varying vec3 v_ViewDir;
+varying vec4 v_Light0DirectionL3X;
+varying vec4 v_Light1DirectionL3Y;
+varying vec4 v_Light2DirectionL3Z;
+varying vec3 v_LightAmbientColor;
 
 void main( )
 {
-    float time = float(g_Time) * TIMESCALE;
-    
-    // Normalized pixel coordinates (from -1 to 1)
-    vec2 p = v_Position.xy / v_Position.w;
-    p.x *= g_TexelSize.y / g_TexelSize.x;
-    
-    // Adjust Center
-    p += vec2(.25, 0.);
-    p *= ZOOM;
-    
-    // Cylindrical Tunnel
-    float r = length(p);
-    r = r * (1.0 + 0.025 * sin(15.0 * r - 2.0 * time));
+    vec4 diffuse = texSample2D(g_Texture0, v_TexCoord.xy * 4.0);
 
-    // angle of each pixel to the center of the screen
-    float a = atan(p.y/p.x);
-    
-    // index texture by (animated inverse) radious and angle
-    vec2 uv = vec2( 0.3/r + .05 * time, a/3.1415927 );
-    
-    vec2 uv2 = vec2( uv.x, atan(p.y/(abs(p.x))/3.1415927) );
+#if NORMALMAP
+    vec3 normal = DecompressNormal(texSample2D(g_Texture1, v_TexCoord.xy));
+#else
+    vec3 normal = normalize(v_Normal);
+#endif
 
-    // Time varying pixel color
-    float totalWeight = 0.0;
-    float noise = 0.0;
+    vec2 screenUV = (v_ScreenPos.xy / v_ScreenPos.z) * 0.5 + 0.5;
+#ifdef HLSL_SM30
+    screenUV += g_TexelSizeHalf;
+#endif
     
-    for (int i=0; i < numIters; i++)
-    {
-        totalWeight += noiseIters[i].y;
-        //noise += textureGrad( g_Texture0, noiseIters[i].x * uv, dFdx(uv2), dFdy(uv2) ).x * noiseIters[i].y;
-        noise += texSample2D( g_Texture0, noiseIters[i].x * uv).x * noiseIters[i].y;
-    }
+    vec3 viewDir = normalize(v_ViewDir);
+    vec3 specularResult = vec3(0, 0, 0);
+    float specularPower = ComputeMaterialSpecularPower(g_Roughness, g_Metallic);
+    float specularStrength = ComputeMaterialSpecularStrength(g_Roughness, g_Metallic);
     
-    noise *= (MAXBRIGHTNESS-MINBRIGHTNESS) / totalWeight;
-    noise += MINBRIGHTNESS;
+    // Lighting
+    float emissive = step(1.0 - v_TexCoord.y, g_Light);
+    emissive += 1.0 - max(0.0,dot(viewDir, normal)); // rim light
+    vec3 light = ComputeLightSpecular(normal, v_Light0DirectionL3X.xyz, g_LightsColorRadius[0].rgb, g_LightsColorRadius[0].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
+    light += ComputeLightSpecular(normal, v_Light1DirectionL3Y.xyz, g_LightsColorRadius[1].rgb, g_LightsColorRadius[1].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
+    light += ComputeLightSpecular(normal, v_Light2DirectionL3Z.xyz, g_LightsColorRadius[2].rgb, g_LightsColorRadius[2].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
+    light += ComputeLightSpecular(normal, vec3(v_Light0DirectionL3X.w, v_Light1DirectionL3Y.w, v_Light2DirectionL3Z.w), g_LightsColorRadius[3].rgb, g_LightsColorRadius[3].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
+    light += v_LightAmbientColor;
+    diffuse.rgb *= light;
+
+    // Refraction
+    vec2 screenRefractionOffset = refract(viewDir, normal, 0.5) / v_ScreenPos.z;
+    vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
+    refract = refract * 4.0 * (1.0 + emissive);
+
+    vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .5); // blend between diffuse and (refracted) scene
+    float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);
+    finalColor *= mix(g_Color1, g_Color2, tintLerp); // tint color by blending two input colors over time
+    finalColor = finalColor + specularResult; // add specular highlights
     
-    vec3 col = tint * noise * (.05 + .95*r) * 0.3 / ZOOM;
-    
-    gl_FragColor  = vec4(col, 1.0);
+    gl_FragColor = vec4(finalColor, 1.0);
 }

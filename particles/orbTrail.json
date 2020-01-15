@@ -63,8 +63,8 @@
 	[
 		{
 			"id" : 2,
-			"max" : 2,
-			"min" : 2,
+			"max" : 1.5,
+			"min" : 1.5,
 			"name" : "lifetimerandom"
 		},
 		{

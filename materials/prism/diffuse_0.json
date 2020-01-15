@@ -6,17 +6,17 @@
 			"combos" : {},
 			"constantshadervalues" : 
 			{
-				"Alpha" : 0.5,
-				"Color" : "0 0.6431372549019608 0.7058823529411765",
+				"Alpha" : 1,
 				"Light" : 0,
 				"Metal" : 0,
-				"Rough" : 0
+				"Rough" : 0,
+				"ui_editor_properties_color_end" : "0 0.6431372549019608 0.7803921568627451",
+				"ui_editor_properties_color_start" : "0.596078431372549 0 0.7803921568627451"
 			},
 			"cullmode" : "nocull",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
-			"shader" : "generic2",
-			"textures" : [ null, null ]
+			"shader" : "crystal"
 		}
 	]
 }
