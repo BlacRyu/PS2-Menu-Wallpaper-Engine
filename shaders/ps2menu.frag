@@ -71,7 +71,7 @@ void main( )
     noise *= (MAXBRIGHTNESS-MINBRIGHTNESS) / totalWeight;
     noise += MINBRIGHTNESS;
     
-    vec3 col = g_BackgroundColor * noise * (.05 + .95*r) * 0.3 / ZOOM;
+    vec3 col = g_BackgroundColor * noise * (.1 + .9*r) * 0.3 / ZOOM;
     
     gl_FragColor  = vec4(col, 1.0);
 }
