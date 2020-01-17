@@ -1,9 +1,8 @@
+Needs:
+	Current Date
+	Access Vertex Colors or second UV in shader
+
 Tasks:
-Crystal Material
-	Diffuse (cloudy noise)
-	Refraction
-	Reflection (maybe just specular)
-	Emissive
 
 Try clouds as a tessellated cylinder (or cone) with vertex offsets
 
@@ -28,6 +27,12 @@ User Customization
 
 
 Done:
+
+Crystal Material
+	Diffuse (cloudy noise)
+	Refraction
+	Reflection (maybe just specular)
+	Emissive
 
 Crystal Rotation
 	three.js

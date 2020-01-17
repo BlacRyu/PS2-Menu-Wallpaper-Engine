@@ -12,7 +12,7 @@
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
 			"shader" : "genericparticle",
-			"textures" : [ "particle/halo_2" ]
+			"textures" : [ "particle/halo" ]
 		}
 	]
 }

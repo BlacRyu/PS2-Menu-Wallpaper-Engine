@@ -6,13 +6,13 @@
 			"combos" : {},
 			"constantshadervalues" : 
 			{
-				"ui_editor_properties_overbright" : 0.29999999999999999
+				"ui_editor_properties_overbright" : 1
 			},
 			"cullmode" : "nocull",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
 			"shader" : "genericparticle",
-			"textures" : [ "particle/beam/beam_1" ]
+			"textures" : [ "particle/Trail_1" ]
 		}
 	]
 }

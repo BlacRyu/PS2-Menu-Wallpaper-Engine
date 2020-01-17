@@ -5,33 +5,52 @@
 	{
 		"properties" : 
 		{
-			"background_color" : 
+			"mode" : 
 			{
-				"order" : 100,
-				"text" : "Background Color",
-				"type" : "color",
-				"value" : "0.6784313725490196 0.5411764705882353 1"
+				"options" : 
+				[
+					{
+						"label" : "Clock",
+						"value" : "Clock"
+					},
+					{
+						"label" : "Audio",
+						"value" : "Audio"
+					}
+				],
+				"order" : 102,
+				"text" : "Mode",
+				"type" : "combo",
+				"value" : "Clock"
 			},
 			"prism_gradient_1" : 
 			{
-				"order" : 101,
+				"order" : 100,
 				"text" : "Prism gradient 1",
 				"type" : "color",
-				"value" : "0.6823529411764706 0 0.6352941176470588"
+				"value" : "0.47843137254901963 0.3333333333333333 0.7803921568627451"
 			},
 			"prism_gradient_2" : 
 			{
-				"order" : 102,
+				"order" : 101,
 				"text" : "Prism gradient 2",
 				"type" : "color",
-				"value" : "0 0.5490196078431373 0.6039215686274509"
+				"value" : "0.2980392156862745 0.7803921568627451 0.7568627450980392"
 			},
 			"schemecolor" : 
 			{
-				"order" : 0,
+				"order" : 99,
 				"text" : "ui_browse_properties_scheme_color",
 				"type" : "color",
-				"value" : "0 0 0"
+				"value" : "0.6745098039215687 0.5372549019607843 1"
+			},
+			"show_clock_text" : 
+			{
+				"condition" : "mode.value == \"Clock\"",
+				"order" : 103,
+				"text" : "Show Clock Text",
+				"type" : "bool",
+				"value" : true
 			}
 		}
 	},

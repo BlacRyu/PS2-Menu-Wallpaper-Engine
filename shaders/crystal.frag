@@ -33,6 +33,7 @@ varying vec4 v_Light0DirectionL3X;
 varying vec4 v_Light1DirectionL3Y;
 varying vec4 v_Light2DirectionL3Z;
 varying vec3 v_LightAmbientColor;
+varying float v_Height;
 
 void main( )
 {
@@ -55,8 +56,9 @@ void main( )
     float specularStrength = ComputeMaterialSpecularStrength(g_Roughness, g_Metallic);
     
     // Lighting
-    float emissive = step(1.0 - v_TexCoord.y, g_Light);
-    emissive += 1.0 - max(0.0,dot(viewDir, normal)); // rim light
+    float rim = 1.0 - max(0.0,dot(viewDir, normal));
+    float emissive = step(v_Height, g_Light);
+    emissive += rim; // rim light
     vec3 light = ComputeLightSpecular(normal, v_Light0DirectionL3X.xyz, g_LightsColorRadius[0].rgb, g_LightsColorRadius[0].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
     light += ComputeLightSpecular(normal, v_Light1DirectionL3Y.xyz, g_LightsColorRadius[1].rgb, g_LightsColorRadius[1].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
     light += ComputeLightSpecular(normal, v_Light2DirectionL3Z.xyz, g_LightsColorRadius[2].rgb, g_LightsColorRadius[2].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
@@ -67,12 +69,12 @@ void main( )
     // Refraction
     vec2 screenRefractionOffset = refract(viewDir, normal, 0.5) / v_ScreenPos.z;
     vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
-    refract = refract * 4.0 * (1.0 + emissive * 4.0);
+    refract = refract * 3.0 * (1.0 + emissive * 4.0);
 
     // "Reflection"
     float reflect = texSample2D(g_Texture0, normal.xy).r;
-    reflect = reflect * reflect;
-    reflect = reflect * reflect * .25;
+    reflect *= reflect;
+    reflect *= reflect * 0.5;
 
     vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .5); // blend between diffuse and (refracted) scene
     float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);

@@ -25,6 +25,7 @@ varying vec4 v_Light0DirectionL3X;
 varying vec4 v_Light1DirectionL3Y;
 varying vec4 v_Light2DirectionL3Z;
 varying vec3 v_LightAmbientColor;
+varying float v_Height;
 
 void main() {
 	vec4 worldPos = mul(vec4(a_Position, 1.0), g_ModelMatrix);
@@ -52,6 +53,8 @@ void main() {
 #else
 	v_Normal = normal;
 #endif
+
+	v_Height = a_Position.y;
 
 	v_Light0DirectionL3X.w = l3.x;
 	v_Light1DirectionL3Y.w = l3.y;

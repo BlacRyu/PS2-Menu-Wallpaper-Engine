@@ -24,9 +24,9 @@
 		"camerashakespeed" : 3.0,
 		"clearcolor" : "0.125 0.098 0.204",
 		"clearenabled" : true,
-		"farz" : 10000.0,
+		"farz" : 1000.0,
 		"fov" : 53.0,
-		"nearz" : 0.10000000149011612,
+		"nearz" : 1.0,
 		"orthogonalprojection" : null,
 		"skylightcolor" : "1.000 1.000 1.000"
 	},
@@ -56,7 +56,7 @@
 			"name" : "Prisms (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismScale = new Vec3(0.1, 0.09, 0.1);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 30, 0);\n\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\n\n// Prism Objects\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\n\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles), \"XYZ\");\n\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tprisms[i] = new Prism();\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\n\t\tlet prismTransform = parentTransform.multiply(localTransform);\n\t}\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles), \"XYZ\");\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismScale = new Vec3(0.1, 0.09, 0.1);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 30, 0);\n\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\n\n// Prism Objects\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\nfunction interpAngle(angle1, angle2, percent){\n\tlet a1 = [angle1.x % 360, angle1.y % 360, angle1.z % 360];\n\tlet a2 = [angle2.x % 360, angle2.y % 360, angle2.z % 360];\n\tlet diff = [];\n\tfor (let i = 0; i < 3; i++){\n\t\tif (a1[i] < 0)\n\t\t\ta1[i] += 360;\n\t\tif (a2[i] < 0)\n\t\t\ta2[i] += 360;\n\t\tdiff[i] = a2[i] - a1[i];\n\t\tif (diff[i] > 180)\n\t\t\tdiff[i] -= 360;\n\t\telse if (diff[i] < -180)\n\t\t\tdiff[i] += 360;\n\t}\n\treturn new Vec3(a1[0] + diff[0] * percent, a1[1] + diff[1] * percent, a1[2] + diff[2] * percent);\n}\n\nfunction interpPosition(pos1, pos2, percent){\n\tlet x = pos1.x + (pos2.x - pos1.x) * percent;\n\tlet y = pos1.y + (pos2.y - pos1.y) * percent;\n\tlet z = pos1.z + (pos2.z - pos1.z) * percent;\n\treturn new Vec3(x, y, z);\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles), \"XYZ\");\n\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tprisms[i] = new Prism();\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\n\t\tlet prismTransform = parentTransform.multiply(localTransform);\n\t\t\n\t\tprisms[i].layer.light = i * 10;\n\t\tconsole.log(\"prisms[i].layer.light:\", prisms[i].layer.light);\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles), \"XYZ\");\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tlet mode = userProperties.mode;\n}\n",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
@@ -70,11 +70,154 @@
 			"name" : "Orbs (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numOrbs = 7;\nconst orbDist = 5;\n\n// Orb parent rotation (z rotation offset based on orb index)\nconst angleSpeed = new Vec3(0, 110, 90);\n\n\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\n\n// Objects\nlet orbs = [];\n\n\n// Classes\nclass Orb {\n\tconstructor(offset){\n\t\tthis.layer = thisScene.createLayer(orbAsset);\n\t\tthis.offset = offset;\n\t}\n}\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = new Orb();\n\t\t\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min * 2.0;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\torbs[i].offset = new Vec3(0, orbDist, 0);\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min * 2.0;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numOrbs = 7;\nconst orbDist = 5;\n\n// Orb parent rotation (z rotation offset based on orb index)\nconst angleSpeed = new Vec3(0, 110, 90);\n\n\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\n\n// Objects\nlet orbs = [];\n\n\n// Classes\nclass Orb {\n\tconstructor(offset){\n\t\tthis.layer = thisScene.createLayer(orbAsset);\n\t\tthis.offset = offset;\n\t}\n}\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = new Orb();\n\t\t\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\torbs[i].offset = new Vec3(0, orbDist, 0);\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
 			"scale" : "1.000 1.000 1.000"
+		},
+		{
+			"alpha" : 0.89999997615814209,
+			"anchor" : "topleft",
+			"angles" : "0.000 0.000 0.000",
+			"backgroundcolor" : "0.000 0.000 0.000",
+			"color" : "0.875 0.875 0.875",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/blurprecise/effect.json",
+					"id" : 57,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"combos" : 
+							{
+								"KERNEL" : 2
+							},
+							"constantshadervalues" : 
+							{
+								"scale" : "2 2"
+							},
+							"id" : 60
+						},
+						{
+							"combos" : 
+							{
+								"KERNEL" : 2,
+								"VERTICAL" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"scale" : "2 2"
+							},
+							"id" : 61
+						}
+					],
+					"visible" : true
+				}
+			],
+			"font" : "fonts/NimbusSanL-Reg.ttf",
+			"horizontalalign" : "left",
+			"id" : 48,
+			"locktransforms" : true,
+			"name" : "Current Date",
+			"opaquebackground" : false,
+			"origin" : "-14.000 10.000 15.000",
+			"padding" : 4,
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"pointsize" : 40.0,
+			"scale" : "0.010 0.010 0.010",
+			"size" : "837.000 208.000",
+			"solid" : true,
+			"text" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\tlet year = dateTime.getFullYear();\n\tlet month = dateTime.getMonth() + 1;\n\tif (month < 10) month = \"0\" + month;\n\tlet day = dateTime.getDate();\n\tif (day < 10) day = \"0\" + day;\n\treturn year + \"/\" + month + \"/\" + day;\n}\n",
+				"value" : "0000/00/00"
+			},
+			"verticalalign" : "top",
+			"visible" : 
+			{
+				"user" : "show_clock_text",
+				"value" : true
+			}
+		},
+		{
+			"alpha" : 0.89999997615814209,
+			"anchor" : "topleft",
+			"angles" : "0.000 0.000 0.000",
+			"backgroundcolor" : "0.000 0.000 0.000",
+			"color" : "0.875 0.875 0.875",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/blurprecise/effect.json",
+					"id" : 71,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"scale" : "2 2"
+							},
+							"id" : 72
+						},
+						{
+							"combos" : 
+							{
+								"VERTICAL" : 1
+							},
+							"constantshadervalues" : 
+							{
+								"scale" : "2 2"
+							},
+							"id" : 73
+						}
+					],
+					"visible" : true
+				}
+			],
+			"font" : "fonts/NimbusSanL-Reg.ttf",
+			"horizontalalign" : "right",
+			"id" : 19,
+			"locktransforms" : true,
+			"name" : "Current Time",
+			"opaquebackground" : false,
+			"origin" : "14.000 10.000 15.000",
+			"padding" : 4,
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"pointsize" : 40.0,
+			"scale" : "0.010 0.010 0.010",
+			"size" : "653.000 208.000",
+			"solid" : true,
+			"text" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\t// let hour = Math.floor(engine.timeOfDay * 24.0);\n\tlet hour = dateTime.getHours();\n\tif (hour < 10) hour = \"0\" + hour;\n\tlet minute = dateTime.getMinutes();\n\tif (minute < 10) minute = \"0\" + minute;\n\tlet second = dateTime.getSeconds();\n\tif (second < 10) second = \"0\" + second;\n\treturn hour + \":\" + minute + \":\" + second;\n}\n",
+				"value" : "00:00:00"
+			},
+			"verticalalign" : "top",
+			"visible" : 
+			{
+				"user" : "show_clock_text",
+				"value" : true
+			}
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 66,
+			"locktransforms" : false,
+			"model" : "models/prism/prism.mdl",
+			"name" : "prism",
+			"origin" : "3.242 5.793 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"scale" : "0.000 0.000 0.000"
 		}
 	]
 }
