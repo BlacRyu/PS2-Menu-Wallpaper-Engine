@@ -93,7 +93,6 @@ export default class Mat4 {
 
 
 	static fromEuler(angles, order){
-		// XYZ rotation order
 		let r = new Mat4();
 		let e = angles.multiply(deg2rad);
 		let sx = Math.sin(e.x), sy = Math.sin(e.y), sz = Math.sin(e.z);
@@ -120,6 +119,34 @@ export default class Mat4 {
 				r.elements[2][2] = cx * cy;
 				break;
 
+			case "YXZ":
+				r.elements[0][0] = cy * cz + sy * sz * sx;
+				r.elements[0][1] = sy * cz * sx - cy * sz;
+				r.elements[0][2] = cx * sy;
+
+				r.elements[1][0] = cx * sz;
+				r.elements[1][1] = cx * cz;
+				r.elements[1][2] = -sx;
+
+				r.elements[2][0] = cy * sz * sx - sy * cz;
+				r.elements[2][1] = sy * sz + cy * cz * sx;
+				r.elements[2][2] = cx * cy;
+				break;
+
+			case "ZXY":
+				r.elements[0][0] = cy * cz - sy * sz * sx
+				r.elements[0][1] = -cx * sz;
+				r.elements[0][2] = sy * cz + cy * sz * sx;
+
+				r.elements[1][0] = cy * sz + sy * cz * sx;
+				r.elements[1][1] = cx * cz;
+				r.elements[1][2] = sy * sz - cy * cz * sx;
+
+				r.elements[2][0] = -cx * sy;
+				r.elements[2][1] = sx;
+				r.elements[2][2] = cx * cy;
+				break;
+
 			case "ZYX":
 				r.elements[0][0] = cy * cz;
 				r.elements[0][1] = sx * cz * sy - cx * sz;
@@ -132,6 +159,20 @@ export default class Mat4 {
 				r.elements[2][0] = -sy;
 				r.elements[2][1] = sx * cy;
 				r.elements[2][2] = cx * cy;
+				break;
+
+			case "YZX":
+				r.elements[0][0] = cy * cz;
+				r.elements[0][1] = sx * sy - cx * cy * sz;
+				r.elements[0][2] = sx * cy * sz + cx * sy;
+
+				r.elements[1][0] = sz;
+				r.elements[1][1] = cx * cz;
+				r.elements[1][2] = -sx * cz;
+
+				r.elements[2][0] = -sy * cz;
+				r.elements[2][1] = cx * sy * sz + sx * cy;
+				r.elements[2][2] = cx * cy - sx * sy * sz;
 				break;
 		}
 

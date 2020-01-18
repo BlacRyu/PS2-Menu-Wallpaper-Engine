@@ -57,8 +57,9 @@ void main( )
     
     // Lighting
     float rim = 1.0 - max(0.0,dot(viewDir, normal));
-    float emissive = step(v_Height, g_Light);
+    float emissive = smoothstep(v_Height * 0.95, v_Height * 0.95 + 5.0, g_Light) * 1.0;
     emissive += rim; // rim light
+    emissive += step(0, g_Light) * 0.3; // Make the primary crystal glow all over
     vec3 light = ComputeLightSpecular(normal, v_Light0DirectionL3X.xyz, g_LightsColorRadius[0].rgb, g_LightsColorRadius[0].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
     light += ComputeLightSpecular(normal, v_Light1DirectionL3Y.xyz, g_LightsColorRadius[1].rgb, g_LightsColorRadius[1].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
     light += ComputeLightSpecular(normal, v_Light2DirectionL3Z.xyz, g_LightsColorRadius[2].rgb, g_LightsColorRadius[2].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
@@ -69,12 +70,12 @@ void main( )
     // Refraction
     vec2 screenRefractionOffset = refract(viewDir, normal, 0.5) / v_ScreenPos.z;
     vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
-    refract = refract * 3.0 * (1.0 + emissive * 4.0);
+    refract = refract * 2.0 * (1.0 + emissive * 4.0);
 
     // "Reflection"
     float reflect = texSample2D(g_Texture0, normal.xy).r;
     reflect *= reflect;
-    reflect *= reflect * 0.5;
+    reflect *= reflect * 0.4;
 
     vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .5); // blend between diffuse and (refracted) scene
     float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);

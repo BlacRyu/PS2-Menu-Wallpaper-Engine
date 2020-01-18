@@ -1,6 +1,6 @@
 {
 	"passes": [{
-		"shader": "effects/edgedetection",
+		"shader": "effects/filmgrain",
 		"blending": "normal",
 		"depthtest": "disabled",
 		"depthwrite": "disabled",
