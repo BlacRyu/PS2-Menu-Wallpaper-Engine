@@ -67,3 +67,28 @@ export function forwardZ(angles){
 export function forwardX(angles){
 	return rotVec(new Vec3(1., 0., 0.), angles);
 };
+
+export function interpAngle(angle1, angle2, percent){
+	let a1 = [angle1.x % 360, angle1.y % 360, angle1.z % 360];
+	let a2 = [angle2.x % 360, angle2.y % 360, angle2.z % 360];
+	let diff = [];
+	for (let i = 0; i < 3; i++){
+		if (a1[i] < 0)
+			a1[i] += 360;
+		if (a2[i] < 0)
+			a2[i] += 360;
+		diff[i] = a2[i] - a1[i];
+		if (diff[i] > 180)
+			diff[i] -= 360;
+		else if (diff[i] < -180)
+			diff[i] += 360;
+	}
+	return new Vec3(a1[0] + diff[0] * percent, a1[1] + diff[1] * percent, a1[2] + diff[2] * percent);
+};
+
+export function interpPosition(pos1, pos2, percent){
+	let x = pos1.x + (pos2.x - pos1.x) * percent;
+	let y = pos1.y + (pos2.y - pos1.y) * percent;
+	let z = pos1.z + (pos2.z - pos1.z) * percent;
+	return new Vec3(x, y, z);
+};

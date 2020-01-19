@@ -57,7 +57,7 @@ void main( )
     
     // Lighting
     float rim = 1.0 - max(0.0,dot(viewDir, normal));
-    float emissive = smoothstep(v_Height * 0.95, v_Height * 0.95 + 5.0, g_Light) * 1.0;
+    float emissive = smoothstep(v_Height * 0.95, v_Height * 0.95 + 0.5, g_Light) * 1.0;
     emissive += rim; // rim light
     emissive += step(0, g_Light) * 0.3; // Make the primary crystal glow all over
     vec3 light = ComputeLightSpecular(normal, v_Light0DirectionL3X.xyz, g_LightsColorRadius[0].rgb, g_LightsColorRadius[0].w, viewDir, specularPower, specularStrength, emissive, g_Metallic, specularResult);
@@ -77,7 +77,7 @@ void main( )
     reflect *= reflect;
     reflect *= reflect * 0.4;
 
-    vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .5); // blend between diffuse and (refracted) scene
+    vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .25); // blend between diffuse and (refracted) scene
     float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);
     finalColor *= mix(g_Color1, g_Color2, tintLerp); // tint color by blending two input colors over time
     finalColor = finalColor + specularResult; // add specular highlights

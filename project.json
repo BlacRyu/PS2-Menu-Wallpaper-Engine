@@ -5,17 +5,32 @@
 	{
 		"properties" : 
 		{
+			"background_color" : 
+			{
+				"order" : 100,
+				"text" : "ui_editor_scene_options_background_color",
+				"type" : "color",
+				"value" : "0.6745098039215687 0.5372549019607843 1"
+			},
+			"clock_24_hour" : 
+			{
+				"condition" : "show_clock_text.value == true",
+				"order" : 106,
+				"text" : "Clock 24-hour",
+				"type" : "bool",
+				"value" : false
+			},
 			"film_grain" : 
 			{
 				"fraction" : true,
-				"max" : 2,
+				"max" : 1,
 				"min" : 0,
-				"order" : 104,
+				"order" : 107,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.050000000000000003,
 				"text" : "Film Grain",
 				"type" : "slider",
-				"value" : 0.34999999999999998
+				"value" : 0.25
 			},
 			"mode" : 
 			{
@@ -27,39 +42,52 @@
 						"value" : "clock.smooth"
 					}
 				],
-				"order" : 102,
+				"order" : 103,
 				"text" : "Mode",
 				"type" : "combo",
 				"value" : "clock.smooth"
 			},
 			"prism_gradient_1" : 
 			{
-				"order" : 100,
-				"text" : "Prism gradient 1",
+				"order" : 101,
+				"text" : "Prism color 1",
 				"type" : "color",
 				"value" : "0.36470588235294116 0.3607843137254902 0.8588235294117647"
 			},
 			"prism_gradient_2" : 
 			{
-				"order" : 101,
-				"text" : "Prism gradient 2",
+				"order" : 102,
+				"text" : "Prism color 2",
 				"type" : "color",
 				"value" : "0.2980392156862745 0.7803921568627451 0.7176470588235294"
 			},
 			"schemecolor" : 
 			{
-				"order" : 99,
+				"order" : 0,
 				"text" : "ui_browse_properties_scheme_color",
 				"type" : "color",
-				"value" : "0.6745098039215687 0.5372549019607843 1"
+				"value" : "0 0 0"
 			},
 			"show_clock_text" : 
 			{
-				"condition" : "false && mode.value == \"clock.smooth\"",
-				"order" : 103,
+				"condition" : "true && mode.value == \"clock.smooth\"",
+				"order" : 104,
 				"text" : "Show Clock Text",
 				"type" : "bool",
 				"value" : true
+			},
+			"text_size" : 
+			{
+				"condition" : "show_clock_text.value == true",
+				"fraction" : true,
+				"max" : 80,
+				"min" : 10,
+				"order" : 105,
+				"precision" : 2,
+				"step" : 1,
+				"text" : "Text Size",
+				"type" : "slider",
+				"value" : 35
 			}
 		}
 	},

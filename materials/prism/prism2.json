@@ -9,9 +9,9 @@
 				"Alpha" : 1,
 				"Light" : 
 				{
-					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60 * 100;\n}\n",
+					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60 * 10;\n}\n",
 					"user" : null,
-					"value" : 50
+					"value" : 5
 				},
 				"Metal" : 0,
 				"Rough" : 0,

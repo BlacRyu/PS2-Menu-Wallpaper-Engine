@@ -1,0 +1,34 @@
+{
+	"passes" : 
+	[
+		{
+			"blending" : "normal",
+			"combos" : {},
+			"constantshadervalues" : 
+			{
+				"Alpha" : 1,
+				"Light" : 
+				{
+					"user" : null,
+					"value" : -1
+				},
+				"Metal" : 0,
+				"Rough" : 0,
+				"ui_editor_properties_color_end" : 
+				{
+					"user" : "prism_gradient_2",
+					"value" : "0.2980392156862745 0.7803921568627451 0.7568627450980392"
+				},
+				"ui_editor_properties_color_start" : 
+				{
+					"user" : "prism_gradient_1",
+					"value" : "0.47843137254901963 0.3333333333333333 0.7803921568627451"
+				}
+			},
+			"cullmode" : "nocull",
+			"depthtest" : "enabled",
+			"depthwrite" : "enabled",
+			"shader" : "crystal"
+		}
+	]
+}

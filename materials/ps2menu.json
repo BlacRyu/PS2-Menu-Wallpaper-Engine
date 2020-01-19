@@ -9,7 +9,7 @@
 				"background_color" : 
 				{
 					"script" : null,
-					"user" : "schemecolor",
+					"user" : "background_color",
 					"value" : "0.6784313725490196 0.5411764705882353 1"
 				}
 			},

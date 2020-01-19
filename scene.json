@@ -50,13 +50,24 @@
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
+			"id" : 64,
+			"locktransforms" : false,
+			"model" : "models/prism/prism.mdl",
+			"name" : "mainPrism",
+			"origin" : "0.216 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"scale" : "1.000 1.000 1.000",
+			"skin" : 1
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
 			"id" : 18,
 			"locktransforms" : false,
 			"model" : "models/empty.mdl",
 			"name" : "Prisms (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismScale = new Vec3(0.1, 0.09, 0.1);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\nconst angleRigidity = 3.0; // Smoothing disabled due to gimbal issues\nlet targetAngles = new Vec3(0, 0, 0);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 20, 0);\n\n\n\n// Math Constants\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register asset\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\nconst prism2Asset = engine.registerAsset(\"models/prism2/prism2.mdl\");\n\n\n // Pseudo-enum\nconst modes = {\n\tCLOCK: {\n\t\tSMOOTH: \"clock.smooth\",\n\t\tCLICK: \"clock.click\"\n\t},\n\tAUDIO: \"audio\"\n};\nlet mode = modes.CLOCK.SMOOTH;\n\n// Prism Object\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\nclass Prism2 { // head prism of the clock\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prism2Asset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\nfunction interpAngle(angle1, angle2, percent){\n\tlet a1 = [angle1.x % 360, angle1.y % 360, angle1.z % 360];\n\tlet a2 = [angle2.x % 360, angle2.y % 360, angle2.z % 360];\n\tlet diff = [];\n\tfor (let i = 0; i < 3; i++){\n\t\tif (a1[i] < 0)\n\t\t\ta1[i] += 360;\n\t\tif (a2[i] < 0)\n\t\t\ta2[i] += 360;\n\t\tdiff[i] = a2[i] - a1[i];\n\t\tif (diff[i] > 180)\n\t\t\tdiff[i] -= 360;\n\t\telse if (diff[i] < -180)\n\t\t\tdiff[i] += 360;\n\t}\n\treturn new Vec3(a1[0] + diff[0] * percent, a1[1] + diff[1] * percent, a1[2] + diff[2] * percent);\n}\n\nfunction interpPosition(pos1, pos2, percent){\n\tlet x = pos1.x + (pos2.x - pos1.x) * percent;\n\tlet y = pos1.y + (pos2.y - pos1.y) * percent;\n\tlet z = pos1.z + (pos2.z - pos1.z) * percent;\n\treturn new Vec3(x, y, z);\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles, \"XYZ\"));\n\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tif (i === 0)\n\t\t\tprisms[i] = new Prism2();\n\t\telse\n\t\t\tprisms[i] = new Prism();\n\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\n\t\tlet prismTransform = parentTransform.multiply(localTransform);\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Parent object rotation\n\tlet currentDateTime = new Date();\n\tswitch (mode){\n\t\tcase modes.CLOCK.SMOOTH:\n\t\t\tlet yaw = -(currentDateTime.getSeconds() + currentDateTime.getMilliseconds() * .001) * 6;\n\t\t\tlet roll = -currentDateTime.getHours() % 12 * 30;\n\t\t\tlet clockTransform = new Mat4();\n\t\t\tclockTransform = clockTransform.multiply(Mat4.fromEuler(new Vec3(0, yaw, roll), \"ZYX\"));\n\t\t\ttargetAngles = clockTransform.toEuler(\"XYZ\");\n\t\t\tbreak;\n\t\tcase modes.CLOCK.CLICK:\n\t\t\ttargetAngles = new Vec3(0, currentDateTime.getSeconds() * 6, 0);\n\t\t\tbreak;\n\t\tdefault:\n\t\t\ttargetAngles = targetAngles.add( angleSpeed.multiply(engine.frametime) );\n\t\t\tbreak;\n\t}\n\tthisLayer.angles = targetAngles;//interpAngle(thisLayer.angles, targetAngles, Math.min(1.0, angleRigidity * engine.frametime));\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles, \"XYZ\"));\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tmode = userProperties.mode;\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismScale = new Vec3(1.0, 0.9, 1.0);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\nconst angleRigidity = 3.0; // Smoothing disabled due to gimbal issues\nlet targetAngles = new Vec3(0, 0, 0);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 20, 0);\n\n\n\n// Math Constants\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register asset\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\n//const prism2Asset = engine.registerAsset(\"models/prism2/prism2.mdl\");\n\n\n // Pseudo-enum\nconst modes = {\n\tCLOCK: {\n\t\tSMOOTH: \"clock.smooth\",\n\t\tCLICK: \"clock.click\"\n\t},\n\tAUDIO: \"audio\"\n};\n// User Properties\nlet mode = modes.CLOCK.SMOOTH;\n\n// Prism Object\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\nclass MainPrism { // head prism of the clock\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.getLayer(\"mainPrism\");\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tif (i === 0)\n\t\t\tprisms[i] = new MainPrism();\n\t\telse\n\t\t\tprisms[i] = new Prism();\n\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Parent object rotation\n\tlet currentDateTime = new Date();\n\tswitch (mode){\n\t\tcase modes.CLOCK.SMOOTH:\n\t\t\tlet yaw = -(currentDateTime.getSeconds() + currentDateTime.getMilliseconds() * .001) * 6;\n\t\t\tlet roll = -currentDateTime.getHours() % 12 * 30;\n\t\t\tlet clockTransform = new Mat4();\n\t\t\tclockTransform = clockTransform.multiply(Mat4.fromEuler(new Vec3(0, yaw, roll), \"ZYX\"));\n\t\t\ttargetAngles = clockTransform.toEuler(\"XYZ\");\n\t\t\tbreak;\n\t\tcase modes.CLOCK.CLICK:\n\t\t\ttargetAngles = new Vec3(0, currentDateTime.getSeconds() * 6, 0);\n\t\t\tbreak;\n\t\tdefault:\n\t\t\ttargetAngles = targetAngles.add( angleSpeed.multiply(engine.frametime) );\n\t\t\tbreak;\n\t}\n\tthisLayer.angles = targetAngles;//OMGVector.interpAngle(thisLayer.angles, targetAngles, Math.min(1.0, angleRigidity * engine.frametime));\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles, \"XYZ\"));\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\t//mode = userProperties.mode;\n}\n",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
@@ -129,13 +140,17 @@
 			"padding" : 4,
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
-			"pointsize" : 40.0,
+			"pointsize" : 
+			{
+				"user" : "text_size",
+				"value" : 35.0
+			},
 			"scale" : "0.010 0.010 0.010",
-			"size" : "837.000 208.000",
+			"size" : "736.000 183.000",
 			"solid" : true,
 			"text" : 
 			{
-				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\tlet year = dateTime.getFullYear();\n\tlet month = dateTime.getMonth() + 1;\n\tif (month < 10) month = \"0\" + month;\n\tlet day = dateTime.getDate();\n\tif (day < 10) day = \"0\" + day;\n\treturn year + \"/\" + month + \"/\" + day;\n}\n",
+				"script" : "'use strict';\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet ratio = size.x / size.y;\n\tthisLayer.origin = new Vec3(-11 * ratio, 10.5, 15); \n}\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\tlet year = dateTime.getFullYear();\n\tlet month = dateTime.getMonth() + 1;\n\tif (month < 10) month = \"0\" + month;\n\tlet day = dateTime.getDate();\n\tif (day < 10) day = \"0\" + day;\n\treturn year + \"/\" + month + \"/\" + day;\n}\n/**\n * @param {String} value (for property 'text')\n */\nexport function init(value) {\n\tresizeScreen(engine.screenResolution);\n\treturn value;\n}\n",
 				"value" : "0000/00/00"
 			},
 			"verticalalign" : "top",
@@ -193,13 +208,17 @@
 			"padding" : 4,
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
-			"pointsize" : 40.0,
+			"pointsize" : 
+			{
+				"user" : "text_size",
+				"value" : 35.0
+			},
 			"scale" : "0.010 0.010 0.010",
-			"size" : "653.000 208.000",
+			"size" : "574.000 183.000",
 			"solid" : true,
 			"text" : 
 			{
-				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\t// let hour = Math.floor(engine.timeOfDay * 24.0);\n\tlet hour = dateTime.getHours();\n\tif (hour < 10) hour = \"0\" + hour;\n\tlet minute = dateTime.getMinutes();\n\tif (minute < 10) minute = \"0\" + minute;\n\tlet second = dateTime.getSeconds();\n\tif (second < 10) second = \"0\" + second;\n\treturn hour + \":\" + minute + \":\" + second;\n}\n",
+				"script" : "'use strict';\n\nlet militaryTime = false;\nlet ampm = \"am\";\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet ratio = size.x / size.y;\n\tthisLayer.origin = new Vec3(11 * ratio, 10.5, 15); \n}\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\tlet hour = dateTime.getHours();\n\tif (!militaryTime){\n\t\tif (hour > 12)\n\t\t\tampm = \"PM\";\n\t\telse\n\t\t\tampm = \"AM\";\n\t\thour = hour % 12;\n\t}\n\t//if (hour < 10) hour = \"0\" + hour;\n\tlet minute = dateTime.getMinutes();\n\tif (minute < 10) minute = \"0\" + minute;\n\tlet second = dateTime.getSeconds();\n\tif (second < 10) second = \"0\" + second;\n\n\tlet time = hour + \":\" + minute + \":\" + second;\n\tif (!militaryTime)\n\t\ttime = time + \" \" + ampm;\n\treturn time;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tresizeScreen(engine.screenResolution);\n\tmilitaryTime = userProperties.clock_24_hour;\n}",
 				"value" : "00:00:00"
 			},
 			"verticalalign" : "top",
@@ -245,26 +264,6 @@
 			"perspective" : false,
 			"solid" : true,
 			"visible" : true
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 82,
-			"locktransforms" : false,
-			"model" : "models/prism/prism.mdl",
-			"name" : "prism",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"scale" : "0.000 0.000 0.000"
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 64,
-			"locktransforms" : false,
-			"model" : "models/prism2/prism2.mdl",
-			"name" : "prism2",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"scale" : "0.000 0.000 0.000"
 		}
 	]
 }
