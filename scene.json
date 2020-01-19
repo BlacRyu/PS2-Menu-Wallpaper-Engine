@@ -75,6 +75,20 @@
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
+			"id" : 143,
+			"locktransforms" : false,
+			"model" : "models/empty.mdl",
+			"name" : "Sounds (script)",
+			"origin" : 
+			{
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\n// Register asset\nconst noiseAsset = engine.registerAsset(\"sounds/noise.ogg\");\nconst noiseLow200Asset = engine.registerAsset(\"sounds/noise_low_200.ogg\");\nconst noiseLow800Asset = engine.registerAsset(\"sounds/noise_low_800.ogg\");\nconst noiseHighAsset = engine.registerAsset(\"sounds/noise_high.ogg\");\n\nclass Range {\n\tconstructor(min, max){\n\t\tthis.min = min;\n\t\tthis.max = max;\n\t\tthis.rand();\n\t}\n\trand(){\n\t\treturn this.lerp(Math.random());\n\t}\n\tlerp(l){\n\t\treturn this.value = this.min + (this.max - this.min) * l;\n\t}\n\tget(){\n\t\treturn this.value;\n\t}\n\tset(value){\n\t\tthis.value = value;\n\t}\n}\n\nclass SoundLayer {\n\tconstructor(asset, mindelay, maxdelay, minduration, maxduration, minvolume, maxvolume){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.stop();\n\t\tthis.layer.volume = 0;\n\t\tthis.delay = new Range(mindelay, maxdelay);\n\t\tthis.remainingDelay = 0;\n\t\tthis.duration = new Range(minduration, maxduration);\n\t\tthis.remainingDuration = 0;\n\t\tthis.volume = new Range(minvolume, maxvolume);\n\t\tthis.currentVolume = 0;\n\n\t\tthis.wasPlaying = false;\n\t}\n\treset(){\n\t\tthis.remainingDelay = this.delay.rand();\n\t\tthis.remainingDuration = this.duration.rand();\n\t\tthis.volume.rand();\n\t\tthis.currentVolume = 0;\n\t}\n}\n\n// Array of prisms\nlet layers = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tlayers[0] = new SoundLayer(noiseLow200Asset, 0, 0, 8, 14, 0.2, 0.3);\n\tlayers[1] = new SoundLayer(noiseLow800Asset, 4, 8, 6, 10, 0.15, 0.2);\n\tlayers[2] = new SoundLayer(noiseHighAsset, 2, 8, 4, 8, 0.08, 0.15);\n\tlayers[3] = new SoundLayer(noiseAsset, 6, 10, 3, 5, 0.03, 0.1);\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tfor (let i = 0; i < layers.length; i++){\n\t\tif (layers[i].wasPlaying && !layers[i].layer.isPlaying())\n\t\t{\n\t\t\tlayers[i].reset();\n\t\t}\n\t\telse if (!layers[i].layer.isPlaying()){\n\t\t\tlayers[i].remainingDelay -= engine.frametime;\n\t\t\tif (layers[i].remainingDelay <= 0)\n\t\t\t\tlayers[i].layer.play();\n\t\t}\n\t\telse{\n\t\t\tlayers[i].remainingDuration -= engine.frametime;\n\t\t\tif (layers[i].remainingDuration <= 0){\n\t\t\t\tlayers[i].layer.stop();\n\t\t\t\tlayers[i].reset();\n\t\t\t}\n\t\t\telse{\n\t\t\t\tlet time = 1 - layers[i].remainingDuration / layers[i].duration.get();\n\t\t\t\tlayers[i].layer.volume = (1 - Math.abs(1 - 2 * time)) * layers[i].volume.get();\n\t\t\t}\n\t\t}\n\t}\n\treturn value;\n}\n",
+				"value" : "-5.500 0.000 0.000"
+			},
+			"parallaxDepth" : "1.000 1.000",
+			"scale" : "1.000 1.000 1.000"
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
 			"id" : 39,
 			"locktransforms" : false,
 			"model" : "models/empty.mdl",
@@ -263,6 +277,26 @@
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
 			"solid" : true,
+			"visible" : true
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 52,
+			"instanceoverride" : 
+			{
+				"colorn" : 
+				{
+					"script" : "'use strict';\n\nlet particleColor = new Vec3(1, 1, 1);\n\n/**\n * @param {Vec3} value (for property 'colorn')\n */\nexport function update(value) {\n\treturn particleColor;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tparticleColor = userProperties.background_color.multiply(0.2);\n}\n",
+					"value" : "0.23137254901960785 0.1843137254901961 0.3215686274509804"
+				},
+				"id" : 41
+			},
+			"locktransforms" : false,
+			"name" : "particles",
+			"origin" : "0.000 0.000 -50.000",
+			"parallaxDepth" : "1.000 1.000",
+			"particle" : "particles/particles.json",
+			"scale" : "1.000 1.000 1.000",
 			"visible" : true
 		}
 	]

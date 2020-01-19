@@ -1,0 +1,113 @@
+{
+	"animationmode" : null,
+	"children" : null,
+	"controlpoint" : 
+	[
+		{
+			"flags" : 0,
+			"id" : 0,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 1,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 2,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 3,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 4,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 5,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 6,
+			"offset" : "0 0 0"
+		},
+		{
+			"flags" : 0,
+			"id" : 7,
+			"offset" : "0 0 0"
+		}
+	],
+	"emitter" : 
+	[
+		{
+			"directions" : "1 1 0",
+			"distancemax" : 20,
+			"distancemin" : 12,
+			"id" : 5,
+			"instantaneous" : 0,
+			"name" : "sphererandom",
+			"origin" : "0 0 0",
+			"rate" : 40
+		}
+	],
+	"flags" : null,
+	"initializer" : 
+	[
+		{
+			"id" : 2,
+			"max" : 15,
+			"min" : 10,
+			"name" : "lifetimerandom"
+		},
+		{
+			"exponent" : 4,
+			"id" : 3,
+			"max" : 0.20000000000000001,
+			"min" : 0.050000000000000003,
+			"name" : "sizerandom"
+		},
+		{
+			"id" : 4,
+			"max" : "3 3 12",
+			"min" : "-3 -3 10",
+			"name" : "velocityrandom"
+		}
+	],
+	"material" : "materials/particle/halo_1.json",
+	"maxcount" : 500,
+	"operator" : 
+	[
+		{
+			"drag" : 0.14999999999999999,
+			"gravity" : "0 0 1",
+			"id" : 6,
+			"name" : "movement"
+		},
+		{
+			"fadeintime" : 0,
+			"fadeouttime" : 0,
+			"id" : 7,
+			"name" : "alphafade"
+		}
+	],
+	"renderer" : 
+	[
+		{
+			"flags" : 0,
+			"id" : 1,
+			"length" : 0.080000000000000002,
+			"name" : "ropetrail",
+			"segments" : 3,
+			"subdivision" : 1
+		}
+	],
+	"sequencemultiplier" : null,
+	"starttime" : 0
+}
