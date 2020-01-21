@@ -6,58 +6,63 @@
 		{
 			"flags" : 0,
 			"id" : 0,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
-			"flags" : 0,
+			"flags" : 1,
 			"id" : 1,
+			"locktopointer" : true,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 2,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 3,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 4,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 5,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 6,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		},
 		{
 			"flags" : 0,
 			"id" : 7,
+			"locktopointer" : false,
 			"offset" : "0 0 0"
 		}
 	],
 	"emitter" : 
 	[
 		{
-			"directions" : "1 1 0",
-			"distancemax" : 15,
-			"distancemin" : 10,
+			"distancemax" : 20,
+			"distancemin" : 12,
 			"id" : 5,
-			"instantaneous" : 0,
 			"name" : "sphererandom",
-			"origin" : "0 0 0",
-			"rate" : 40
+			"rate" : 60
 		}
 	],
-	"flags" : null,
+	"flags" : 1,
 	"initializer" : 
 	[
 		{
@@ -69,30 +74,30 @@
 		{
 			"exponent" : 4,
 			"id" : 3,
-			"max" : 0.14999999999999999,
-			"min" : 0.050000000000000003,
+			"max" : 0.25,
+			"min" : 0.10000000000000001,
 			"name" : "sizerandom"
 		},
 		{
 			"id" : 4,
-			"max" : "3 3 10",
-			"min" : "-3 -3 4",
+			"max" : "2 2 10",
+			"min" : "-2 -2 5",
 			"name" : "velocityrandom"
 		}
 	],
-	"material" : "materials/particle/halo_1.json",
-	"maxcount" : 500,
+	"material" : "materials/particle/halo_2.json",
+	"maxcount" : 50000,
 	"operator" : 
 	[
 		{
-			"drag" : 0.20000000000000001,
-			"gravity" : "0 0 0.8",
+			"drag" : 0.5,
+			"gravity" : "0 0 2",
 			"id" : 6,
 			"name" : "movement"
 		},
 		{
-			"fadeintime" : 0,
-			"fadeouttime" : 0,
+			"fadeintime" : 0.10000000000000001,
+			"fadeouttime" : 0.10000000000000001,
 			"id" : 7,
 			"name" : "alphafade"
 		},
@@ -100,19 +105,16 @@
 			"id" : 8,
 			"name" : "turbulence",
 			"scale" : 0.050000000000000003,
-			"speedmax" : 1.5,
-			"speedmin" : 0.75
+			"speedmax" : 4,
+			"speedmin" : 2,
+			"timescale" : -50
 		}
 	],
 	"renderer" : 
 	[
 		{
-			"flags" : 0,
 			"id" : 1,
-			"length" : 0.080000000000000002,
-			"name" : "ropetrail",
-			"segments" : 3,
-			"subdivision" : 1
+			"name" : "sprite"
 		}
 	],
 	"sequencemultiplier" : null,
