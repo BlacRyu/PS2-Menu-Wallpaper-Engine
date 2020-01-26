@@ -59,7 +59,7 @@
 			"distancemin" : 12,
 			"id" : 5,
 			"name" : "sphererandom",
-			"rate" : 60
+			"rate" : 120
 		}
 	],
 	"flags" : 1,
