@@ -5,10 +5,6 @@ Needs:
 
 Tasks:
 
-White noise
-	Multiple clips at various pitches
-		Volume fades in and out slowly over time
-
 Try clouds as a tessellated cylinder (or cone) with vertex offsets
 
 User Customization
@@ -27,6 +23,11 @@ User Customization
 
 
 Done:
+
+White noise
+	Multiple clips at various pitches
+		Volume fades in and out slowly over time
+		
 
 User Customization
 	Modes

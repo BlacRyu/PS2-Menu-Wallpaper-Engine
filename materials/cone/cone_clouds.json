@@ -1,0 +1,23 @@
+{
+	"passes" : 
+	[
+		{
+			"blending" : "normal",
+			"combos" : {},
+			"constantshadervalues" : 
+			{
+				"background_color" : 
+				{
+					"script" : null,
+					"user" : "schemecolor",
+					"value" : "0.6784313725490196 0.5411764705882353 1"
+				}
+			},
+			"cullmode" : "normal",
+			"depthtest" : "disabled",
+			"depthwrite" : "disabled",
+			"shader" : "ps2menu_cone",
+			"textures" : [ "util/noise" ]
+		}
+	]
+}

@@ -64,8 +64,8 @@
 	[
 		{
 			"id" : 2,
-			"max" : 8,
-			"min" : 8,
+			"max" : 7,
+			"min" : 7,
 			"name" : "sizerandom"
 		},
 		{

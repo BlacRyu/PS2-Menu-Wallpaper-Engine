@@ -14,7 +14,7 @@
 				}
 			},
 			"cullmode" : "normal",
-			"depthtest" : "disabled",
+			"depthtest" : "enabled",
 			"depthwrite" : "disabled",
 			"shader" : "ps2menu",
 			"textures" : [ "util/noise" ]

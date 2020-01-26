@@ -1,0 +1,8 @@
+{
+	"normals" : true,
+	"tangentspace" : true,
+	"materialdirectory" : "cone/",
+	"skins" : [{
+		"diffuse_0" : "cone_clouds_2"
+	}]
+}

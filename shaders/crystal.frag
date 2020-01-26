@@ -68,9 +68,13 @@ void main( )
     diffuse.rgb *= light;
 
     // Refraction
-    vec2 screenRefractionOffset = refract(viewDir, normal, 0.5) / v_ScreenPos.z;
+    vec2 screenRefractionOffset = refract(viewDir, normal, 0.5).xy / v_ScreenPos.z;
+#if HLSL
     vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
     refract = refract * 2.0 * (1.0 + emissive * 4.0);
+#else
+    vec3 refract = CAST3(0.5);
+#endif
 
     // "Reflection"
     float reflect = texSample2D(g_Texture0, normal.xy).r;

@@ -24,7 +24,7 @@
 		"camerashakespeed" : 3.0,
 		"clearcolor" : "0.125 0.098 0.204",
 		"clearenabled" : true,
-		"farz" : 1000.0,
+		"farz" : 10000.0,
 		"fov" : 53.0,
 		"nearz" : 1.0,
 		"orthogonalprojection" : null,
@@ -38,7 +38,8 @@
 			"copybackground" : true,
 			"id" : 16,
 			"image" : "models/ps2menu.json",
-			"locktransforms" : false,
+			"ledsource" : false,
+			"locktransforms" : true,
 			"name" : "Clouds",
 			"origin" : "0.000 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -51,47 +52,64 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 64,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"model" : "models/prism/prism.mdl",
 			"name" : "mainPrism",
-			"origin" : "0.216 0.000 0.000",
+			"origin" : "0.000 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
 			"scale" : "1.000 1.000 1.000",
 			"skin" : 1
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
 			"id" : 18,
+			"image" : "models/empty.json",
+			"ledsource" : false,
 			"locktransforms" : false,
-			"model" : "models/empty.mdl",
 			"name" : "Prisms (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 8;\nconst prismScale = new Vec3(1.0, 0.9, 1.0);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\nconst angleRigidity = 3.0; // Smoothing disabled due to gimbal issues\nlet targetAngles = new Vec3(0, 0, 0);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 20, 0);\n\n\n\n// Math Constants\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register asset\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\n//const prism2Asset = engine.registerAsset(\"models/prism2/prism2.mdl\");\n\n\n // Pseudo-enum\nconst modes = {\n\tCLOCK: {\n\t\tSMOOTH: \"clock.smooth\",\n\t\tCLICK: \"clock.click\"\n\t},\n\tAUDIO: \"audio\"\n};\n// User Properties\nlet mode = modes.CLOCK.SMOOTH;\n\n// Prism Object\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\nclass MainPrism { // head prism of the clock\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.getLayer(\"mainPrism\");\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tif (i === 0)\n\t\t\tprisms[i] = new MainPrism();\n\t\telse\n\t\t\tprisms[i] = new Prism();\n\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Parent object rotation\n\tlet currentDateTime = new Date();\n\tswitch (mode){\n\t\tcase modes.CLOCK.SMOOTH:\n\t\t\tlet yaw = -(currentDateTime.getSeconds() + currentDateTime.getMilliseconds() * .001) * 6;\n\t\t\tlet roll = -currentDateTime.getHours() % 12 * 30;\n\t\t\tlet clockTransform = new Mat4();\n\t\t\tclockTransform = clockTransform.multiply(Mat4.fromEuler(new Vec3(0, yaw, roll), \"ZYX\"));\n\t\t\ttargetAngles = clockTransform.toEuler(\"XYZ\");\n\t\t\tbreak;\n\t\tcase modes.CLOCK.CLICK:\n\t\t\ttargetAngles = new Vec3(0, currentDateTime.getSeconds() * 6, 0);\n\t\t\tbreak;\n\t\tdefault:\n\t\t\ttargetAngles = targetAngles.add( angleSpeed.multiply(engine.frametime) );\n\t\t\tbreak;\n\t}\n\tthisLayer.angles = targetAngles;//OMGVector.interpAngle(thisLayer.angles, targetAngles, Math.min(1.0, angleRigidity * engine.frametime));\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles, \"XYZ\"));\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\t//mode = userProperties.mode;\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nimport * as OMGVector from 'OMGVector';\nimport Mat4 from 'OMGMatrix';\n\n// Properties\nconst numPrisms = 12;\nconst prismDist = 7;\nconst prismScale = new Vec3(0.9, 0.9, 0.9);\n\n// Parent rotation\nconst angleSpeed = new Vec3(0, 10, 15);\nconst angleRigidity = 3.0; // Smoothing disabled due to gimbal issues\nlet targetAngles = new Vec3(0, 0, 0);\n\n// Prism local axis rotation\nconst prismAngleSpeed = new Vec3(0, 20, 0);\n\n\n\n// Math Constants\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register asset\nconst prismAsset = engine.registerAsset(\"models/prism/prism.mdl\");\n//const prism2Asset = engine.registerAsset(\"models/prism2/prism2.mdl\");\n\n\n // Pseudo-enum\nconst modes = {\n\tCLOCK: {\n\t\tSMOOTH: \"clock.smooth\",\n\t\tCLICK: \"clock.click\"\n\t},\n\tAUDIO: \"audio\"\n};\n// User Properties\nlet mode = modes.CLOCK.SMOOTH;\n\n// Prism Object\nclass Prism {\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.createLayer(prismAsset);\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\nclass MainPrism { // head prism of the clock\n\tconstructor(offset, angles){\n\t\tthis.layer = thisScene.getLayer(\"mainPrism\");\n\t\tthis.offset = offset;\n\t\tthis.angles = angles;\n\t}\n}\n// Array of prisms\nlet prisms = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\tfor (let i = 0; i < numPrisms; i++)\n\t{\n\t\tif (i === 0)\n\t\t\tprisms[i] = new MainPrism();\n\t\telse\n\t\t\tprisms[i] = new Prism();\n\n\t\tprisms[i].layer.scale = prismScale;\n\t\t\n\t\tlet angle = i * 360 / numPrisms;\n\t\tprisms[i].angles = new Vec3(0, 0, angle);\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"XYZ\"));\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(new Vec3(0, prismDist, 0)));\n\n\t\tprisms[i].offset = localTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Parent object rotation\n\tlet currentDateTime = new Date();\n\tswitch (mode){\n\t\tcase modes.CLOCK.SMOOTH:\n\t\t\tlet yaw = -(currentDateTime.getSeconds() + currentDateTime.getMilliseconds() * .001) * 6;\n\t\t\tlet roll = -currentDateTime.getHours() % 12 * 30;\n\t\t\tlet clockTransform = new Mat4();\n\t\t\tclockTransform = clockTransform.multiply(Mat4.fromEuler(new Vec3(0, yaw, roll), \"ZYX\"));\n\t\t\ttargetAngles = clockTransform.toEuler(\"XYZ\");\n\t\t\tbreak;\n\t\tcase modes.CLOCK.CLICK:\n\t\t\ttargetAngles = new Vec3(0, currentDateTime.getSeconds() * 6, 0);\n\t\t\tbreak;\n\t\tdefault:\n\t\t\ttargetAngles = targetAngles.add( angleSpeed.multiply(engine.frametime) );\n\t\t\tbreak;\n\t}\n\tthisLayer.angles = targetAngles;//OMGVector.interpAngle(thisLayer.angles, targetAngles, Math.min(1.0, angleRigidity * engine.frametime));\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\tparentTransform = parentTransform.multiply(Mat4.fromEuler(thisLayer.angles, \"XYZ\"));\n\t\n\t// Update Prisms\n\tfor (let i = 0; i < prisms.length; i++)\n\t{\n\t\tprisms[i].angles = prisms[i].angles.add(prismAngleSpeed.multiply(engine.frametime));\n\n\t\tlet prismTransform = new Mat4();\n\t\tprismTransform = prismTransform.multiply(parentTransform);\n\t\tprismTransform = prismTransform.multiply(Mat4.fromPosition(prisms[i].offset));\n\t\tprismTransform = prismTransform.multiply(Mat4.fromEuler(prisms[i].angles, \"ZYX\"));\n\n\t\tprisms[i].layer.angles = prismTransform.toEuler(\"ZYX\");\n\t\tprisms[i].layer.origin = prismTransform.toPosition();\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\t//mode = userProperties.mode;\n}\n",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
-			"scale" : "1.000 1.000 1.000"
+			"perspective" : false,
+			"scale" : "0.000 0.000 0.000",
+			"size" : "32.000 32.000",
+			"solid" : true,
+			"visible" : false
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
-			"id" : 143,
-			"locktransforms" : false,
-			"model" : "models/empty.mdl",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 18,
+			"image" : "models/empty.json",
+			"ledsource" : false,
+			"locktransforms" : true,
 			"name" : "Sounds (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\n// Register asset\nconst noiseAsset = engine.registerAsset(\"sounds/noise.ogg\");\nconst noiseLow200Asset = engine.registerAsset(\"sounds/noise_low_200.ogg\");\nconst noiseLow800Asset = engine.registerAsset(\"sounds/noise_low_800.ogg\");\nconst noiseHighAsset = engine.registerAsset(\"sounds/noise_high.ogg\");\n\nclass Range {\n\tconstructor(min, max){\n\t\tthis.min = min;\n\t\tthis.max = max;\n\t\tthis.value = this.rand();\n\t}\n\trand(){\n\t\treturn this.lerp(Math.random());\n\t}\n\tlerp(l){\n\t\treturn this.value = this.min + (this.max - this.min) * l;\n\t}\n\tget(){\n\t\treturn this.value;\n\t}\n\tset(value){\n\t\tthis.value = value;\n\t}\n}\n\nclass SoundLayer {\n\tconstructor(asset, mindelay, maxdelay, minduration, maxduration, minvolume, maxvolume){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.stop();\n\t\tthis.layer.volume = 0.0001;\n\t\tthis.delay = new Range(mindelay, maxdelay);\n\t\tthis.remainingDelay = 0;\n\t\tthis.duration = new Range(minduration, maxduration);\n\t\tthis.remainingDuration = 0;\n\t\tthis.volume = new Range(minvolume, maxvolume);\n\n\t\tthis.wasPlaying = false;\n\t}\n\treset(){\n\t\tthis.remainingDelay = this.delay.rand();\n\t\tthis.remainingDuration = this.duration.rand();\n\t\tthis.volume.value = this.volume.rand();\n\t}\n}\n\nclass SoundLayer2 {\n\tconstructor(asset){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.volume = 0.2;\n\t}\n}\n\n// Array of prisms\nlet layers = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\t//let myLayer = new SoundLayer2(noiseLow800Asset);\n\tlayers[0] = new SoundLayer(noiseLow200Asset, 0,  0, 10, 16,  0.2, 0.3);\n\tlayers[1] = new SoundLayer(noiseLow800Asset, 4,  8, 6, 10, 0.15, 0.2);\n\tlayers[2] = new SoundLayer(noiseHighAsset,   2,  8, 4,  8, 0.08, 0.15);\n\tlayers[3] = new SoundLayer(noiseAsset,       6, 10, 3,  5, 0.03, 0.1);\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tfor (let i = 0; i < layers.length; i++){\n\t\tif (layers[i].wasPlaying && !layers[i].layer.isPlaying())\n\t\t{\n\t\t\tlayers[i].reset();\n\t\t}\n\t\telse if (!layers[i].layer.isPlaying()){\n\t\t\tlayers[i].remainingDelay -= engine.frametime;\n\t\t\tif (layers[i].remainingDelay <= 0)\n\t\t\t\tlayers[i].layer.play();\n\t\t}\n\t\telse{\n\t\t\tlayers[i].remainingDuration -= engine.frametime;\n\t\t\tif (layers[i].remainingDuration <= 0){\n\t\t\t\tlayers[i].layer.stop();\n\t\t\t\tlayers[i].reset();\n\t\t\t}\n\t\t\telse{\n\t\t\t\tlet time = 1 - layers[i].remainingDuration / layers[i].duration.get();\n\t\t\t\tlayers[i].layer.volume = (1 - Math.abs(1 - 2 * time)) * layers[i].volume.get();\n\t\t\t}\n\t\t}\n\t}\n\treturn value;\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\n// Register asset\nconst noiseAsset = engine.registerAsset(\"sounds/noise.ogg\");\nconst noiseLow100Asset = engine.registerAsset(\"sounds/noise_low_100.ogg\");\nconst noiseLow200Asset = engine.registerAsset(\"sounds/noise_low_200.ogg\");\nconst noiseLow800Asset = engine.registerAsset(\"sounds/noise_low_800.ogg\");\nconst noiseHighAsset = engine.registerAsset(\"sounds/noise_high.ogg\");\n\nclass Range {\n\tconstructor(min, max){\n\t\tthis.min = min;\n\t\tthis.max = max;\n\t\tthis.value = this.rand();\n\t}\n\trand(){\n\t\treturn this.lerp(Math.random());\n\t}\n\tlerp(l){\n\t\treturn this.value = this.min + (this.max - this.min) * l;\n\t}\n\tget(){\n\t\treturn this.value;\n\t}\n\tset(value){\n\t\tthis.value = value;\n\t}\n}\n\nclass SoundLayer {\n\tconstructor(asset, mindelay, maxdelay, minduration, maxduration, minvolume, maxvolume){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.stop();\n\t\tthis.layer.volume = 0.0001;\n\t\tthis.delay = new Range(mindelay, maxdelay);\n\t\tthis.remainingDelay = 0;\n\t\tthis.duration = new Range(minduration, maxduration);\n\t\tthis.remainingDuration = 0;\n\t\tthis.volume = new Range(minvolume, maxvolume);\n\n\t\tthis.wasPlaying = false;\n\t}\n\treset(){\n\t\tthis.remainingDelay = this.delay.rand();\n\t\tthis.remainingDuration = this.duration.rand();\n\t\tthis.volume.value = this.volume.rand();\n\t}\n}\n\nclass SoundLayer2 {\n\tconstructor(asset){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.volume = 0.2;\n\t}\n}\n\n// Array of prisms\nlet layers = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\t// asset,  mindelay, maxdelay,  minduration, maxduration,  minvolume, maxvolume\n\tlayers[0] = new SoundLayer(noiseLow100Asset,  0,  0,  16, 20,   0.2, 0.25);\n\tlayers[1] = new SoundLayer(noiseLow200Asset,  2,  6,  10, 16,  0.18, 0.3);\n\tlayers[2] = new SoundLayer(noiseLow800Asset,  4, 12,   6, 10,  0.15, 0.2);\n\tlayers[3] = new SoundLayer(noiseHighAsset,    6, 18,   4,  8,  0.08, 0.15);\n\tlayers[4] = new SoundLayer(noiseAsset,        8, 24,   3,  5,  0.03, 0.1);\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tfor (let i = 0; i < layers.length; i++){\n\t\tif (layers[i].wasPlaying && !layers[i].layer.isPlaying())\n\t\t{\n\t\t\tlayers[i].reset();\n\t\t}\n\t\telse if (!layers[i].layer.isPlaying()){\n\t\t\tlayers[i].remainingDelay -= engine.frametime;\n\t\t\tif (layers[i].remainingDelay <= 0)\n\t\t\t\tlayers[i].layer.play();\n\t\t}\n\t\telse{\n\t\t\tlayers[i].remainingDuration -= engine.frametime;\n\t\t\tif (layers[i].remainingDuration <= 0){\n\t\t\t\tlayers[i].layer.stop();\n\t\t\t\tlayers[i].reset();\n\t\t\t}\n\t\t\telse{\n\t\t\t\tlet time = 1 - layers[i].remainingDuration / layers[i].duration.get();\n\t\t\t\ttime = WEMath.smoothStep(0, 1, (1 - Math.abs(1 - 2 * time)));\n\t\t\t\tlayers[i].layer.volume = time * layers[i].volume.get();\n\t\t\t\t// keep volume above 0 to reduce popping\n\t\t\t\tlayers[i].layer.volume = Math.max(0.01, layers[i].layer.volume);\n\t\t\t}\n\t\t}\n\t}\n\treturn value;\n}\n",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
-			"scale" : "1.000 1.000 1.000"
+			"perspective" : false,
+			"scale" : "0.000 0.000 0.000",
+			"size" : "32.000 32.000",
+			"solid" : true,
+			"visible" : false
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
-			"id" : 39,
-			"locktransforms" : false,
-			"model" : "models/empty.mdl",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 18,
+			"image" : "models/empty.json",
+			"ledsource" : false,
+			"locktransforms" : true,
 			"name" : "Orbs (script)",
 			"origin" : 
 			{
@@ -99,7 +117,11 @@
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
-			"scale" : "1.000 1.000 1.000"
+			"perspective" : false,
+			"scale" : "0.000 0.000 0.000",
+			"size" : "32.000 32.000",
+			"solid" : true,
+			"visible" : false
 		},
 		{
 			"alpha" : 0.89999997615814209,
@@ -147,6 +169,7 @@
 			"font" : "fonts/NimbusSanL-Reg.ttf",
 			"horizontalalign" : "left",
 			"id" : 48,
+			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Current Date",
 			"opaquebackground" : false,
@@ -215,6 +238,7 @@
 			"font" : "fonts/NimbusSanL-Reg.ttf",
 			"horizontalalign" : "right",
 			"id" : 19,
+			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Current Time",
 			"opaquebackground" : false,
@@ -272,7 +296,8 @@
 			],
 			"id" : 63,
 			"image" : "models/util/fullscreenlayer.json",
-			"locktransforms" : false,
+			"ledsource" : false,
+			"locktransforms" : true,
 			"name" : "Film Grain",
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
@@ -292,7 +317,7 @@
 				},
 				"id" : 41
 			},
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "particles",
 			"origin" : "0.000 0.000 -40.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -313,7 +338,7 @@
 				},
 				"id" : 112
 			},
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "particles2",
 			"origin" : "0.000 0.000 -40.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -324,7 +349,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 49,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"maxtime" : 5.0,
 			"mintime" : 1.0,
 			"muteineditor" : false,
@@ -334,8 +359,8 @@
 			"playbackmode" : "loop",
 			"scale" : "1.000 1.000 1.000",
 			"sound" : [ "sounds/silence.ogg" ],
-			"startsilent" : false,
-			"volume" : 0.0
+			"startsilent" : true,
+			"volume" : 0.0099999997764825821
 		}
 	]
 }

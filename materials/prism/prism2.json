@@ -26,7 +26,7 @@
 					"value" : "0.47843137254901963 0.3333333333333333 0.7803921568627451"
 				}
 			},
-			"cullmode" : "nocull",
+			"cullmode" : "normal",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
 			"shader" : "crystal"
