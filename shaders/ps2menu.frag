@@ -1,13 +1,15 @@
 varying vec2 v_TexCoord;
 varying vec4 v_Position;
 
-uniform float     g_Time;                // Application time, starts with 0
+uniform float     g_Time;
 uniform vec2 g_TexelSize;
 uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_noise","default":"util/noise"}
 uniform vec3 g_BackgroundColor; // {"material":"background_color","default":"0.68 0.54 1.0","type":"color"}
+uniform float g_FOV; // {"material":"FOV","default":"53"}
+uniform float g_Center; // {"material":"Center","default":"0.4"}
 
 #define ZOOM 0.65 // 1.0 is neutral
-#define PERSPECTIVE 0.35 // 0 is neutral
+//#define PERSPECTIVE 0.35 // 0 is neutral
 #define TIMESCALE 0.4
 #define MINBRIGHTNESS 0.7
 #define MAXBRIGHTNESS 1.0
@@ -41,11 +43,15 @@ void main( )
     
     // Normalized pixel coordinates (from -1 to 1)
     vec2 p = v_Position.xy / v_Position.w;
-    p.x *= g_TexelSize.y / g_TexelSize.x;
     
     // Adjust Center
-    p += vec2(.25, 0.);
-    p *= (1.0 - PERSPECTIVE) + length(p) * PERSPECTIVE;
+    float fov = g_FOV * -0.02 + 1.4;
+    p += vec2(-2 * g_Center + 1, 0.0);
+
+    float aspectRatio = g_TexelSize.y / g_TexelSize.x;
+    p.x *= aspectRatio;
+
+    p *= (1.0 - fov) + length(p) * fov;
     p *= ZOOM;
     
     // Cylindrical Tunnel

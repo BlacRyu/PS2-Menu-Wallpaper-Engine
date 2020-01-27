@@ -1,11 +1,24 @@
 {
+	"approved" : true,
 	"contentrating" : "Everyone",
-	"description" : "Recreation of the background menu graphics from Playstation 2.\r\n\r\n\r\nTags: crystal prism orb scene 3D white noise soothing soft waves retro abstract clock time date shader clouds tunnel menu bios settings playstation ps2",
+	"description" : "My attempt to recreate the background from the Playstation 2 system menu from scratch as a 3D scene. The glowing prism represents the hour hand of the clock, and the glow fills up based on the current minute. The prisms do one full rotation per minute. There is soft white noise in the background making it a good wallpaper for relaxing and meditation.\r\n\r\n\r\n\r\n\r\n\r\nTags: crystals prisms orbs 3D scene white noise soothing soft waves retro abstract clock time date text shaders models clouds tunnel menu bios settings playstation ps2 relaxing soothing nostalgia customizable colors purple blue turquoise",
 	"file" : "scene.json",
 	"general" : 
 	{
 		"properties" : 
 		{
+			"center" : 
+			{
+				"fraction" : true,
+				"max" : 1,
+				"min" : 0,
+				"order" : 108,
+				"precision" : 2,
+				"step" : 0.010000000000000011,
+				"text" : "Center",
+				"type" : "slider",
+				"value" : 0.41999999999999998
+			},
 			"clock_24_hour" : 
 			{
 				"condition" : "show_clock_text.value == true",
@@ -25,6 +38,18 @@
 				"text" : "Film Grain",
 				"type" : "slider",
 				"value" : 0.25
+			},
+			"fov" : 
+			{
+				"fraction" : true,
+				"max" : 90,
+				"min" : 30,
+				"order" : 107,
+				"precision" : 2,
+				"step" : 0.10000000000000001,
+				"text" : "FOV",
+				"type" : "slider",
+				"value" : 53
 			},
 			"mode" : 
 			{
@@ -68,7 +93,7 @@
 				"order" : 103,
 				"text" : "Show Clock Text",
 				"type" : "bool",
-				"value" : true
+				"value" : false
 			},
 			"text_size" : 
 			{
@@ -87,8 +112,8 @@
 	},
 	"preview" : "preview.gif",
 	"tags" : [ "Game" ],
-	"title" : "Playstation 2 Settings Menu",
+	"title" : "Playstation 2 Clock",
 	"type" : "scene",
-	"visibility" : "private",
+	"visibility" : "public",
 	"workshopid" : "1979606285"
 }

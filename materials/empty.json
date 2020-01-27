@@ -7,7 +7,7 @@
 			"depthtest" : "enabled",
 			"depthwrite" : "disabled",
 			"shader" : "genericimage",
-			"textures" : [ "util/black" ]
+			"textures" : [ null ]
 		}
 	]
 }

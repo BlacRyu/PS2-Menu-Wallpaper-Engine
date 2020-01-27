@@ -6,6 +6,16 @@
 			"combos" : {},
 			"constantshadervalues" : 
 			{
+				"Center" : 
+				{
+					"user" : "center",
+					"value" : 0.40000000000000002
+				},
+				"FOV" : 
+				{
+					"user" : "fov",
+					"value" : 53
+				},
 				"background_color" : 
 				{
 					"script" : null,
