@@ -2,8 +2,8 @@
 	"normals" : true,
 	"tangentspace" : true,
 	"skins": [{
-		"diffuse_0": "prism"
+		"diffuse_0": "prism_back"
 	}, {
-		"diffuse_0": "prism_main"
+		"diffuse_0": "prism_main_back"
 	}]
 }

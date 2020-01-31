@@ -23,7 +23,7 @@
 			{
 				"condition" : "show_clock_text.value == true",
 				"order" : 105,
-				"text" : "Clock 24-hour",
+				"text" : "- Clock 24-hour",
 				"type" : "bool",
 				"value" : false
 			},
@@ -104,7 +104,7 @@
 				"order" : 104,
 				"precision" : 2,
 				"step" : 1,
-				"text" : "Text Size",
+				"text" : "- Text Size",
 				"type" : "slider",
 				"value" : 35
 			}

@@ -1,9 +1,10 @@
 Needs:
 	Send uniform parameters to individual instances of models/materials
-	Access Vertex Colors or second UV in shader
 
 
 Tasks:
+
+Optionally rotate scene slightly based on mouse movement.
 
 Try clouds as a tessellated cylinder (or cone) with vertex offsets
 
@@ -12,6 +13,9 @@ User Customization
 		Audio-responsive mode
 			Prisms light up based on audio channels
 			? Global screenshake / fov-jolt based on jumps in overall amplitude
+		Orbs-only mode
+			Background and prisms fade to black
+
 
 
 

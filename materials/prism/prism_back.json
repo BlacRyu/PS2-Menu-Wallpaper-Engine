@@ -2,7 +2,7 @@
 	"passes" : 
 	[
 		{
-			"blending" : "additive",
+			"blending" : "normal",
 			"combos" : {},
 			"constantshadervalues" : 
 			{
@@ -28,7 +28,7 @@
 			"cullmode" : "normal",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
-			"shader" : "crystal"
+			"shader" : "crystal_back"
 		}
 	]
 }

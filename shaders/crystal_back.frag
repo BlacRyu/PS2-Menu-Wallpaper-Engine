@@ -48,16 +48,16 @@ void main( )
     // Lighting
     float rim = 1.0 - max(0.0,dot(viewDir, normal));
     float emissive = smoothstep(v_Height * 0.95, v_Height * 0.95 + 0.5, g_Light) * 0.5;
-    emissive += rim; // rim light
-    emissive += step(0, g_Light) * 0.25; // Make the primary crystal glow all over
+    emissive += rim * 1.75; // rim light
+    //emissive += step(0, g_Light) * 0.3; // Make the primary crystal glow all over
     vec3 light = v_LightAmbientColor;
     diffuse.rgb *= light;
 
     // Refraction
-    vec2 screenRefractionOffset = refract( viewDir, normal, 0.5 ).xy / v_ScreenPos.z;
+    vec2 screenRefractionOffset = refract(viewDir, normal, 0.5).xy / v_ScreenPos.z;
 #if HLSL
-    vec3 refract = texSample2D( g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset ).rgb;
-    refract = refract * 2.0 * (0.75 + emissive * 4.0);
+    vec3 refract = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset).rgb;
+    refract = refract * (0.75 + emissive * 2.0);
 #else
     vec3 refract = CAST3(0.5);
 #endif
@@ -66,7 +66,7 @@ void main( )
     float reflect = texSample2D( g_Texture0, normal.xy + CAST2(v_Height*0.002) ).r;
     reflect *= reflect;
     reflect *= reflect;
-    reflect *= reflect * 0.6;
+    reflect *= reflect * 0.25;
 
     vec3 finalColor = mix(refract, diffuse.rgb, diffuse.r * .2); // blend between diffuse and (refracted) scene
     float tintLerp = abs(mod(g_Time / colorPeriod, 1.0) * 2.0 - 1.0);
