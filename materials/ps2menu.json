@@ -6,6 +6,12 @@
 			"combos" : {},
 			"constantshadervalues" : 
 			{
+				"Alpha" : 
+				{
+					"script" : "'use strict';\n\n// ps2menu\n\n/**\n * @param {Number} value (for property 'Alpha')\n */\nexport function update(value) {\n\treturn Math.max(0.1, shared.fade);\n}\n",
+					"user" : null,
+					"value" : 1
+				},
 				"Center" : 
 				{
 					"user" : "center",

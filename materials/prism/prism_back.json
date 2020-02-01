@@ -6,14 +6,16 @@
 			"combos" : {},
 			"constantshadervalues" : 
 			{
-				"Alpha" : 1,
+				"Alpha" : 
+				{
+					"script" : "'use strict';\n\n// prism_back\n\n/**\n * @param {Number} value (for property 'Alpha')\n */\nexport function update(value) {\n\treturn shared.fade;\n}\n",
+					"value" : 1
+				},
 				"Light" : 
 				{
 					"user" : null,
 					"value" : -1
 				},
-				"Metal" : 0,
-				"Rough" : 0,
 				"ui_editor_properties_color_end" : 
 				{
 					"user" : "prism_gradient_2",

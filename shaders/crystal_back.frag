@@ -5,6 +5,7 @@
 #endif
 
 uniform float g_Light; // {"material":"Light","default":0,"range":[0,1]}
+uniform float g_FadeAlpha; // {"material":"Alpha","default":1,"range":[0,1]}
 
 uniform float g_Time;
 uniform vec3 g_Color1; // {"material":"ui_editor_properties_color_start", "type":"color", "default":"1.0 0.25 1.0"}
@@ -73,5 +74,8 @@ void main( )
     finalColor *= mix(g_Color1, g_Color2, tintLerp); // tint color by blending two input colors over time
     finalColor = finalColor + reflect; // add "reflections"
     
-    gl_FragColor = vec4(finalColor, 1.0);
+    vec3 sceneColor = texSample2D(g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y)).rgb;
+    float alpha = clamp(g_FadeAlpha, 0.0, 1.0);
+
+    gl_FragColor = vec4(mix(sceneColor, finalColor, alpha), 1.0);
 }

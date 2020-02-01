@@ -12,7 +12,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 108,
+				"order" : 107,
 				"precision" : 2,
 				"step" : 0.010000000000000011,
 				"text" : "Center",
@@ -21,8 +21,8 @@
 			},
 			"clock_24_hour" : 
 			{
-				"condition" : "show_clock_text.value == true",
-				"order" : 105,
+				"condition" : "mode.value == \"clock\" && show_clock_text.value == true",
+				"order" : 103,
 				"text" : "- Clock 24-hour",
 				"type" : "bool",
 				"value" : false
@@ -32,7 +32,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 106,
+				"order" : 108,
 				"precision" : 2,
 				"step" : 0.050000000000000003,
 				"text" : "Film Grain",
@@ -44,7 +44,7 @@
 				"fraction" : true,
 				"max" : 90,
 				"min" : 30,
-				"order" : 107,
+				"order" : 106,
 				"precision" : 2,
 				"step" : 0.10000000000000001,
 				"text" : "FOV",
@@ -53,29 +53,33 @@
 			},
 			"mode" : 
 			{
-				"condition" : "false",
+				"condition" : "",
 				"options" : 
 				[
 					{
 						"label" : "Clock",
-						"value" : "clock.smooth"
+						"value" : "clock"
+					},
+					{
+						"label" : "Orbs only",
+						"value" : "orbs"
 					}
 				],
-				"order" : 102,
+				"order" : 100,
 				"text" : "Mode",
 				"type" : "combo",
-				"value" : "clock.smooth"
+				"value" : "clock"
 			},
 			"prism_gradient_1" : 
 			{
-				"order" : 100,
+				"order" : 104,
 				"text" : "Prism color 1",
 				"type" : "color",
 				"value" : "0.5176470588235295 0.5098039215686274 0.9098039215686274"
 			},
 			"prism_gradient_2" : 
 			{
-				"order" : 101,
+				"order" : 105,
 				"text" : "Prism color 2",
 				"type" : "color",
 				"value" : "0.30196078431372547 0.8823529411764706 0.6509803921568628"
@@ -89,21 +93,21 @@
 			},
 			"show_clock_text" : 
 			{
-				"condition" : "true && mode.value == \"clock.smooth\"",
-				"order" : 103,
+				"condition" : "mode.value == \"clock\"",
+				"order" : 101,
 				"text" : "Show Clock Text",
 				"type" : "bool",
 				"value" : false
 			},
 			"text_size" : 
 			{
-				"condition" : "show_clock_text.value == true",
+				"condition" : "mode.value == \"clock\" && show_clock_text.value == true",
 				"fraction" : true,
 				"max" : 80,
 				"min" : 10,
-				"order" : 104,
+				"order" : 102,
 				"precision" : 2,
-				"step" : 1,
+				"step" : 0.10000000000000001,
 				"text" : "- Text Size",
 				"type" : "slider",
 				"value" : 35

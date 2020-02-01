@@ -7,6 +7,7 @@ uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_noise","defau
 uniform vec3 g_BackgroundColor; // {"material":"background_color","default":"0.68 0.54 1.0","type":"color"}
 uniform float g_FOV; // {"material":"FOV","default":"53"}
 uniform float g_Center; // {"material":"Center","default":"0.4"}
+uniform float g_FadeAlpha; // {"material":"Alpha","default":1,"range":[0,1]}
 
 #define ZOOM 0.65 // 1.0 is neutral
 //#define PERSPECTIVE 0.35 // 0 is neutral
@@ -82,5 +83,5 @@ void main( )
     
     vec3 col = g_BackgroundColor * noise * min(1.0, (.1 + .9*r)) * 0.6;
     
-    gl_FragColor  = vec4(col, 1.0);
+    gl_FragColor  = vec4(col * g_FadeAlpha, 1.0);
 }
