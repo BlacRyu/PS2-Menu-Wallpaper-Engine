@@ -42,7 +42,7 @@
 			"id" : 115,
 			"image" : "models/empty.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "OMGMatrix (shared script module)",
 			"origin" : "-5.500 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -63,7 +63,7 @@
 			"id" : 117,
 			"image" : "models/empty.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "OMGVector (shared script module)",
 			"origin" : "-5.500 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -84,7 +84,7 @@
 			"id" : 113,
 			"image" : "models/empty.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Camera (script)",
 			"origin" : "-5.500 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -105,7 +105,7 @@
 			"id" : 16,
 			"image" : "models/ps2menu.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Clouds",
 			"origin" : "0.000 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
@@ -122,7 +122,7 @@
 			"id" : 12,
 			"image" : "models/empty.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Prisms (script)",
 			"origin" : 
 			{
@@ -143,11 +143,11 @@
 			"id" : 14,
 			"image" : "models/empty.json",
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Orbs (script)",
 			"origin" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nlet OMGVector = shared.OMGVector;\nlet Mat4 = shared.Mat4;\n\n// Properties\nconst numOrbs = 7;\nconst orbDist = 4.5;\n\n// Orb parent rotation (z rotation offset based on orb index)\nconst angleSpeed = new Vec3(0, 110, 90);\n\n\nlet center = 0.4;\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\n\n// Objects\nlet orbs = [];\n\n\n// Classes\nclass Orb {\n\tconstructor(offset){\n\t\tthis.layer = thisScene.createLayer(orbAsset);\n\t\tthis.offset = offset;\n\t}\n}\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < numOrbs; i++)\n\t{\n\t\torbs[i] = new Orb();\n\t\t\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\torbs[i].offset = new Vec3(0, orbDist, 0);\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tlet parentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tfor (let i = 0; i < orbs.length; i++)\n\t{\n\t\tlet angleZ = (i+1) * engine.runtime * 360. * sec2Min;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(orbs[i].offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\torbs[i].layer.origin = finalTransform.toPosition();\n\t}\n\treturn value;\n}\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet aspectRatio = (size.x / size.y);\n\tlet offset = 17 * aspectRatio * (2 * center - 1);\n\tthisLayer.origin = new Vec3(offset, 0, 0);\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.center != undefined){\n\t\tcenter = userProperties.center;\n\t\tresizeScreen(engine.screenResolution);\n\t}\n\t//mode = userProperties.mode;\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\nlet OMGVector = shared.OMGVector;\nlet Mat4 = shared.Mat4;\n\n// Properties\nconst numOrbs = 7;\nconst orbDist = 4.5;\n\n// Orb parent rotation (z rotation offset based on orb index)\nconst angleSpeed = new Vec3(0, 110, 90);\n\n\nlet center = 0.4;\n\n\n// Consts\nconst sec2Min = 0.016666666667;\nconst deg2rad = WEMath.deg2rad;\n\n// Register assets and their children\nconst orbAsset = engine.registerAsset(\"particles/orb.json\");\n\tengine.registerAsset(\"orbTrail.json\");\n\tengine.registerAsset(\"orbGlow.json\");\n\n\n// Objects\nlet orbs = [];\nlet parentTransform = new Mat4();\n\n\n// Classes\nclass Orb {\n\tconstructor(offset) {\n\t\tthis.layer = thisScene.createLayer(orbAsset);\n\t\tthis.offset = offset;\n\t}\n\n\tupdate(index, seconds) {\n\t\tlet angleZ = (index+1) * seconds * 360. * sec2Min;\n\t\tlet finalAngles = thisLayer.angles.add(new Vec3(0, 0, angleZ));\n\t\tlet finalParentTransform = parentTransform.multiply(Mat4.fromEuler(finalAngles), \"XYZ\");\n\n\t\tlet localTransform = new Mat4();\n\t\tlocalTransform = localTransform.multiply(Mat4.fromPosition(this.offset));\n\n\t\tlet finalTransform = finalParentTransform.multiply(localTransform);\n\n\t\tthis.layer.origin = finalTransform.toPosition();\n\t}\n}\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tparentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tlet currentTime = new Date();\n\tlet seconds = currentTime.getHours() * 3600 + currentTime.getMinutes() * 60 + currentTime.getSeconds() + currentTime.getMilliseconds() * 0.001;\n\n\tfor (let i = 0; i < numOrbs; i++) {\n\t\torbs[i] = new Orb(new Vec3(0, orbDist, 0));\n\t\t\n\t\torbs[i].update(i, seconds);\n\t}\n\treturn value;\n}\n\nexport function update(value) {\n\tthisLayer.angles = thisLayer.angles.add( angleSpeed.multiply(engine.frametime) );\n\tparentTransform = new Mat4();\n\tparentTransform = parentTransform.multiply(Mat4.fromPosition(thisLayer.origin));\n\n\tlet currentTime = new Date();\n\tlet seconds = currentTime.getHours() * 3600 + currentTime.getMinutes() * 60 + currentTime.getSeconds() + currentTime.getMilliseconds() * 0.001;\n\n\tfor (let i = 0; i < orbs.length; i++) {\n\t\torbs[i].update(i, seconds);\n\t}\n\treturn value;\n}\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet aspectRatio = (size.x / size.y);\n\tlet offset = 17 * aspectRatio * (2 * center - 1);\n\tthisLayer.origin = new Vec3(offset, 0, 0);\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.center != undefined) {\n\t\tcenter = userProperties.center;\n\t\tresizeScreen(engine.screenResolution);\n\t}\n\t//mode = userProperties.mode;\n}\n",
 				"value" : "-5.500 0.000 0.000"
 			},
 			"parallaxDepth" : "1.000 1.000",
@@ -160,7 +160,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 64,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"model" : "models/prism/prism_back.mdl",
 			"name" : "mainPrism_back",
 			"origin" : "0.000 0.000 0.000",
@@ -171,7 +171,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 104,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"model" : "models/prism/prism.mdl",
 			"name" : "mainPrism",
 			"origin" : "0.000 0.000 0.000",
@@ -251,7 +251,7 @@
 			"horizontalalign" : "left",
 			"id" : 48,
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Current Date",
 			"opaquebackground" : false,
 			"origin" : "-18.000 14.000 5.000",
@@ -324,7 +324,7 @@
 			"horizontalalign" : "right",
 			"id" : 19,
 			"ledsource" : false,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"name" : "Current Time",
 			"opaquebackground" : false,
 			"origin" : "14.000 10.000 15.000",
@@ -391,27 +391,6 @@
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
-			"id" : 52,
-			"instanceoverride" : 
-			{
-				"colorn" : 
-				{
-					"script" : "'use strict';\n\nlet particleColor = new Vec3(1, 1, 1);\n\n/**\n * @param {Vec3} value (for property 'colorn')\n */\nexport function update(value) {\n\treturn particleColor;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tparticleColor = userProperties.schemecolor.multiply(0.175);\n}\n",
-					"user" : null,
-					"value" : "0.23137254901960785 0.1843137254901961 0.3215686274509804"
-				},
-				"id" : 41
-			},
-			"locktransforms" : true,
-			"name" : "particles",
-			"origin" : "0.000 0.000 -40.000",
-			"parallaxDepth" : "1.000 1.000",
-			"particle" : "particles/particles.json",
-			"scale" : "1.000 1.000 1.000",
-			"visible" : false
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
 			"id" : 110,
 			"instanceoverride" : 
 			{
@@ -424,7 +403,7 @@
 				"id" : 112
 			},
 			"locktransforms" : true,
-			"name" : "particles2",
+			"name" : "particles",
 			"origin" : "0.000 0.000 -40.000",
 			"parallaxDepth" : "1.000 1.000",
 			"particle" : "particles/particles2.json",
@@ -450,7 +429,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 98,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"model" : "models/prism/prism.mdl",
 			"name" : "prism (fixes? a weird script error: \"createLayer cannot be called from global scope\")",
 			"origin" : "0.000 0.000 0.000",
@@ -460,7 +439,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 95,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"model" : "models/prism/prism_back.mdl",
 			"name" : "prism_back (fixes? a weird script error: \"createLayer cannot be called from global scope\")",
 			"origin" : "0.000 0.000 0.000",
@@ -470,7 +449,7 @@
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 130,
-			"locktransforms" : false,
+			"locktransforms" : true,
 			"maxtime" : 5.0,
 			"mintime" : 1.0,
 			"muteineditor" : true,
