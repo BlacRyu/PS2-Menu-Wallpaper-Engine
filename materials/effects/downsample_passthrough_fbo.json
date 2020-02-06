@@ -1,6 +1,6 @@
 {
 	"passes": [{
-		"shader": "effects/blur_downsample4",
+		"shader" : "passthrough",
 		"blending": "normal",
 		"depthtest": "disabled",
 		"depthwrite": "disabled",

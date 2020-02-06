@@ -14,8 +14,8 @@ const float colorPeriod = 20.0; // time in seconds to cycle from color 1 to 2 an
 
 uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_albedo","default":"util/clouds_256"}
 uniform sampler2D g_Texture1; // {"material":"ui_editor_properties_normal", "format":"normalmap", "combo":"NORMALMAP"}
-uniform sampler2D g_Texture2; // {"material":"ui_editor_properties_framebuffer","default":"_rt_FullFrameBuffer","hidden":true}
-uniform sampler2D g_Texture3; // {"material":"Reflection","default":"_rt_Reflection","hidden":true}
+uniform sampler2D g_Texture2; // {"material":"ui_editor_properties_framebuffer","default":"_rt_FullFrameBuffer"}
+uniform sampler2D g_Texture3; // {"material":"Reflection","default":"_rt_Reflection"}
 
 #ifndef NORMALMAP
 varying vec3 v_Normal;

@@ -94,7 +94,7 @@
 			"solid" : true,
 			"visible" : 
 			{
-				"script" : "'use strict';\nlet OMGVector = shared.OMGVector;\n\n// Eye-balled positions at various FoVs\nconst posAt30fov = new Vec3(0, 0, 64.0);\nconst posAt40fov = new Vec3(0, 0, 50.0);\nconst posAt53fov = new Vec3(0, 0, 38.0);\nconst posAt90fov = new Vec3(0, 0, 20.0);\nconst posAtStart = new Vec3(0, 0, 250.0);\n\nlet fov = 53;\nlet position = new Vec3(posAtStart);\nlet targetPosition = new Vec3(posAt53fov);\nlet velocity = new Vec3(0, 0, 0);\nlet accel = 100;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\nlet Mode = shared.Mode = {\n\tCLOCK: \"clock\",\n\tAUDIO: \"audio\",\n\tORBS: \"orbs\"\n};\nshared.mode = shared.Mode.CLOCK;\n\n\n// Scene fade transition (to/from orb mode)\nshared.transitionTime = 3.0;\nshared.fade = -1.0;\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\n\treturn value;\n}\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function update(value) {\n\tlet dt = Math.min(engine.frametime, 0.05);\n\n\tlet distance = targetPosition.add(position.multiply(-1));\n\tif (OMGVector.magnitude(distance) > 0.1){\n\t\tlet targetVelocity = distance;\n\t\tlet velocityDelta = targetVelocity.add(velocity.multiply(-1));\n\n\t\t//velocity += (targetVelocity - velocity) * accel * dt;\n\t\tvelocity = velocity.add(OMGVector.normalize( velocityDelta ).multiply(Math.min(OMGVector.magnitude(velocityDelta), accel * dt)));\n\n\t\t// position += velocity * dt\n\t\tposition = position.add(velocity.multiply(dt));\n\n\t\tlet cameraTransform = thisScene.getCameraTransforms();\n\t\tcameraTransform.eye = position;\n\t\tthisScene.setCameraTransforms(cameraTransform);\n\t}\n\t\n\t// Scene fade (Orbs mode transition)\n\tif (shared.mode === Mode.ORBS){\n\t\tif (shared.fade > 0)\n\t\t\tshared.fade = Math.max(0.0, shared.fade - dt / shared.transitionTime);\n\t}\n\telse{\n\t\tif (shared.fade < 1)\n\t\t\tshared.fade = Math.min(1.0, shared.fade + dt / shared.transitionTime);\n\t}\n\n\treturn value;\n}\n\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.mode != undefined){\n\t\tshared.mode = userProperties.mode;\n\t}\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t}\n\n\tupdateCameraTarget()\n\t\n\tif (engine.runtime < 0.1 && shared.mode === Mode.ORBS){\n\t\tshared.fade = 0;\n\t}\n}\n\nfunction updateCameraTarget(){\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\ttargetPosition = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\ttargetPosition = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\ttargetPosition = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n\n\tif (shared.mode === Mode.ORBS){\n\t\ttargetPosition = targetPosition.multiply(0.65);\n\t}\n}",
+				"script" : "'use strict';\nlet OMGVector = shared.OMGVector;\n\n// Eye-balled positions at various FoVs\nconst posAt30fov = new Vec3(0, 0, 64.0);\nconst posAt40fov = new Vec3(0, 0, 50.0);\nconst posAt53fov = new Vec3(0, 0, 38.0);\nconst posAt90fov = new Vec3(0, 0, 20.0);\nconst posAtStart = new Vec3(0, 0, 250.0);\n\nlet fov = 53;\nlet position = new Vec3(posAtStart);\nlet targetPosition = new Vec3(posAt53fov);\nlet velocity = new Vec3(0, 0, 0);\nlet accel = 100;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\nlet Mode = shared.Mode = {\n\tCLOCK: \"clock\",\n\tAUDIO: \"audio\",\n\tORBS: \"orbs\"\n};\nshared.mode = shared.Mode.CLOCK;\n\n\n// Scene fade transition (to/from orb mode)\nshared.transitionTime = 3.0;\nshared.fade = -1.0;\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\treturn value;\n}\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function update(value) {\n\tlet dt = Math.min(engine.frametime, 0.05);\n\n\tlet distance = targetPosition.add(position.multiply(-1));\n\tif (OMGVector.magnitude(distance) > 0.1){\n\t\tlet targetVelocity = distance;\n\t\tlet velocityDelta = targetVelocity.add(velocity.multiply(-1));\n\n\t\t//velocity += (targetVelocity - velocity) * accel * dt;\n\t\tvelocity = velocity.add(OMGVector.normalize( velocityDelta ).multiply(Math.min(OMGVector.magnitude(velocityDelta), accel * dt)));\n\n\t\t// position += velocity * dt\n\t\tposition = position.add(velocity.multiply(dt));\n\n\t\tlet cameraTransform = thisScene.getCameraTransforms();\n\t\tcameraTransform.eye = position;\n\t\tthisScene.setCameraTransforms(cameraTransform);\n\t}\n\t\n\t// Scene fade (Orbs mode transition)\n\tif (shared.mode === Mode.ORBS){\n\t\tif (shared.fade > 0)\n\t\t\tshared.fade = Math.max(0.0, shared.fade - dt / shared.transitionTime);\n\t}\n\telse{\n\t\tif (shared.fade < 1)\n\t\t\tshared.fade = Math.min(1.0, shared.fade + dt / shared.transitionTime);\n\t}\n\n\treturn value;\n}\n\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.mode != undefined){\n\t\tshared.mode = userProperties.mode;\n\t}\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t}\n\n\tupdateCameraTarget()\n\t\n\tif (engine.runtime < 0.1 && shared.mode === Mode.ORBS){\n\t\tshared.fade = 0;\n\t}\n}\n\nfunction updateCameraTarget(){\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\ttargetPosition = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\ttargetPosition = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\ttargetPosition = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n\n\tif (shared.mode === Mode.ORBS){\n\t\ttargetPosition = targetPosition.multiply(0.65);\n\t}\n}",
 				"value" : false
 			}
 		},
@@ -245,6 +245,44 @@
 						}
 					],
 					"visible" : true
+				},
+				{
+					"file" : "effects/downsample2x/effect.json",
+					"id" : 84,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"id" : 85
+						},
+						{
+							"combos" : 
+							{
+								"TRANSFORM" : 1
+							},
+							"id" : 86
+						}
+					],
+					"visible" : false
+				},
+				{
+					"file" : "effects/downsample4x/effect.json",
+					"id" : 77,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"id" : 78
+						},
+						{
+							"combos" : 
+							{
+								"TRANSFORM" : 1
+							},
+							"id" : 79
+						}
+					],
+					"visible" : false
 				}
 			],
 			"font" : "fonts/NimbusSanL-Reg.ttf",
@@ -275,7 +313,7 @@
 			"visible" : 
 			{
 				"user" : "show_clock_text",
-				"value" : false
+				"value" : true
 			}
 		},
 		{
@@ -348,46 +386,8 @@
 			"visible" : 
 			{
 				"user" : "show_clock_text",
-				"value" : false
+				"value" : true
 			}
-		},
-		{
-			"colorBlendMode" : 0,
-			"copybackground" : true,
-			"effects" : 
-			[
-				{
-					"file" : "effects/filmgrain/effect.json",
-					"id" : 68,
-					"name" : "",
-					"passes" : 
-					[
-						{
-							"constantshadervalues" : 
-							{
-								"scale" : 10,
-								"strength" : 
-								{
-									"user" : "film_grain",
-									"value" : 0.38
-								}
-							},
-							"id" : 70,
-							"textures" : [ null, "util/noise" ]
-						}
-					],
-					"visible" : true
-				}
-			],
-			"id" : 63,
-			"image" : "models/util/fullscreenlayer.json",
-			"ledsource" : false,
-			"locktransforms" : true,
-			"name" : "Film Grain",
-			"parallaxDepth" : "1.000 1.000",
-			"perspective" : false,
-			"solid" : true,
-			"visible" : true
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
@@ -461,6 +461,134 @@
 			"sound" : [ "sounds/startup.ogg" ],
 			"startsilent" : false,
 			"volume" : 0.40000000596046448
+		},
+		{
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/filmgrain/effect.json",
+					"id" : 68,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"constantshadervalues" : 
+							{
+								"scale" : 10,
+								"strength" : 
+								{
+									"user" : "film_grain",
+									"value" : 0.38
+								}
+							},
+							"id" : 70,
+							"textures" : [ null, "util/noise" ]
+						}
+					],
+					"visible" : true
+				}
+			],
+			"id" : 63,
+			"image" : "models/util/fullscreenlayer.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Film Grain",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"solid" : true,
+			"visible" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
+				"value" : false
+			}
+		},
+		{
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/downsample2x/effect.json",
+					"id" : 145,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"id" : 148
+						},
+						{
+							"combos" : 
+							{
+								"TRANSFORM" : 1
+							},
+							"id" : 149
+						}
+					],
+					"visible" : 
+					{
+						"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif(userProperties.resolution_scale != undefined){\n\t\tthisLayer.visible = (userProperties.resolution_scale === \"half\");\n\t}\n}\n",
+						"value" : true
+					}
+				}
+			],
+			"id" : 141,
+			"image" : "models/util/fullscreenlayer.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Downsample 2x",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"solid" : true,
+			"visible" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
+				"value" : false
+			}
+		},
+		{
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"effects" : 
+			[
+				{
+					"file" : "effects/downsample4x/effect.json",
+					"id" : 188,
+					"name" : "",
+					"passes" : 
+					[
+						{
+							"id" : 189
+						},
+						{
+							"combos" : 
+							{
+								"TRANSFORM" : 1
+							},
+							"id" : 190
+						}
+					],
+					"visible" : 
+					{
+						"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif(userProperties.resolution_scale != undefined){\n\t\tthisLayer.visible = (userProperties.resolution_scale == \"quarter\");\n\t}\n}\n",
+						"value" : true
+					}
+				}
+			],
+			"id" : 176,
+			"image" : "models/util/fullscreenlayer.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Downsample 4x",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"solid" : true,
+			"visible" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
+				"value" : false
+			}
 		}
 	]
 }

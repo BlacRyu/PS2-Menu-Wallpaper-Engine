@@ -12,7 +12,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 107,
+				"order" : 108,
 				"precision" : 2,
 				"step" : 0.010000000000000011,
 				"text" : "Center",
@@ -22,7 +22,7 @@
 			"clock_24_hour" : 
 			{
 				"condition" : "mode.value == \"clock\" && show_clock_text.value == true",
-				"order" : 103,
+				"order" : 104,
 				"text" : "- Clock 24-hour",
 				"type" : "bool",
 				"value" : false
@@ -32,7 +32,7 @@
 				"fraction" : true,
 				"max" : 1,
 				"min" : 0,
-				"order" : 108,
+				"order" : 109,
 				"precision" : 2,
 				"step" : 0.050000000000000003,
 				"text" : "Film Grain",
@@ -44,7 +44,7 @@
 				"fraction" : true,
 				"max" : 90,
 				"min" : 30,
-				"order" : 106,
+				"order" : 107,
 				"precision" : 2,
 				"step" : 0.10000000000000001,
 				"text" : "FOV",
@@ -72,17 +72,39 @@
 			},
 			"prism_gradient_1" : 
 			{
-				"order" : 104,
+				"order" : 105,
 				"text" : "Prism color 1",
 				"type" : "color",
 				"value" : "0.5176470588235295 0.5098039215686274 0.9098039215686274"
 			},
 			"prism_gradient_2" : 
 			{
-				"order" : 105,
+				"order" : 106,
 				"text" : "Prism color 2",
 				"type" : "color",
 				"value" : "0.30196078431372547 0.8823529411764706 0.6509803921568628"
+			},
+			"resolution_scale" : 
+			{
+				"options" : 
+				[
+					{
+						"label" : "Full",
+						"value" : "full"
+					},
+					{
+						"label" : "Half",
+						"value" : "half"
+					},
+					{
+						"label" : "Quarter",
+						"value" : "quarter"
+					}
+				],
+				"order" : 101,
+				"text" : "Resolution Scale",
+				"type" : "combo",
+				"value" : "full"
 			},
 			"schemecolor" : 
 			{
@@ -94,10 +116,10 @@
 			"show_clock_text" : 
 			{
 				"condition" : "mode.value == \"clock\"",
-				"order" : 101,
+				"order" : 102,
 				"text" : "Show Clock Text",
 				"type" : "bool",
-				"value" : false
+				"value" : true
 			},
 			"text_size" : 
 			{
@@ -105,7 +127,7 @@
 				"fraction" : true,
 				"max" : 80,
 				"min" : 10,
-				"order" : 102,
+				"order" : 103,
 				"precision" : 2,
 				"step" : 0.10000000000000001,
 				"text" : "- Text Size",

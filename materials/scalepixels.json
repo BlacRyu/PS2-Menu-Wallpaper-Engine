@@ -1,0 +1,18 @@
+{
+	"passes" : 
+	[
+		{
+			"blending" : "translucent",
+			"combos" : {},
+			"constantshadervalues" : 
+			{
+				"pixel scale" : 1
+			},
+			"cullmode" : "nocull",
+			"depthtest" : "disabled",
+			"depthwrite" : "disabled",
+			"shader" : "scalepixels",
+			"textures" : [ "_rt_imageLayerComposite_143_a" ]
+		}
+	]
+}

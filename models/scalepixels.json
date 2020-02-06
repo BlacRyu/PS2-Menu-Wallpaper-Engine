@@ -1,0 +1,5 @@
+{
+	"material" : "materials/scalepixels.json",
+	"fullscreen" : true,
+	"passthrough" : false
+}

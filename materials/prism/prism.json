@@ -31,7 +31,8 @@
 			"cullmode" : "normal",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
-			"shader" : "crystal"
+			"shader" : "crystal",
+			"textures" : [ "util/clouds_256", null, "_rt_FullFrameBuffer", "_rt_Reflection" ]
 		}
 	]
 }

@@ -1,0 +1,45 @@
+{
+	"version" : 1,
+	"name" : "Downsample 4x",
+	"description" : "Lowers the resolution of the layer by a factor of 4",
+	"group" : "blur",
+	"passes" :
+	[
+		{
+			"material" : "materials/effects/downsample_passthrough_fbo.json",
+			"target" : "_rt_QuarterCompoBuffer1",
+			"bind" :
+			[
+				{
+					"name" : "previous",
+					"index" : 0
+				}
+			]
+		},
+		{
+			"material" : "materials/effects/downsample_passthrough.json",
+			"bind" :
+			[
+				{
+					"name" : "_rt_QuarterCompoBuffer1",
+					"index" : 0
+				}
+			]
+		}
+	],
+	"fbos" :
+	[
+		{
+			"name" : "_rt_QuarterCompoBuffer1",
+			"scale" : 4,
+			"format" : "rgba8888"
+		}
+	],
+	"dependencies" :
+	[
+		"materials/effects/downsample_passthrough.json",
+		"materials/effects/downsample_passthrough_fbo.json",
+		"shaders/effects/downsample_passthrough.frag",
+		"shaders/effects/downsample_passthrough.vert"
+	]
+}

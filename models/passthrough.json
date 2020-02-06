@@ -1,0 +1,6 @@
+{
+	"material" : "materials/passthrough.json",
+	"fullscreen" : false,
+	"passthrough" : true,
+	"autosize" : false
+}
