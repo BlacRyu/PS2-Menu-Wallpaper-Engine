@@ -1,22 +1,21 @@
 Needs:
+	Access child emitters through script.
 	Send uniform parameters to individual instances of models/materials
 
 
 Tasks:
 
-Optionally rotate scene slightly based on mouse movement.
+	Optionally rotate scene slightly based on mouse movement.
 
-Try clouds as a tessellated cylinder (or cone) with vertex offsets
+	Try clouds as a tessellated cylinder (or cone) with vertex offsets
 
-User Customization
-	Modes
-		Audio-responsive mode
-			Prisms light up based on audio channels
-			? Global screenshake / fov-jolt based on jumps in overall amplitude
-		Orbs-only mode
-			Background and prisms fade to black
-
-
+	User Customization
+		Modes
+			Audio-responsive mode
+				Prisms light up based on audio channels
+				? Global screenshake / fov-jolt based on jumps in overall amplitude
+			Orbs-only mode
+				Background and prisms fade to black
 
 
 
@@ -26,7 +25,17 @@ User Customization
 
 
 
-Done:
+
+
+===============================================================================
+Done
+===============================================================================
+
+
+Bugs:
+Stopping a particlesystem layer than playing it again doesn't resume the child emitters.
+
+
 
 White noise
 	Multiple clips at various pitches

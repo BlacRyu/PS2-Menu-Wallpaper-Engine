@@ -80,8 +80,8 @@
 	"operator" : 
 	[
 		{
-			"fadeintime" : 0,
-			"fadeouttime" : 0,
+			"fadeintime" : 0.050000000000000003,
+			"fadeouttime" : 0.050000000000000003,
 			"id" : 5,
 			"name" : "alphafade"
 		},

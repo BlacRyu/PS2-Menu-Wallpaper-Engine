@@ -24,8 +24,8 @@
 				},
 				"background_color" : 
 				{
-					"script" : null,
-					"user" : "schemecolor",
+					"script" : "'use strict';\n\nlet custom_colors = false;\nconst default_color = new Vec3(0.67, 0.54, 1);\nlet background_color = default_color.copy();\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.custom_colors != undefined)\n\t\tcustom_colors = userProperties.custom_colors;\n\tif (userProperties.schemecolor != undefined)\n\t\tbackground_color = userProperties.schemecolor;\n\n\tif (custom_colors)\n\t\tthisObject.background_color = background_color.copy();\n\telse\n\t\tthisObject.background_color = default_color.copy();\n}\n",
+					"user" : null,
 					"value" : "0.6784313725490196 0.5411764705882353 1"
 				}
 			},

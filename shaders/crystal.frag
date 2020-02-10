@@ -8,8 +8,8 @@ uniform float g_Light; // {"material":"Light","default":0,"range":[0,1]}
 uniform float g_FadeAlpha; // {"material":"Alpha","default":1,"range":[0,1]}
 
 uniform float g_Time;
-uniform vec3 g_Color1; // {"material":"ui_editor_properties_color_start", "type":"color", "default":"1.0 0.25 1.0"}
-uniform vec3 g_Color2; // {"material":"ui_editor_properties_color_end", "type":"color", "default":"0.25 1.0 1.0"}
+uniform vec3 g_Color1; // {"material":"start_color", "label":"ui_editor_properties_color_start", "type":"color", "default":"1.0 0.25 1.0"}
+uniform vec3 g_Color2; // {"material":"end_color", "label":"ui_editor_properties_color_end", "type":"color", "default":"0.25 1.0 1.0"}
 const float colorPeriod = 20.0; // time in seconds to cycle from color 1 to 2 and back
 
 uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_albedo","default":"util/clouds_256"}
