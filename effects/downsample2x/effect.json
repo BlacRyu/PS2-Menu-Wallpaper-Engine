@@ -3,6 +3,7 @@
 	"name" : "Downsample 2x",
 	"description" : "Lowers the resolution of the layer by a factor of 2",
 	"group" : "blur",
+	"preview" : "preview/project.json",
 	"passes" :
 	[
 		{

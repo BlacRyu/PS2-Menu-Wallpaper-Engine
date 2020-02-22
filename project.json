@@ -22,7 +22,7 @@
 				"min" : 0,
 				"order" : 111,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.025000000000000001,
 				"text" : "Center",
 				"type" : "slider",
 				"value" : 0.41999999999999998
@@ -50,7 +50,7 @@
 				"min" : 0,
 				"order" : 112,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.025000000000000001,
 				"text" : "Film Grain",
 				"type" : "slider",
 				"value" : 0.25
@@ -63,7 +63,7 @@
 				"min" : 30,
 				"order" : 110,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.5,
 				"text" : "FOV",
 				"type" : "slider",
 				"value" : 53
@@ -113,26 +113,16 @@
 			},
 			"resolution_scale" : 
 			{
-				"condition" : "advanced_settings.value === true",
-				"options" : 
-				[
-					{
-						"label" : "Full",
-						"value" : "full"
-					},
-					{
-						"label" : "Half",
-						"value" : "half"
-					},
-					{
-						"label" : "Quarter",
-						"value" : "quarter"
-					}
-				],
+				"condition" : "advanced_settings.value == true",
+				"fraction" : true,
+				"max" : 1,
+				"min" : 0.050000000000000003,
 				"order" : 109,
+				"precision" : 2,
+				"step" : 0.01,
 				"text" : "Resolution Scale",
-				"type" : "combo",
-				"value" : "full"
+				"type" : "slider",
+				"value" : 1
 			},
 			"schemecolor" : 
 			{
@@ -148,7 +138,7 @@
 				"order" : 101,
 				"text" : "Show Clock Text",
 				"type" : "bool",
-				"value" : false
+				"value" : true
 			},
 			"text_size" : 
 			{

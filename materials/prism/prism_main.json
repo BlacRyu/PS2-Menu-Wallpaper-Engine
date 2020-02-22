@@ -12,15 +12,16 @@
 					"user" : null,
 					"value" : 1
 				},
+				"Emissive" : 0.20000000000000001,
 				"Light" : 
 				{
-					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60 * 10;\n}\n",
+					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60;\n}\n",
 					"user" : null,
-					"value" : 5
+					"value" : 0.5
 				},
 				"end_color" : 
 				{
-					"script" : "'use strict';\n\nlet custom_colors = false;\nconst default_color = new Vec3(0.3, 0.78, 0.76);\nlet end_color = default_color.copy();\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.custom_colors != undefined)\n\t\tcustom_colors = userProperties.custom_colors;\n\tif (userProperties.prism_gradient_2 != undefined)\n\t\tend_color = userProperties.prism_gradient_2;\n\tconsole.log(Object.keys(thisObject))\n\n\tif (custom_colors)\n\t\tthisObject.end_color = end_color.copy();\n\telse\n\t\tthisObject.end_color = default_color.copy();\n}\n",
+					"script" : "'use strict';\n\nlet custom_colors = false;\nconst default_color = new Vec3(0.3, 0.78, 0.76);\nlet end_color = default_color.copy();\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.custom_colors != undefined)\n\t\tcustom_colors = userProperties.custom_colors;\n\tif (userProperties.prism_gradient_2 != undefined)\n\t\tend_color = userProperties.prism_gradient_2;\n\n\tif (custom_colors)\n\t\tthisObject.end_color = end_color.copy();\n\telse\n\t\tthisObject.end_color = default_color.copy();\n}\n",
 					"user" : null,
 					"value" : "0.2980392156862745 0.7803921568627451 0.7568627450980392"
 				},

@@ -3,7 +3,10 @@
 	[
 		{
 			"blending" : "normal",
-			"combos" : {},
+			"combos" : 
+			{
+				"CRYSTAL_BACK" : 1
+			},
 			"constantshadervalues" : 
 			{
 				"Alpha" : 
@@ -11,11 +14,15 @@
 					"script" : "'use strict';\n\n// prism_main_back\n\n/**\n * @param {Number} value (for property 'Alpha')\n */\nexport function update(value) {\n\treturn shared.fade;\n}\n",
 					"value" : 1
 				},
+				"Emissive" : 
+				{
+					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Emissive')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60;\n}\n",
+					"value" : 0.20000000000000001
+				},
 				"Light" : 
 				{
-					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60 * 10;\n}\n",
-					"user" : null,
-					"value" : 5
+					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'Light')\n */\nexport function update(value) {\n\tlet currentDateTime = new Date();\n\treturn (currentDateTime.getMinutes() + currentDateTime.getSeconds() / 60) / 60;\n}\n",
+					"value" : 0.5
 				},
 				"end_color" : 
 				{
@@ -31,7 +38,7 @@
 			"cullmode" : "normal",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
-			"shader" : "crystal_back"
+			"shader" : "crystal"
 		}
 	]
 }

@@ -1,9 +1,12 @@
 {
 	"passes": [{
-		"shader" : "passthrough",
+		"shader" : "effects/downsample_passthrough",
 		"blending": "normal",
 		"depthtest": "disabled",
 		"depthwrite": "disabled",
-		"cullmode": "nocull"
+		"cullmode": "nocull",
+		"combos": {
+			"FILTER" : 1
+		}
 	}]
 }

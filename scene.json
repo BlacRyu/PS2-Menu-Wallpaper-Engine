@@ -2,7 +2,7 @@
 	"camera" : 
 	{
 		"center" : "0.000 0.000 0.000",
-		"eye" : "0.000 0.000 100.000",
+		"eye" : "0.000 0.000 38.000",
 		"up" : "0.000 1.000 0.000"
 	},
 	"general" : 
@@ -35,6 +35,27 @@
 	},
 	"objects" : 
 	[
+		{
+			"angles" : "0.000 0.000 0.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 134,
+			"image" : "models/empty.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "OMGHelpers (shared script module)",
+			"origin" : "-5.500 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "0.000 0.000 0.000",
+			"size" : "512.000 512.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"script" : "'use strict';\n\nclass OMGHelpers {\n\tstatic printObjectValues(obj){\n\t\tif (typeof(obj) !== 'object' || obj === null)\n\t\t\treturn;\n\n\t\tlet keys = Object.keys(obj);\n\t\tfor (let i = 0; i < keys.length; ++i)\n\t\t\tconsole.log(keys[i] + \" - \" + obj[keys[i]]);\n\t}\n}\n\nshared.OMGHelpers = OMGHelpers;",
+				"value" : false
+			}
+		},
 		{
 			"angles" : "0.000 0.000 0.000",
 			"colorBlendMode" : 0,
@@ -73,7 +94,7 @@
 			"solid" : true,
 			"visible" : 
 			{
-				"script" : "'use strict';\n\nclass OMGVector {\n\t/**\n\t * @param {Vec3} vector\n\t * @param {Number} angle\n\t * Rotates around the X axis by angle radians\n\t */\n\tstatic rotX(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x, \n\t\t\tvector.y * cos - vector.z * sin,\n\t\t\tvector.y * sin + vector.z * cos)\n\t};\n\n\tstatic rotY(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x * cos + vector.z * sin,\n\t\t\tvector.y, \n\t\t\t-vector.x * sin + vector.z * cos)\n\t};\n\n\tstatic rotZ(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x * cos - vector.y * sin,\n\t\t\tvector.x * sin + vector.y * cos,\n\t\t\tvector.z)\n\t};\n\n\tstatic rotAxis(vec, angle, axis){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\t(cos + (1 - cos) * axis.x * axis.x) * vec.x +\n\t\t\t((1 - cos) * axis.x * axis.y - axis.z * sin) * vec.y +\n\t\t((1 - cos) * axis.x * axis.z + axis.y * sin) * vec.z,\n\n\t\t((1 - cos) * axis.x * axis.y + axis.z * sin) * vec.x +\n\t\t(cos + (1 - cos) * axis.y * axis.y) * vec.y +\n\t\t((1 - cos) * axis.y * axis.z - axis.x * sin) * vec.z,\n\n\t\t((1 - cos) * axis.x * axis.z - axis.y * sin) * vec.x +\n\t\t((1 - cos) * axis.y * axis.z + axis.x * sin) * vec.y +\n\t\t(cos + (1 - cos) * axis.z * axis.z) * vec.z);\n\t};\n\n\tstatic rotVec(vector, angles){\n\t\tlet r = rotX(vector, angles.x);\n\t\tr = rotY(r, angles.y);\n\t\treturn r = rotZ(r, angles.z);\n\t};\n\n\tstatic unrotVec(vector, angles){\n\t\tlet r = rotZ(vector, -angles.x);\n\t\tr = rotY(r, -angles.y);\n\t\treturn r = rotX(r, -angles.z);\n\t};\n\n\tstatic forwardY(angles){\n\t\treturn rotVec(new Vec3(0., 1., 0.), angles);\n\t};\n\n\tstatic forwardZ(angles){\n\t\treturn rotVec(new Vec3(0., 0., 1.), angles);\n\t};\n\n\tforwardX(angles){\n\t\treturn rotVec(new Vec3(1., 0., 0.), angles);\n\t};\n\n\tstatic interpAngle(angle1, angle2, percent){\n\t\tlet a1 = [angle1.x % 360, angle1.y % 360, angle1.z % 360];\n\t\tlet a2 = [angle2.x % 360, angle2.y % 360, angle2.z % 360];\n\t\tlet diff = [];\n\t\tfor (let i = 0; i < 3; i++){\n\t\t\tif (a1[i] < 0)\n\t\t\t\ta1[i] += 360;\n\t\t\tif (a2[i] < 0)\n\t\t\t\ta2[i] += 360;\n\t\t\tdiff[i] = a2[i] - a1[i];\n\t\t\tif (diff[i] > 180)\n\t\t\t\tdiff[i] -= 360;\n\t\t\telse if (diff[i] < -180)\n\t\t\t\tdiff[i] += 360;\n\t\t}\n\t\treturn new Vec3(a1[0] + diff[0] * percent, a1[1] + diff[1] * percent, a1[2] + diff[2] * percent);\n\t};\n\n\tstatic interpPosition(pos1, pos2, percent){\n\t\treturn lerp(pos1, pos2, percent);\n\t}\n\n\t/**\n\t * @param {Vec3} v1 First vector\n\t * @param {Vec3} v2 Second vector\n\t * @param {Number} percent interpolation value between 0 and 1\n\t * Interpolates linearly between v1 and v2 based on percent (0 to 1).\n\t */\n\tstatic lerp(v1, v2, percent){\n\t\tlet x = v1.x + (v2.x - v1.x) * percent;\n\t\tlet y = v1.y + (v2.y - v1.y) * percent;\n\t\tlet z = v1.z + (v2.z - v1.z) * percent;\n\t\treturn new Vec3(x, y, z);\n\t};\n\t\n\n\tstatic magnitude(vec){\n\t\treturn Math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);\n\t}\n\n\tstatic normalize(vec){\n\t\treturn vec.multiply(1 / OMGVector.magnitude(vec));\n\t};\n}\n\nshared.OMGVector = OMGVector;",
+				"script" : "'use strict';\n\nclass OMGVector {\n\t/**\n\t * @param {Vec3} vector\n\t * @param {Number} angle\n\t * Rotates around the X axis by angle radians\n\t */\n\tstatic rotX(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x, \n\t\t\tvector.y * cos - vector.z * sin,\n\t\t\tvector.y * sin + vector.z * cos)\n\t};\n\n\tstatic rotY(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x * cos + vector.z * sin,\n\t\t\tvector.y, \n\t\t\t-vector.x * sin + vector.z * cos)\n\t};\n\n\tstatic rotZ(vector, angle){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\tvector.x * cos - vector.y * sin,\n\t\t\tvector.x * sin + vector.y * cos,\n\t\t\tvector.z)\n\t};\n\n\tstatic rotAxis(vec, angle, axis){\n\t\tlet cos = Math.cos(angle);\n\t\tlet sin = Math.sin(angle);\n\t\treturn new Vec3(\n\t\t\t(cos + (1 - cos) * axis.x * axis.x) * vec.x +\n\t\t\t((1 - cos) * axis.x * axis.y - axis.z * sin) * vec.y +\n\t\t((1 - cos) * axis.x * axis.z + axis.y * sin) * vec.z,\n\n\t\t((1 - cos) * axis.x * axis.y + axis.z * sin) * vec.x +\n\t\t(cos + (1 - cos) * axis.y * axis.y) * vec.y +\n\t\t((1 - cos) * axis.y * axis.z - axis.x * sin) * vec.z,\n\n\t\t((1 - cos) * axis.x * axis.z - axis.y * sin) * vec.x +\n\t\t((1 - cos) * axis.y * axis.z + axis.x * sin) * vec.y +\n\t\t(cos + (1 - cos) * axis.z * axis.z) * vec.z);\n\t};\n\n\tstatic rotVec(vector, angles){\n\t\tlet r = rotX(vector, angles.x);\n\t\tr = rotY(r, angles.y);\n\t\treturn r = rotZ(r, angles.z);\n\t};\n\n\tstatic unrotVec(vector, angles){\n\t\tlet r = rotZ(vector, -angles.x);\n\t\tr = rotY(r, -angles.y);\n\t\treturn r = rotX(r, -angles.z);\n\t};\n\n\tstatic forwardY(angles){\n\t\treturn rotVec(new Vec3(0., 1., 0.), angles);\n\t};\n\n\tstatic forwardZ(angles){\n\t\treturn rotVec(new Vec3(0., 0., 1.), angles);\n\t};\n\n\tstatic forwardX(angles){\n\t\treturn rotVec(new Vec3(1., 0., 0.), angles);\n\t};\n\n\tstatic interpAngle(angle1, angle2, percent){\n\t\tlet a1 = [angle1.x % 360, angle1.y % 360, angle1.z % 360];\n\t\tlet a2 = [angle2.x % 360, angle2.y % 360, angle2.z % 360];\n\t\tlet diff = [];\n\t\tfor (let i = 0; i < 3; i++){\n\t\t\tif (a1[i] < 0)\n\t\t\t\ta1[i] += 360;\n\t\t\tif (a2[i] < 0)\n\t\t\t\ta2[i] += 360;\n\t\t\tdiff[i] = a2[i] - a1[i];\n\t\t\tif (diff[i] > 180)\n\t\t\t\tdiff[i] -= 360;\n\t\t\telse if (diff[i] < -180)\n\t\t\t\tdiff[i] += 360;\n\t\t}\n\t\treturn new Vec3(a1[0] + diff[0] * percent, a1[1] + diff[1] * percent, a1[2] + diff[2] * percent);\n\t};\n\n\tstatic interpPosition(pos1, pos2, percent){\n\t\treturn lerp(pos1, pos2, percent);\n\t}\n\n\t/**\n\t * @param {Vec3} v1 First vector\n\t * @param {Vec3} v2 Second vector\n\t * @param {Number} percent interpolation value between 0 and 1\n\t * Interpolates linearly between v1 and v2 based on percent (0 to 1).\n\t */\n\tstatic lerp(v1, v2, percent){\n\t\tlet x = v1.x + (v2.x - v1.x) * percent;\n\t\tlet y = v1.y + (v2.y - v1.y) * percent;\n\t\tlet z = v1.z + (v2.z - v1.z) * percent;\n\t\treturn new Vec3(x, y, z);\n\t};\n\t\n\n\tstatic magnitude(vec){\n\t\treturn Math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);\n\t}\n\n\tstatic normalize(vec){\n\t\treturn vec.multiply(1 / OMGVector.magnitude(vec));\n\t};\n}\n\nshared.OMGVector = OMGVector;",
 				"value" : false
 			}
 		},
@@ -94,7 +115,7 @@
 			"solid" : true,
 			"visible" : 
 			{
-				"script" : "'use strict';\nlet OMGVector = shared.OMGVector;\n\n// Eye-balled positions at various FoVs\nconst posAt30fov = new Vec3(0, 0, 64.0);\nconst posAt40fov = new Vec3(0, 0, 50.0);\nconst posAt53fov = new Vec3(0, 0, 38.0);\nconst posAt90fov = new Vec3(0, 0, 20.0);\nconst posAtStart = new Vec3(0, 0, 250.0);\n\nlet fov = 53;\nlet position = new Vec3(posAtStart);\nlet targetPosition = new Vec3(posAt53fov);\nlet velocity = new Vec3(0, 0, 0);\nlet accel = 100;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\nlet Mode = shared.Mode = {\n\tCLOCK: \"clock\",\n\tAUDIO: \"audio\",\n\tORBS: \"orbs\"\n};\nshared.mode = shared.Mode.CLOCK;\n\n\n// Scene fade transition (to/from orb mode)\nshared.transitionTime = 3.0;\nshared.fade = -1.0;\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\treturn value;\n}\n\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function update(value) {\n\tlet dt = Math.min(engine.frametime, 0.05);\n\n\tlet distance = targetPosition.add(position.multiply(-1));\n\tif (OMGVector.magnitude(distance) > 0.1){\n\t\tlet targetVelocity = distance;\n\t\tlet velocityDelta = targetVelocity.add(velocity.multiply(-1));\n\n\t\t//velocity += (targetVelocity - velocity) * accel * dt;\n\t\tvelocity = velocity.add(OMGVector.normalize( velocityDelta ).multiply(Math.min(OMGVector.magnitude(velocityDelta), accel * dt)));\n\n\t\t// position += velocity * dt\n\t\tposition = position.add(velocity.multiply(dt));\n\n\t\tlet cameraTransform = thisScene.getCameraTransforms();\n\t\tcameraTransform.eye = position;\n\t\tthisScene.setCameraTransforms(cameraTransform);\n\t}\n\t\n\t// Scene fade (Orbs mode transition)\n\tif (shared.mode === Mode.ORBS){\n\t\tif (shared.fade > 0)\n\t\t\tshared.fade = Math.max(0.0, shared.fade - dt / shared.transitionTime);\n\t}\n\telse{\n\t\tif (shared.fade < 1)\n\t\t\tshared.fade = Math.min(1.0, shared.fade + dt / shared.transitionTime);\n\t}\n\n\treturn value;\n}\n\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.mode != undefined){\n\t\tshared.mode = userProperties.mode;\n\t}\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t}\n\n\tupdateCameraTarget()\n\t\n\tif (engine.runtime < 0.1 && shared.mode === Mode.ORBS){\n\t\tshared.fade = 0;\n\t}\n}\n\nfunction updateCameraTarget(){\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\ttargetPosition = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\ttargetPosition = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\ttargetPosition = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n\n\tif (shared.mode === Mode.ORBS){\n\t\ttargetPosition = targetPosition.multiply(0.65);\n\t}\n}",
+				"script" : "'use strict';\nlet OMGVector = shared.OMGVector;\nlet OMGHelpers = shared.OMGHelpers;\n\n// Eye-balled positions at various FoVs\nconst posAt30fov = new Vec3(0, 0, 64.0);\nconst posAt40fov = new Vec3(0, 0, 50.0);\nconst posAt53fov = new Vec3(0, 0, 38.0);\nconst posAt90fov = new Vec3(0, 0, 20.0);\nconst posAtStart = new Vec3(0, 0, 250.0);\n\nlet fov = 53;\nlet position = new Vec3(posAtStart);\nlet targetPosition = new Vec3(posAt53fov);\nlet velocity = new Vec3(0, 0, 0);\nlet accel = 100;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\nlet Mode = shared.Mode = {\n\tCLOCK: \"clock\",\n\tAUDIO: \"audio\",\n\tORBS: \"orbs\"\n};\nshared.mode = shared.Mode.CLOCK;\n\n\n// Scene fade transition (to/from orb mode)\nshared.transitionTime = 3.0;\nshared.fade = -1.0;\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tlet cameraTransform = thisScene.getCameraTransforms();\n\tcameraTransform.center = new Vec3(0, 0, 0);\n\tthisScene.setCameraTransforms(cameraTransform);\n\treturn value;\n}\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function update(value) {\n\tlet dt = Math.min(engine.frametime, 0.05);\n\n\tlet distance = targetPosition.add(position.multiply(-1));\n\tif (OMGVector.magnitude(distance) > 0.1){\n\t\tlet targetVelocity = distance;\n\t\tlet velocityDelta = targetVelocity.add(velocity.multiply(-1));\n\n\t\t//velocity += (targetVelocity - velocity) * accel * dt;\n\t\tvelocity = velocity.add(OMGVector.normalize( velocityDelta ).multiply(Math.min(OMGVector.magnitude(velocityDelta), accel * dt)));\n\n\t\t// position += velocity * dt\n\t\tposition = position.add(velocity.multiply(dt));\n\n\t\tlet cameraTransform = thisScene.getCameraTransforms();\n\t\tcameraTransform.eye = position;\n\t\tthisScene.setCameraTransforms(cameraTransform);\n\t}\n\t\n\t// Scene fade (Orbs mode transition)\n\tif (shared.mode === Mode.ORBS){\n\t\tif (shared.fade > 0)\n\t\t\tshared.fade = Math.max(0.0, shared.fade - dt / shared.transitionTime);\n\t}\n\telse{\n\t\tif (shared.fade < 1)\n\t\t\tshared.fade = Math.min(1.0, shared.fade + dt / shared.transitionTime);\n\t}\n\n\treturn value;\n}\n\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.mode != undefined){\n\t\tshared.mode = userProperties.mode;\n\t}\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t}\n\n\tupdateCameraTarget()\n\t\n\tif (engine.runtime < 0.1 && shared.mode === Mode.ORBS){\n\t\tshared.fade = 0;\n\t}\n}\n\nfunction updateCameraTarget(){\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\ttargetPosition = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\ttargetPosition = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\ttargetPosition = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n\n\tif (shared.mode === Mode.ORBS){\n\t\ttargetPosition = targetPosition.multiply(0.65);\n\t}\n}",
 				"value" : false
 			}
 		},
@@ -206,7 +227,7 @@
 				"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'alpha')\n */\nexport function update(value) {\n\treturn Math.min(0.9, shared.fade);\n}\n",
 				"value" : 0.89999997615814209
 			},
-			"anchor" : "topleft",
+			"anchor" : "none",
 			"angles" : "0.000 0.000 0.000",
 			"backgroundcolor" : "0.000 0.000 0.000",
 			"color" : "0.875 0.875 0.875",
@@ -268,14 +289,14 @@
 			"solid" : true,
 			"text" : 
 			{
-				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\nlet fov = 53;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet ratio = size.x / size.y;\n\tlet posAt30fov = new Vec3(-12.8 * ratio, 12.5, 15);\n\tlet posAt40fov = new Vec3(-12.4 * ratio, 12, 15);\n\tlet posAt53fov = new Vec3(-11 * ratio, 11, 15);\n\tlet posAt90fov = new Vec3(-14.5 * ratio, 14, 5);\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\tthisLayer.origin = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\tthisLayer.origin = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\tthisLayer.origin = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n}\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\tlet dateTime = new Date();\n\tlet year = dateTime.getFullYear();\n\tlet month = dateTime.getMonth() + 1;\n\tif (month < 10) month = \"0\" + month;\n\tlet day = dateTime.getDate();\n\tif (day < 10) day = \"0\" + day;\n\treturn year + \"/\" + month + \"/\" + day;\n}\n/**\n * @param {String} value (for property 'text')\n */\nexport function init(value) {\n\tresizeScreen(engine.screenResolution);\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t\tresizeScreen(engine.screenResolution);\n\t}\n}\n",
+				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\nlet fov = 53;\n\nfunction lerp(start, end, interp) {\n\treturn start + (end - start) * interp;\n}\nfunction lerpVec3(start, end, interp) {\n\tlet x = lerp(start.x, end.x, interp);\n\tlet y = lerp(start.y, end.y, interp);\n\tlet z = lerp(start.z, end.z, interp);\n\treturn new Vec3(x, y, z);\n}\n\n/**\n * @param {Vec2} size\n */\nexport function resizeScreen(size) {\n\tlet ratio = size.x / size.y;\n\tlet posAt30fov = new Vec3(-12.8 * ratio, 12.5, 15);\n\tlet posAt40fov = new Vec3(-12.4 * ratio, 12, 15);\n\tlet posAt53fov = new Vec3(-11 * ratio, 11, 15);\n\tlet posAt90fov = new Vec3(-14.5 * ratio, 14, 5);\n\tlet interp = 0;\n\tif (fov < 40){\n\t\tinterp = (fov - 30) / (40-30);\n\t\tthisLayer.origin = lerpVec3(posAt30fov, posAt40fov, interp);\n\t}\n\telse if (fov < 53){\n\t\tinterp = (fov - 40) / (53-40);\n\t\tthisLayer.origin = lerpVec3(posAt40fov, posAt53fov, interp);\n\t}\n\telse{\n\t\tinterp = (fov - 53) / (90-53);\n\t\tthisLayer.origin = lerpVec3(posAt53fov, posAt90fov, interp);\n\t}\n}\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\t//let x = thisLayer.horizontalalign;\n\tlet dateTime = new Date();\n\tlet year = dateTime.getFullYear();\n\tlet month = dateTime.getMonth() + 1;\n\tif (month < 10) month = \"0\" + month;\n\tlet day = dateTime.getDate();\n\tif (day < 10) day = \"0\" + day;\n\treturn year + \"/\" + month + \"/\" + day;\n}\n/**\n * @param {String} value (for property 'text')\n */\nexport function init(value) {\n\tresizeScreen(engine.screenResolution);\n\treturn value;\n}\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.fov != undefined){\n\t\tfov = userProperties.fov;\n\t\tresizeScreen(engine.screenResolution);\n\t}\n}\n",
 				"value" : "0000/00/00"
 			},
 			"verticalalign" : "top",
 			"visible" : 
 			{
 				"user" : "show_clock_text",
-				"value" : false
+				"value" : true
 			}
 		},
 		{
@@ -284,7 +305,7 @@
 				"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'alpha')\n */\nexport function update(value) {\n\treturn Math.min(0.9, shared.fade);\n}\n",
 				"value" : 0.89999997615814209
 			},
-			"anchor" : "topleft",
+			"anchor" : "none",
 			"angles" : "0.000 0.000 0.000",
 			"backgroundcolor" : "0.000 0.000 0.000",
 			"color" : "0.875 0.875 0.875",
@@ -348,8 +369,39 @@
 			"visible" : 
 			{
 				"user" : "show_clock_text",
-				"value" : false
+				"value" : true
 			}
+		},
+		{
+			"alpha" : 1.0,
+			"anchor" : "none",
+			"angles" : "0.000 0.000 0.000",
+			"backgroundcolor" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"font" : "systemfont_arial",
+			"horizontalalign" : "center",
+			"id" : 135,
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Debug Text",
+			"opaquebackground" : false,
+			"origin" : "0.000 0.000 0.000",
+			"padding" : 32,
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"pointsize" : 30.0,
+			"scale" : "0.010 0.010 0.010",
+			"size" : "2.000 2.000",
+			"solid" : true,
+			"text" : 
+			{
+				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\treturn (\n\t\t//Object.keys(thisScene.getLayer(\"Current Date\")) +\n\t\t\"Date: \" + thisScene.getLayer(\"Current Date\").origin +\n\t\t\"\\nDate horizontal align: \" + thisScene.getLayer(\"Current Date\").horizontalalign +\n\t\t\"\\nDate vertical align: \" + thisScene.getLayer(\"Current Date\").verticalalign +\n\t\t\"\\nDate anchor: \" + thisScene.getLayer(\"Current Date\").anchor +\n\t\t\"\\nTime: \" + thisScene.getLayer(\"Current Time\").origin + \n\t\t\"\\nTime horizontal align: \" + thisScene.getLayer(\"Current Time\").horizontalalign +\n\t\t\"\\nTime vertical align: \" + thisScene.getLayer(\"Current Time\").verticalalign +\n\t\t\"\\nTime anchor: \" + thisScene.getLayer(\"Current Time\").anchor +\n\t\t\"\\nCamera eye: \" + thisScene.getCameraTransforms().eye + \n\t\t\"\\nCamera center: \" + thisScene.getCameraTransforms().center +\n\t\t\"\\nCamera zoom: \" + thisScene.getCameraTransforms().zoom +\n\t\t\"\\nCamera up: \" + thisScene.getCameraTransforms().up +\n\t\t\"\\nScreen Resolution: \" + engine.screenResolution +\n\t\t\"\\nCanvas size: \" + engine.canvasSize +\n\t\t\"\"\n\t)\n}\n",
+				"value" : ""
+			},
+			"verticalalign" : "center",
+			"visible" : false
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
@@ -371,26 +423,6 @@
 			"particle" : "particles/particles2.json",
 			"scale" : "1.000 1.000 1.000",
 			"visible" : true
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 98,
-			"locktransforms" : true,
-			"model" : "models/prism/prism.mdl",
-			"name" : "prism (fixes? a weird script error: \"createLayer cannot be called from global scope\")",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"scale" : "0.000 0.000 0.000"
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
-			"id" : 95,
-			"locktransforms" : true,
-			"model" : "models/prism/prism_back.mdl",
-			"name" : "prism_back (fixes? a weird script error: \"createLayer cannot be called from global scope\")",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
-			"scale" : "0.000 0.000 0.000"
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
@@ -420,6 +452,11 @@
 					"passes" : 
 					[
 						{
+							"combos" : 
+							{
+								"BLENDMODE" : 12,
+								"GREYSCALE" : 1
+							},
 							"constantshadervalues" : 
 							{
 								"exponent" : 0.5,
@@ -434,53 +471,31 @@
 							"textures" : [ null, "util/noise" ]
 						}
 					],
-					"visible" : true
+					"visible" : false
 				},
 				{
-					"file" : "effects/downsample2x/effect.json",
-					"id" : 75,
+					"file" : "effects/pixelate/effect.json",
+					"id" : 282,
 					"name" : "",
 					"passes" : 
 					[
 						{
-							"id" : 76
-						},
-						{
 							"combos" : 
 							{
-								"TRANSFORM" : 1
+								"POINTFILTER" : 0
 							},
-							"id" : 77
-						}
-					],
-					"visible" : 
-					{
-						"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif(userProperties.resolution_scale != undefined){\n\t\tthisObject.visible = (userProperties.resolution_scale === \"half\");\n\t}\n}\n",
-						"value" : false
-					}
-				},
-				{
-					"file" : "effects/downsample4x/effect.json",
-					"id" : 81,
-					"name" : "",
-					"passes" : 
-					[
-						{
-							"id" : 82
-						},
-						{
-							"combos" : 
+							"constantshadervalues" : 
 							{
-								"TRANSFORM" : 1
+								"Resolution Scale" : 
+								{
+									"user" : "resolution_scale",
+									"value" : 0.125
+								}
 							},
-							"id" : 83
+							"id" : 283
 						}
 					],
-					"visible" : 
-					{
-						"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif(userProperties.resolution_scale != undefined){\n\t\tthisObject.visible = (userProperties.resolution_scale === \"quarter\");\n\t}\n}\n",
-						"value" : false
-					}
+					"visible" : false
 				}
 			],
 			"id" : 63,

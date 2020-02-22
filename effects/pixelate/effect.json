@@ -1,0 +1,19 @@
+{
+	"version" : 1,
+	"name" : "Pixelate",
+	"description" : "Lowers the resolution of the layer by a custom percentage.",
+	"group" : "blur",
+	"preview" : "preview/project.json",
+	"passes" :
+	[
+		{
+			"material" : "materials/effects/pixelate.json"
+		}
+	],
+	"dependencies" :
+	[
+		"materials/effects/pixelate.json",
+		"shaders/effects/pixelate.frag",
+		"shaders/effects/pixelate.vert"
+	]
+}

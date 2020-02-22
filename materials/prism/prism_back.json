@@ -3,7 +3,9 @@
 	[
 		{
 			"blending" : "normal",
-			"combos" : {},
+			"combos" : {
+				"CRYSTAL_BACK" : 1
+			},
 			"constantshadervalues" : 
 			{
 				"Alpha" : 
@@ -31,7 +33,7 @@
 			"cullmode" : "normal",
 			"depthtest" : "enabled",
 			"depthwrite" : "enabled",
-			"shader" : "crystal_back"
+			"shader" : "crystal"
 		}
 	]
 }

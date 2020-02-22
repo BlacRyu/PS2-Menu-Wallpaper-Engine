@@ -33,7 +33,7 @@ Done
 
 
 Bugs:
-Stopping a particlesystem layer than playing it again doesn't resume the child emitters.
+Stopping a particlesystem layer then playing it again doesn't resume the child emitters.
 
 
 

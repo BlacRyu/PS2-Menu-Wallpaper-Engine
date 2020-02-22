@@ -22,9 +22,10 @@ void main() {
 	
 	float aspect = g_Texture0Resolution.z / g_Texture0Resolution.w;
 	
+	float t = frac(g_Time);
 	v_TexCoord = a_TexCoord.xyxy;
-	v_TexCoordNoise.xy = (a_TexCoord.xy + g_Time) * g_NoiseScale;
-	v_TexCoordNoise.zw = (a_TexCoord.xy - g_Time * 2.5) * g_NoiseScale * 0.52;
+	v_TexCoordNoise.xy = (a_TexCoord.xy + t) * g_NoiseScale;
+	v_TexCoordNoise.zw = (a_TexCoord.xy - t * 2.5) * g_NoiseScale * 0.52;
 	v_TexCoordNoise *= vec4(aspect, 1.0, aspect, 1.0);
 	
 #if MASK == 1
