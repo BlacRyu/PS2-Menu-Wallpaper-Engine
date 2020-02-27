@@ -432,12 +432,16 @@
 			"mintime" : 1.0,
 			"muteineditor" : true,
 			"name" : "startup.ogg",
-			"origin" : "0.000 0.000 0.000",
+			"origin" : 
+			{
+				"script" : "'use strict';\n\nlet hasPlayed = false;\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Delay starting audio until the first update to prevent hiccupping\n\tif (!hasPlayed) {\n\t\tthisLayer.play();\n\t\thasPlayed = true;\n\t}\n\t\n\treturn value;\n}\n",
+				"value" : "0.000 0.000 0.000"
+			},
 			"parallaxDepth" : "1.000 1.000",
 			"playbackmode" : "single",
 			"scale" : "1.000 1.000 1.000",
 			"sound" : [ "sounds/startup.ogg" ],
-			"startsilent" : false,
+			"startsilent" : true,
 			"volume" : 0.40000000596046448
 		},
 		{
@@ -471,7 +475,7 @@
 							"textures" : [ null, "util/noise" ]
 						}
 					],
-					"visible" : false
+					"visible" : true
 				},
 				{
 					"file" : "effects/pixelate/effect.json",
@@ -495,7 +499,7 @@
 							"id" : 283
 						}
 					],
-					"visible" : false
+					"visible" : true
 				}
 			],
 			"id" : 63,
