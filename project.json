@@ -35,6 +35,19 @@
 				"type" : "bool",
 				"value" : false
 			},
+			"cloud_depth" : 
+			{
+				"condition" : "",
+				"fraction" : true,
+				"max" : 20,
+				"min" : 0,
+				"order" : 114,
+				"precision" : 2,
+				"step" : 0.10000000000000001,
+				"text" : "Cloud Depth",
+				"type" : "slider",
+				"value" : 5
+			},
 			"custom_colors" : 
 			{
 				"order" : 104,
@@ -67,6 +80,14 @@
 				"text" : "FOV",
 				"type" : "slider",
 				"value" : 53
+			},
+			"high_quality_clouds" : 
+			{
+				"condition" : "advanced_settings.value == true",
+				"order" : 113,
+				"text" : "High Quality Clouds",
+				"type" : "bool",
+				"value" : false
 			},
 			"mode" : 
 			{
@@ -159,6 +180,7 @@
 	"tags" : [ "Game" ],
 	"title" : "Playstation 2 Clock",
 	"type" : "scene",
+	"version" : 0,
 	"visibility" : "public",
 	"workshopid" : "1979606285"
 }

@@ -36,7 +36,10 @@
 	"objects" : 
 	[
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 134,
@@ -57,7 +60,10 @@
 			}
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 115,
@@ -78,7 +84,10 @@
 			}
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 117,
@@ -99,7 +108,10 @@
 			}
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 113,
@@ -120,7 +132,10 @@
 			}
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 16,
@@ -132,12 +147,207 @@
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
 			"scale" : "10.000 10.000 10.000",
-			"size" : "256.000 256.000",
+			"size" : "64.000 64.000",
 			"solid" : true,
 			"visible" : true
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 313,
+			"image" : "models/ps2menu_layer1.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer1",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 131,
+			"image" : "models/ps2menu_layer2.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer2",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 138,
+			"image" : "models/ps2menu_layer3.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer3",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 141,
+			"image" : "models/ps2menu_layer4.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer4",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 143,
+			"image" : "models/ps2menu_layer5.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer5",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 145,
+			"image" : "models/ps2menu_layer6.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer6",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 164,
+			"image" : "models/ps2menu_layer7.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer7",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
+			"colorBlendMode" : 0,
+			"copybackground" : true,
+			"id" : 166,
+			"image" : "models/ps2menu_layer8.json",
+			"ledsource" : false,
+			"locktransforms" : true,
+			"name" : "Clouds Layer8",
+			"origin" : "0.000 0.000 0.000",
+			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
+			"scale" : "10.000 10.000 10.000",
+			"size" : "64.000 64.000",
+			"solid" : true,
+			"visible" : 
+			{
+				"user" : "high_quality_clouds",
+				"value" : false
+			}
+		},
+		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 12,
@@ -158,7 +368,10 @@
 			}
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 14,
@@ -186,22 +399,27 @@
 			"name" : "mainPrism_back",
 			"origin" : "0.000 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
 			"scale" : "1.000 1.000 1.000",
 			"skin" : 1
 		},
 		{
 			"angles" : "0.000 0.000 0.000",
 			"id" : 104,
-			"locktransforms" : true,
+			"locktransforms" : false,
 			"model" : "models/prism/prism.mdl",
 			"name" : "mainPrism",
 			"origin" : "0.000 0.000 0.000",
 			"parallaxDepth" : "1.000 1.000",
+			"perspective" : false,
 			"scale" : "1.000 1.000 1.000",
 			"skin" : 1
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
 			"angles" : "0.000 0.000 0.000",
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 13,
@@ -384,21 +602,21 @@
 			"horizontalalign" : "center",
 			"id" : 135,
 			"ledsource" : false,
-			"locktransforms" : true,
+			"locktransforms" : false,
 			"name" : "Debug Text",
 			"opaquebackground" : false,
-			"origin" : "0.000 0.000 0.000",
+			"origin" : "-15.157 2.243 0.000",
 			"padding" : 32,
 			"parallaxDepth" : "1.000 1.000",
 			"perspective" : false,
 			"pointsize" : 30.0,
 			"scale" : "0.010 0.010 0.010",
-			"size" : "2.000 2.000",
+			"size" : "626.000 144.000",
 			"solid" : true,
 			"text" : 
 			{
-				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update(value) {\n\treturn (\n\t\t//Object.keys(thisScene.getLayer(\"Current Date\")) +\n\t\t\"Date: \" + thisScene.getLayer(\"Current Date\").origin +\n\t\t\"\\nDate horizontal align: \" + thisScene.getLayer(\"Current Date\").horizontalalign +\n\t\t\"\\nDate vertical align: \" + thisScene.getLayer(\"Current Date\").verticalalign +\n\t\t\"\\nDate anchor: \" + thisScene.getLayer(\"Current Date\").anchor +\n\t\t\"\\nTime: \" + thisScene.getLayer(\"Current Time\").origin + \n\t\t\"\\nTime horizontal align: \" + thisScene.getLayer(\"Current Time\").horizontalalign +\n\t\t\"\\nTime vertical align: \" + thisScene.getLayer(\"Current Time\").verticalalign +\n\t\t\"\\nTime anchor: \" + thisScene.getLayer(\"Current Time\").anchor +\n\t\t\"\\nCamera eye: \" + thisScene.getCameraTransforms().eye + \n\t\t\"\\nCamera center: \" + thisScene.getCameraTransforms().center +\n\t\t\"\\nCamera zoom: \" + thisScene.getCameraTransforms().zoom +\n\t\t\"\\nCamera up: \" + thisScene.getCameraTransforms().up +\n\t\t\"\\nScreen Resolution: \" + engine.screenResolution +\n\t\t\"\\nCanvas size: \" + engine.canvasSize +\n\t\t\"\"\n\t)\n}\n",
-				"value" : ""
+				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\n// export function update(value) {\n// \treturn (\n// \t\t//Object.keys(thisScene.getLayer(\"Current Date\")) +\n// \t\t\"Date: \" + thisScene.getLayer(\"Current Date\").origin +\n// \t\t\"\\nDate horizontal align: \" + thisScene.getLayer(\"Current Date\").horizontalalign +\n// \t\t\"\\nDate vertical align: \" + thisScene.getLayer(\"Current Date\").verticalalign +\n// \t\t\"\\nDate anchor: \" + thisScene.getLayer(\"Current Date\").anchor +\n// \t\t\"\\nTime: \" + thisScene.getLayer(\"Current Time\").origin + \n// \t\t\"\\nTime horizontal align: \" + thisScene.getLayer(\"Current Time\").horizontalalign +\n// \t\t\"\\nTime vertical align: \" + thisScene.getLayer(\"Current Time\").verticalalign +\n// \t\t\"\\nTime anchor: \" + thisScene.getLayer(\"Current Time\").anchor +\n// \t\t\"\\nCamera eye: \" + thisScene.getCameraTransforms().eye + \n// \t\t\"\\nCamera center: \" + thisScene.getCameraTransforms().center +\n// \t\t\"\\nCamera zoom: \" + thisScene.getCameraTransforms().zoom +\n// \t\t\"\\nCamera up: \" + thisScene.getCameraTransforms().up +\n// \t\t\"\\nScreen Resolution: \" + engine.screenResolution +\n// \t\t\"\\nCanvas size: \" + engine.canvasSize +\n// \t\t\"\"\n// \t)\n// }\n\nlet moved = false;\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update() {\n\tthisLayer.text = (moved ? \"\" : \"not \") + \"moved\";\n\tmoved = false;\n}\n\n\n/**\n * @param {ICursorEvent} event\n */\nexport function cursorMove(event) {\n\tmoved = true;\n}",
+				"value" : "Debug Text"
 			},
 			"verticalalign" : "center",
 			"visible" : false
@@ -445,6 +663,9 @@
 			"volume" : 0.40000000596046448
 		},
 		{
+			"alignment" : "center",
+			"alpha" : 1.0,
+			"color" : "1.000 1.000 1.000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"effects" : 
@@ -479,24 +700,25 @@
 				},
 				{
 					"file" : "effects/pixelate/effect.json",
-					"id" : 282,
+					"id" : 98,
 					"name" : "",
 					"passes" : 
 					[
 						{
 							"combos" : 
 							{
-								"POINTFILTER" : 0
+								"MULTIPLY" : 1
 							},
 							"constantshadervalues" : 
 							{
-								"Resolution Scale" : 
+								"new_resolution" : "640 448",
+								"resolution_scale" : 
 								{
 									"user" : "resolution_scale",
 									"value" : 0.125
 								}
 							},
-							"id" : 283
+							"id" : 99
 						}
 					],
 					"visible" : true
@@ -513,7 +735,7 @@
 			"visible" : 
 			{
 				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
-				"value" : true
+				"value" : false
 			}
 		}
 	]

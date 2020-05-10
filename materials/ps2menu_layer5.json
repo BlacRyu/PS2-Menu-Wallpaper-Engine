@@ -2,14 +2,13 @@
 	"passes" : 
 	[
 		{
-			"blending" : "normal",
+			"blending" : "translucent",
 			"combos" : {},
 			"constantshadervalues" : 
 			{
 				"Alpha" : 
 				{
 					"script" : "'use strict';\n\n// ps2menu\n\n/**\n * @param {Number} value (for property 'Alpha')\n */\nexport function update(value) {\n\treturn Math.max(0.1, shared.fade);\n}\n",
-					"user" : null,
 					"value" : 1
 				},
 				"Center" : 
@@ -17,16 +16,21 @@
 					"user" : "center",
 					"value" : 0.40000000000000002
 				},
-				"Dissolve" : 1,
+				"Dissolve" : 0.48999999999999999,
 				"FOV" : 
 				{
+					"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'FOV')\n */\nexport function update(value) {\n\t\n\treturn value;\n}\n",
 					"user" : "fov",
-					"value" : 53
+					"value" : 53.380000000000003
+				},
+				"Zoom" : 
+				{
+					"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.cloud_depth !== undefined)\n\t\tthisObject.Zoom = .65 + userProperties.cloud_depth * .0059;\n}\n",
+					"value" : 0.6875
 				},
 				"background_color" : 
 				{
 					"script" : "'use strict';\n\nlet custom_colors = false;\nconst default_color = new Vec3(0.67, 0.54, 1);\nlet background_color = default_color.copy();\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.custom_colors != undefined)\n\t\tcustom_colors = userProperties.custom_colors;\n\tif (userProperties.schemecolor != undefined)\n\t\tbackground_color = userProperties.schemecolor;\n\n\tif (custom_colors)\n\t\tthisObject.background_color = background_color.copy();\n\telse\n\t\tthisObject.background_color = default_color.copy();\n}\n",
-					"user" : null,
 					"value" : "0.6784313725490196 0.5411764705882353 1"
 				}
 			},

@@ -2,7 +2,7 @@
 	"passes" : 
 	[
 		{
-			"blending" : "normal",
+			"blending" : "translucent",
 			"combos" : {},
 			"constantshadervalues" : 
 			{
@@ -17,11 +17,16 @@
 					"user" : "center",
 					"value" : 0.40000000000000002
 				},
-				"Dissolve" : 1,
+				"Dissolve" : 0.81000000000000005,
 				"FOV" : 
 				{
 					"user" : "fov",
-					"value" : 53
+					"value" : 53.380000000000003
+				},
+				"Zoom" : 
+				{
+					"script" : "'use strict';\n\n/**\n * @param {Object} userProperties\n */\nexport function applyUserProperties(userProperties) {\n\tif (userProperties.cloud_depth !== undefined)\n\t\tthisObject.Zoom = .65 + userProperties.cloud_depth * .0017;\n}\n",
+					"value" : 0.65749999999999997
 				},
 				"background_color" : 
 				{

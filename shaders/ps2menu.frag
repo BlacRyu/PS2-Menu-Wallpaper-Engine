@@ -5,11 +5,12 @@ uniform float     g_Time;
 uniform vec2 g_TexelSize;
 uniform sampler2D g_Texture0; // {"material":"ui_editor_properties_noise","default":"util/noise"}
 uniform vec3 g_BackgroundColor; // {"material":"background_color","default":"0.68 0.54 1.0","type":"color"}
-uniform float g_FOV; // {"material":"FOV","default":"53"}
+uniform float g_FOV; // {"material":"FOV","default":"53","range":[0,120]}
 uniform float g_Center; // {"material":"Center","default":"0.4"}
 uniform float g_FadeAlpha; // {"material":"Alpha","default":1,"range":[0,1]}
+uniform float g_Dissolve; // {"material":"Dissolve","default":1,"range":[0,1]}
+uniform float g_Zoom; // {"material":"Zoom","default":0.65,"range":[0,2]}
 
-#define ZOOM 0.65 // 1.0 is neutral
 //#define PERSPECTIVE 0.35 // 0 is neutral
 #define TIMESCALE 0.4
 #define MINBRIGHTNESS 0.7
@@ -53,7 +54,7 @@ void main( )
     p.x *= aspectRatio;
 
     p *= (1.0 - fov) + length(p) * fov;
-    p *= ZOOM;
+    p *= g_Zoom;
     
     // Cylindrical Tunnel
     float r = length(p);
@@ -77,11 +78,15 @@ void main( )
         //noise += textureGrad( g_Texture0, noiseIters[i].x * uv, dFdx(uv2), dFdy(uv2) ).x * noiseIters[i].y;
         noise += texSample2D( g_Texture0, noiseIters[i].x * vec2(uv.x + noiseIters[i].z * time, uv.y)).x * noiseIters[i].y;
     }
+
+    noise /= totalWeight;
+
+    float alpha = step(1 - noise, g_Dissolve);
     
-    noise *= (MAXBRIGHTNESS-MINBRIGHTNESS) / totalWeight;
+    noise *= (MAXBRIGHTNESS-MINBRIGHTNESS);
     noise += MINBRIGHTNESS;
     
     vec3 col = g_BackgroundColor * noise * min(1.0, (.1 + .9*r)) * 0.6;
     
-    gl_FragColor  = vec4(col * g_FadeAlpha, 1.0);
+    gl_FragColor  = vec4(col * g_FadeAlpha, alpha);
 }
