@@ -735,7 +735,7 @@
 			"visible" : 
 			{
 				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
-				"value" : false
+				"value" : true
 			}
 		}
 	]
