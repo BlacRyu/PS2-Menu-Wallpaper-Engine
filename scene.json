@@ -31,7 +31,8 @@
 		},
 		"nearz" : 1.0,
 		"orthogonalprojection" : null,
-		"skylightcolor" : "1.000 1.000 1.000"
+		"skylightcolor" : "1.000 1.000 1.000",
+		"zoom" : 1.0
 	},
 	"objects" : 
 	[
