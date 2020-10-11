@@ -29,10 +29,10 @@ const int numIters = 4;
 #else
     const vec3 noiseIters[4] = vec3[]( 
 #endif
-    vec3(0.25,4.0,0.035),
-    vec3(0.5,2.0,0.04),
-    vec3(1.5,1.0,0.0435),
-    vec3(5.5,1.0,0.0465)
+    vec3(1.0,4.0,0.035),
+    vec3(2.0,2.0,0.04),
+    vec3(6.0,1.0,0.0435),
+    vec3(22.0,1.0,0.0465)
 #if HLSL
     };
 #else

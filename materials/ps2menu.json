@@ -34,7 +34,7 @@
 			"depthtest" : "enabled",
 			"depthwrite" : "disabled",
 			"shader" : "ps2menu",
-			"textures" : [ "util/noise" ]
+			"textures" : [ "noise" ]
 		}
 	]
 }
