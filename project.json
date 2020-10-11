@@ -179,7 +179,7 @@
 	"preview" : "preview.gif",
 	"tags" : [ "Game" ],
 	"title" : "Playstation 2 Clock",
-	"type" : "Scene",
+	"type" : "scene",
 	"version" : 2,
 	"visibility" : "public",
 	"workshopid" : "1979606285",

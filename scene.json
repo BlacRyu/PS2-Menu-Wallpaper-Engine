@@ -708,21 +708,27 @@
 						{
 							"combos" : 
 							{
-								"MULTIPLY" : 1
+								"MULTIPLY" : 1,
+								"POINTFILTER" : 0
 							},
 							"constantshadervalues" : 
 							{
 								"new_resolution" : "640 448",
 								"resolution_scale" : 
 								{
+									"script" : null,
 									"user" : "resolution_scale",
-									"value" : 0.125
+									"value" : 1
 								}
 							},
 							"id" : 99
 						}
 					],
-					"visible" : true
+					"visible" : 
+					{
+						"script" : "'use strict';\n\n/**\n * @param {Object} changedUserProperties - only includes user properties that were recently changed!\n */\nexport function applyUserProperties(changedUserProperties) {\n\tif (changedUserProperties.resolution_scale != undefined) {\n\t\tif (changedUserProperties.resolution_scale == 1)\n\t\t\tthisObject.visible = false;\n\t\telse\n\t\t\tthisObject.visible = true;\n\t}\n}\n",
+						"value" : true
+					}
 				}
 			],
 			"id" : 63,
