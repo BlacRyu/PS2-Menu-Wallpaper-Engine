@@ -18,10 +18,10 @@ uniform sampler2D g_Texture0; // {"material":"framebuffer","label":"ui_editor_pr
 void main() {
 #if MULTIPLY
 	vec2 scaledCoord = v_TexCoord * g_Texture0Resolution.xy * g_ResolutionScale;
-	vec2 newTexelSize = 1 / (g_ResolutionScale * g_Texture0Resolution.xy);
+	vec2 newTexelSize = 1.0 / (g_ResolutionScale * g_Texture0Resolution.xy);
 #else
 	vec2 scaledCoord = v_TexCoord * g_NewResolution;
-	vec2 newTexelSize = 1 / (g_NewResolution);
+	vec2 newTexelSize = 1.0 / (g_NewResolution);
 #endif
 
 #if POINTFILTER
@@ -31,13 +31,13 @@ void main() {
 #else
 	// Bilinear Filtering
 	vec2 v_TexCoord00 = floor(scaledCoord) * newTexelSize;
-	vec2 v_TexCoord01 = v_TexCoord00 + vec2(0, newTexelSize.y);
-	vec2 v_TexCoord10 = v_TexCoord00 + vec2(newTexelSize.x, 0);
+	vec2 v_TexCoord01 = v_TexCoord00 + vec2(0.0, newTexelSize.y);
+	vec2 v_TexCoord10 = v_TexCoord00 + vec2(newTexelSize.x, 0.0);
 	vec2 v_TexCoord11 = v_TexCoord00 + vec2(newTexelSize.x, newTexelSize.y);
 	vec2 lerp = fract(scaledCoord);
-	vec4 finalColor = texSample2D(g_Texture0, v_TexCoord00) * (1 - lerp.x) * (1 - lerp.y) +
-										texSample2D(g_Texture0, v_TexCoord01) * (1 - lerp.x) * lerp.y + 
-										texSample2D(g_Texture0, v_TexCoord10) * lerp.x * (1 - lerp.y) + 
+	vec4 finalColor = texSample2D(g_Texture0, v_TexCoord00) * (1.0 - lerp.x) * (1.0 - lerp.y) +
+										texSample2D(g_Texture0, v_TexCoord01) * (1.0 - lerp.x) * lerp.y + 
+										texSample2D(g_Texture0, v_TexCoord10) * lerp.x * (1.0 - lerp.y) + 
 										texSample2D(g_Texture0, v_TexCoord11) * lerp.x * lerp.y;
 #endif
 

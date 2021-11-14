@@ -23,7 +23,7 @@ uniform float g_Zoom; // {"material":"Zoom","default":0.65,"range":[0,2]}
 #endif
     
 //Noise Texture Sample Iterations: (UV Scale, Weight, UV Speed)
-const int numIters = 4;
+const float numIters = 4.0;
 #if HLSL
     const vec3 noiseIters[4] = {
 #else
@@ -48,7 +48,7 @@ void main( )
     
     // Adjust Center
     float fov = g_FOV * -0.02 + 1.4;
-    p += vec2(-2 * g_Center + 1, 0.0);
+    p += vec2(-2.0 * g_Center + 1.0, 0.0);
 
     float aspectRatio = g_TexelSize.y / g_TexelSize.x;
     p.x *= aspectRatio;
@@ -72,16 +72,16 @@ void main( )
     float totalWeight = 0.0;
     float noise = 0.0;
     
-    for (int i=0; i < numIters; i++)
+    for (float i=0.0; i < numIters; i++)
     {
-        totalWeight += noiseIters[i].y;
-        //noise += textureGrad( g_Texture0, noiseIters[i].x * uv, dFdx(uv2), dFdy(uv2) ).x * noiseIters[i].y;
-        noise += texSample2D( g_Texture0, noiseIters[i].x * vec2(uv.x + noiseIters[i].z * time, uv.y)).x * noiseIters[i].y;
+        totalWeight += noiseIters[int(i)].y;
+        //noise += textureGrad( g_Texture0, noiseIters[int(i)].x * uv, dFdx(uv2), dFdy(uv2) ).x * noiseIters[int(i)].y;
+        noise += texSample2D( g_Texture0, noiseIters[int(i)].x * vec2(uv.x + noiseIters[int(i)].z * time, uv.y)).x * noiseIters[int(i)].y;
     }
 
     noise /= totalWeight;
 
-    float alpha = step(1 - noise, g_Dissolve);
+    float alpha = step(1.0 - noise, g_Dissolve);
     
     noise *= (MAXBRIGHTNESS-MINBRIGHTNESS);
     noise += MINBRIGHTNESS;

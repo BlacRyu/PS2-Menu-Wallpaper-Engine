@@ -1,7 +1,7 @@
 {
 	"approved" : true,
 	"contentrating" : "Everyone",
-	"description" : "My attempt to recreate the background from the Playstation 2 system menu from scratch as a 3D scene. The glowing prism represents the hour hand of the clock, and the glow fills up based on the current minute. The prisms do one full rotation per minute. There is soft white noise in the background making it a good wallpaper for relaxing and meditation.\r\n\r\n\r\n\r\n\r\n\r\nTags: crystals prisms orbs 3D scene white noise soothing soft waves retro abstract clock time date text shaders models clouds tunnel menu bios settings playstation ps2 clock relaxing soothing nostalgia customizable colors purple blue turquoise psx startup screen intro opening wind glowing",
+	"description" : "My attempt to recreate the background from the Playstation 2 system menu from scratch as a 3D scene. The glowing prism represents the hour hand of the clock, and the glow fills up based on the current minute. The prisms do one full rotation per minute. There is soft white noise in the background making it a good wallpaper for relaxing and meditation.\r\n\r\n\r\n\r\n\r\n\r\nTags: crystals prisms orbs 3D scene white noise soothing soft waves retro abstract clock time date text shaders models clouds tunnel menu bios settings play station ps2 clock relaxing soothing nostalgia customizable colors purple blue turquoise psx startup screen intro opening wind glowing",
 	"file" : "scene.json",
 	"general" : 
 	{
@@ -9,6 +9,7 @@
 		{
 			"advanced_settings" : 
 			{
+				"index" : 8,
 				"order" : 108,
 				"text" : "Advanced Settings",
 				"type" : "bool",
@@ -18,20 +19,22 @@
 			{
 				"condition" : "advanced_settings.value === true",
 				"fraction" : true,
+				"index" : 11,
 				"max" : 1,
 				"min" : 0,
 				"order" : 111,
 				"precision" : 2,
-				"step" : 0.025000000000000001,
+				"step" : 0.025,
 				"text" : "Center",
 				"type" : "slider",
-				"value" : 0.41999999999999998
+				"value" : 0.42
 			},
 			"clock_24_hour" : 
 			{
 				"condition" : "mode.value == \"clock\" && show_clock_text.value == true",
+				"index" : 2,
 				"order" : 102,
-				"text" : "[Clock] 24-hour",
+				"text" : "[Text] 24-hour",
 				"type" : "bool",
 				"value" : false
 			},
@@ -39,17 +42,19 @@
 			{
 				"condition" : "false && advanced_settings.value == true",
 				"fraction" : true,
+				"index" : 14,
 				"max" : 20,
 				"min" : 0,
 				"order" : 114,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
+				"step" : 0.1,
 				"text" : "Cloud Depth",
 				"type" : "slider",
 				"value" : 5
 			},
 			"custom_colors" : 
 			{
+				"index" : 4,
 				"order" : 104,
 				"text" : "Custom Colors",
 				"type" : "bool",
@@ -59,19 +64,21 @@
 			{
 				"condition" : "advanced_settings.value === true",
 				"fraction" : true,
+				"index" : 12,
 				"max" : 1,
 				"min" : 0,
 				"order" : 112,
 				"precision" : 2,
-				"step" : 0.025000000000000001,
+				"step" : 0.025,
 				"text" : "Film Grain",
 				"type" : "slider",
-				"value" : 0.20000000000000001
+				"value" : 0.2
 			},
 			"fov" : 
 			{
 				"condition" : "advanced_settings.value === true",
 				"fraction" : true,
+				"index" : 10,
 				"max" : 90,
 				"min" : 30,
 				"order" : 110,
@@ -84,6 +91,7 @@
 			"high_quality_clouds" : 
 			{
 				"condition" : "false && advanced_settings.value == true",
+				"index" : 13,
 				"order" : 113,
 				"text" : "High Quality Clouds",
 				"type" : "bool",
@@ -92,6 +100,7 @@
 			"mode" : 
 			{
 				"condition" : "",
+				"index" : 0,
 				"options" : 
 				[
 					{
@@ -111,6 +120,7 @@
 			"orb_color" : 
 			{
 				"condition" : "custom_colors.value === true",
+				"index" : 5,
 				"order" : 105,
 				"text" : "Orb Color",
 				"type" : "color",
@@ -119,6 +129,7 @@
 			"prism_gradient_1" : 
 			{
 				"condition" : "custom_colors.value === true",
+				"index" : 6,
 				"order" : 106,
 				"text" : "Prism color 1",
 				"type" : "color",
@@ -127,6 +138,7 @@
 			"prism_gradient_2" : 
 			{
 				"condition" : "custom_colors.value === true",
+				"index" : 7,
 				"order" : 107,
 				"text" : "Prism color 2",
 				"type" : "color",
@@ -136,8 +148,9 @@
 			{
 				"condition" : "advanced_settings.value == true",
 				"fraction" : true,
+				"index" : 9,
 				"max" : 1,
-				"min" : 0.050000000000000003,
+				"min" : 0.05,
 				"order" : 109,
 				"precision" : 2,
 				"step" : 0.01,
@@ -156,6 +169,7 @@
 			"show_clock_text" : 
 			{
 				"condition" : "mode.value == \"clock\"",
+				"index" : 1,
 				"order" : 101,
 				"text" : "Show Clock Text",
 				"type" : "bool",
@@ -165,12 +179,13 @@
 			{
 				"condition" : "mode.value == \"clock\" && show_clock_text.value == true",
 				"fraction" : true,
+				"index" : 3,
 				"max" : 80,
 				"min" : 10,
 				"order" : 103,
 				"precision" : 2,
-				"step" : 0.10000000000000001,
-				"text" : "[Clock] Text Size",
+				"step" : 0.1,
+				"text" : "[Text] Size",
 				"type" : "slider",
 				"value" : 35
 			}

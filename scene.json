@@ -1,27 +1,32 @@
 {
 	"camera" : 
 	{
-		"center" : "0.000 0.000 0.000",
-		"eye" : "0.000 0.000 38.000",
-		"up" : "0.000 1.000 0.000"
+		"center" : "0.00000 0.00000 0.00000",
+		"eye" : "0.00000 0.00000 38.00000",
+		"up" : "0.00000 1.00000 0.00000"
 	},
 	"general" : 
 	{
-		"ambientcolor" : "0.302 0.302 0.302",
+		"ambientcolor" : "0.30200 0.30200 0.30200",
 		"bloom" : false,
+		"bloomhdrfeather" : 0.1,
+		"bloomhdriterations" : 8,
+		"bloomhdrscatter" : 1.619,
+		"bloomhdrstrength" : 2.0,
+		"bloomhdrthreshold" : 1.0,
 		"bloomstrength" : 3.5,
-		"bloomthreshold" : 0.89999997615814209,
+		"bloomthreshold" : 0.89999998,
 		"camerafade" : false,
 		"cameraparallax" : false,
 		"cameraparallaxamount" : 0.5,
-		"cameraparallaxdelay" : 0.10000000149011612,
+		"cameraparallaxdelay" : 0.1,
 		"cameraparallaxmouseinfluence" : 0.0,
 		"camerapreview" : false,
 		"camerashake" : false,
 		"camerashakeamplitude" : 0.5,
 		"camerashakeroughness" : 1.0,
 		"camerashakespeed" : 3.0,
-		"clearcolor" : "0.125 0.098 0.204",
+		"clearcolor" : "0.12500 0.09800 0.20400",
 		"clearenabled" : true,
 		"farz" : 10000.0,
 		"fov" : 
@@ -29,9 +34,10 @@
 			"user" : "fov",
 			"value" : 53.0
 		},
+		"hdr" : false,
 		"nearz" : 1.0,
 		"orthogonalprojection" : null,
-		"skylightcolor" : "1.000 1.000 1.000",
+		"skylightcolor" : "1.00000 1.00000 1.00000",
 		"zoom" : 1.0
 	},
 	"objects" : 
@@ -39,8 +45,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 134,
@@ -48,11 +55,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "OMGHelpers (shared script module)",
-			"origin" : "-5.500 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-5.50000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -63,8 +70,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 115,
@@ -72,11 +80,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "OMGMatrix (shared script module)",
-			"origin" : "-5.500 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-5.50000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -87,8 +95,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 117,
@@ -96,11 +105,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "OMGVector (shared script module)",
-			"origin" : "-5.500 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-5.50000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -111,8 +120,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 113,
@@ -120,11 +130,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Camera (script)",
-			"origin" : "-5.500 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-5.50000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -135,8 +145,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 16,
@@ -144,19 +155,20 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : true
 		},
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 313,
@@ -164,11 +176,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer1",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -179,8 +191,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 131,
@@ -188,11 +201,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer2",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -203,8 +216,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 138,
@@ -212,11 +226,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer3",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -227,8 +241,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 141,
@@ -236,11 +251,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer4",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -251,8 +266,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 143,
@@ -260,11 +276,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer5",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -275,8 +291,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 145,
@@ -284,11 +301,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer6",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -299,8 +316,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 164,
@@ -308,11 +326,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer7",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -323,8 +341,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 166,
@@ -332,11 +351,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Clouds Layer8",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "10.000 10.000 10.000",
-			"size" : "64.000 64.000",
+			"scale" : "10.00000 10.00000 10.00000",
+			"size" : "256.00000 256.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -347,8 +366,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 12,
@@ -356,11 +376,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Prisms (script)",
-			"origin" : "-8.498 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-8.49800 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -371,8 +391,9 @@
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 14,
@@ -380,11 +401,11 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Orbs (script)",
-			"origin" : "-5.500 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "-5.50000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -393,34 +414,35 @@
 			}
 		},
 		{
-			"angles" : "0.000 0.000 0.000",
+			"angles" : "0.00000 0.00000 0.00000",
 			"id" : 64,
 			"locktransforms" : true,
 			"model" : "models/prism/prism_back.mdl",
 			"name" : "mainPrism_back",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "1.000 1.000 1.000",
+			"scale" : "1.00000 1.00000 1.00000",
 			"skin" : 1
 		},
 		{
-			"angles" : "0.000 0.000 0.000",
+			"angles" : "0.00000 0.00000 0.00000",
 			"id" : 104,
 			"locktransforms" : false,
 			"model" : "models/prism/prism.mdl",
 			"name" : "mainPrism",
-			"origin" : "0.000 0.000 0.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "1.000 1.000 1.000",
+			"scale" : "1.00000 1.00000 1.00000",
 			"skin" : 1
 		},
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"angles" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
+			"angles" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"id" : 13,
@@ -431,12 +453,12 @@
 			"origin" : 
 			{
 				"script" : "'use strict';\nimport * as WEMath from 'WEMath';\n\n// Register asset\nconst noiseAsset = engine.registerAsset(\"sounds/noise.ogg\");\nconst noiseLow100Asset = engine.registerAsset(\"sounds/noise_low_100.ogg\");\nconst noiseLow200Asset = engine.registerAsset(\"sounds/noise_low_200.ogg\");\nconst noiseLow800Asset = engine.registerAsset(\"sounds/noise_low_800.ogg\");\nconst noiseHighAsset = engine.registerAsset(\"sounds/noise_high.ogg\");\n\nclass Range {\n\tconstructor(min, max){\n\t\tthis.min = min;\n\t\tthis.max = max;\n\t\tthis.value = this.rand();\n\t}\n\trand(){\n\t\treturn this.lerp(Math.random());\n\t}\n\tlerp(l){\n\t\treturn this.value = this.min + (this.max - this.min) * l;\n\t}\n\tget(){\n\t\treturn this.value;\n\t}\n\tset(value){\n\t\tthis.value = value;\n\t}\n}\n\nclass SoundLayer {\n\tconstructor(asset, mindelay, maxdelay, minduration, maxduration, minvolume, maxvolume){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.stop();\n\t\tthis.layer.volume = 0.0001;\n\t\tthis.delay = new Range(mindelay, maxdelay);\n\t\tthis.remainingDelay = 0;\n\t\tthis.duration = new Range(minduration, maxduration);\n\t\tthis.remainingDuration = 0;\n\t\tthis.volume = new Range(minvolume, maxvolume);\n\n\t\tthis.wasPlaying = false;\n\t}\n\treset(){\n\t\tthis.remainingDelay = this.delay.rand();\n\t\tthis.remainingDuration = this.duration.rand();\n\t\tthis.volume.value = this.volume.rand();\n\t}\n}\n\nclass SoundLayer2 {\n\tconstructor(asset){\n\t\tthis.layer = thisScene.createLayer(asset);\n\t\tthis.layer.volume = 0.2;\n\t}\n}\n\n// Array of prisms\nlet layers = [];\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function init(value) {\n\t// asset,  mindelay, maxdelay,  minduration, maxduration,  minvolume, maxvolume\n\tlayers[0] = new SoundLayer(noiseLow100Asset,  0,  0,  16, 20,   0.2, 0.25);\n\tlayers[1] = new SoundLayer(noiseLow200Asset,  2,  6,  10, 16,  0.18, 0.3);\n\tlayers[2] = new SoundLayer(noiseLow800Asset,  4, 12,   6, 10,  0.15, 0.2);\n\tlayers[3] = new SoundLayer(noiseHighAsset,    6, 18,   4,  8,  0.08, 0.15);\n\tlayers[4] = new SoundLayer(noiseAsset,        8, 24,   3,  5,  0.03, 0.1);\n\treturn value;\n}\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\tfor (let i = 0; i < layers.length; i++){\n\t\tif (layers[i].wasPlaying && !layers[i].layer.isPlaying())\n\t\t{\n\t\t\tlayers[i].reset();\n\t\t}\n\t\telse if (!layers[i].layer.isPlaying()){\n\t\t\tlayers[i].remainingDelay -= engine.frametime;\n\t\t\tif (layers[i].remainingDelay <= 0)\n\t\t\t\tlayers[i].layer.play();\n\t\t}\n\t\telse{\n\t\t\tlayers[i].remainingDuration -= engine.frametime;\n\t\t\tif (layers[i].remainingDuration <= 0){\n\t\t\t\tlayers[i].layer.stop();\n\t\t\t\tlayers[i].reset();\n\t\t\t}\n\t\t\telse{\n\t\t\t\tlet time = 1 - layers[i].remainingDuration / layers[i].duration.get();\n\t\t\t\ttime = WEMath.smoothStep(0, 1, (1 - Math.abs(1 - 2 * time)));\n\t\t\t\tlayers[i].layer.volume = time * layers[i].volume.get();\n\t\t\t\t// keep volume above 0 to reduce popping\n\t\t\t\tlayers[i].layer.volume = Math.max(0.01, layers[i].layer.volume);\n\t\t\t}\n\t\t}\n\t}\n\treturn value;\n}\n",
-				"value" : "-5.500 0.000 0.000"
+				"value" : "-5.50000 0.00000 0.00000"
 			},
-			"parallaxDepth" : "1.000 1.000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
-			"scale" : "0.000 0.000 0.000",
-			"size" : "512.000 512.000",
+			"scale" : "0.00000 0.00000 0.00000",
+			"size" : "512.00000 512.00000",
 			"solid" : true,
 			"visible" : false
 		},
@@ -444,12 +466,14 @@
 			"alpha" : 
 			{
 				"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'alpha')\n */\nexport function update(value) {\n\treturn Math.min(0.9, shared.fade);\n}\n",
-				"value" : 0.89999997615814209
+				"value" : 0.89999998
 			},
 			"anchor" : "none",
-			"angles" : "0.000 0.000 0.000",
-			"backgroundcolor" : "0.000 0.000 0.000",
-			"color" : "0.875 0.875 0.875",
+			"angles" : "0.00000 0.00000 0.00000",
+			"backgroundbrightness" : 1.0,
+			"backgroundcolor" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "0.87500 0.87500 0.87500",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"effects" : 
@@ -494,17 +518,17 @@
 			"locktransforms" : true,
 			"name" : "Current Date",
 			"opaquebackground" : false,
-			"origin" : "-18.000 14.000 5.000",
+			"origin" : "-18.00000 14.00000 5.00000",
 			"padding" : 4,
-			"parallaxDepth" : "1.000 1.000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"pointsize" : 
 			{
-				"user" : "text_size",
+				"script" : "'use strict';\n\nlet aspectRatio = undefined;\nlet size = undefined;\n\n\nexport function init() {\n\taspectRatio = engine.screenResolution.x / engine.screenResolution.y;\n}\n\n/**\n * @param {Object} changedUserProperties - only includes user properties that were recently changed!\n */\nexport function applyUserProperties(changedUserProperties) {\n\tif (changedUserProperties.text_size !== undefined) {\n\t\tsize = changedUserProperties.text_size;\n\t\tthisObject.pointsize = size * Math.min(1.0, aspectRatio);\n\t}\n}\n\nexport function resizeScreen() {\n\taspectRatio = engine.screenResolution.x / engine.screenResolution.y;\n\tthisObject.pointsize = size * Math.min(1.0, aspectRatio);\n}",
 				"value" : 35.0
 			},
-			"scale" : "0.010 0.010 0.010",
-			"size" : "736.000 183.000",
+			"scale" : "0.01000 0.01000 0.01000",
+			"size" : "736.00000 183.00000",
 			"solid" : true,
 			"text" : 
 			{
@@ -522,12 +546,14 @@
 			"alpha" : 
 			{
 				"script" : "'use strict';\n\n/**\n * @param {Number} value (for property 'alpha')\n */\nexport function update(value) {\n\treturn Math.min(0.9, shared.fade);\n}\n",
-				"value" : 0.89999997615814209
+				"value" : 0.89999998
 			},
 			"anchor" : "none",
-			"angles" : "0.000 0.000 0.000",
-			"backgroundcolor" : "0.000 0.000 0.000",
-			"color" : "0.875 0.875 0.875",
+			"angles" : "0.00000 0.00000 0.00000",
+			"backgroundbrightness" : 1.0,
+			"backgroundcolor" : "0.00000 0.00000 0.00000",
+			"brightness" : 1.0,
+			"color" : "0.87500 0.87500 0.87500",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"effects" : 
@@ -567,17 +593,17 @@
 			"locktransforms" : true,
 			"name" : "Current Time",
 			"opaquebackground" : false,
-			"origin" : "14.000 10.000 15.000",
+			"origin" : "14.00000 10.00000 15.00000",
 			"padding" : 4,
-			"parallaxDepth" : "1.000 1.000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"pointsize" : 
 			{
-				"user" : "text_size",
+				"script" : "'use strict';\n\nlet aspectRatio = undefined;\nlet size = 1;\n\n\nexport function init() {\n\taspectRatio = engine.screenResolution.x / engine.screenResolution.y;\n}\n\n/**\n * @param {Object} changedUserProperties - only includes user properties that were recently changed!\n */\nexport function applyUserProperties(changedUserProperties) {\n\tif (changedUserProperties.text_size !== undefined) {\n\t\tsize = changedUserProperties.text_size;\n\t\tthisObject.pointsize = size * Math.min(1.0, aspectRatio);\n\t}\n}\n\nexport function resizeScreen() {\n\taspectRatio = engine.screenResolution.x / engine.screenResolution.y;\n\tthisObject.pointsize = size * Math.min(1.0, aspectRatio);\n}",
 				"value" : 35.0
 			},
-			"scale" : "0.010 0.010 0.010",
-			"size" : "574.000 183.000",
+			"scale" : "0.01000 0.01000 0.01000",
+			"size" : "574.00000 183.00000",
 			"solid" : true,
 			"text" : 
 			{
@@ -592,38 +618,7 @@
 			}
 		},
 		{
-			"alpha" : 1.0,
-			"anchor" : "none",
-			"angles" : "0.000 0.000 0.000",
-			"backgroundcolor" : "0.000 0.000 0.000",
-			"color" : "1.000 1.000 1.000",
-			"colorBlendMode" : 0,
-			"copybackground" : true,
-			"font" : "systemfont_arial",
-			"horizontalalign" : "center",
-			"id" : 135,
-			"ledsource" : false,
-			"locktransforms" : false,
-			"name" : "Debug Text",
-			"opaquebackground" : false,
-			"origin" : "-15.157 2.243 0.000",
-			"padding" : 32,
-			"parallaxDepth" : "1.000 1.000",
-			"perspective" : false,
-			"pointsize" : 30.0,
-			"scale" : "0.010 0.010 0.010",
-			"size" : "626.000 144.000",
-			"solid" : true,
-			"text" : 
-			{
-				"script" : "'use strict';\n\n/**\n * @param {String} value (for property 'text')\n */\n// export function update(value) {\n// \treturn (\n// \t\t//Object.keys(thisScene.getLayer(\"Current Date\")) +\n// \t\t\"Date: \" + thisScene.getLayer(\"Current Date\").origin +\n// \t\t\"\\nDate horizontal align: \" + thisScene.getLayer(\"Current Date\").horizontalalign +\n// \t\t\"\\nDate vertical align: \" + thisScene.getLayer(\"Current Date\").verticalalign +\n// \t\t\"\\nDate anchor: \" + thisScene.getLayer(\"Current Date\").anchor +\n// \t\t\"\\nTime: \" + thisScene.getLayer(\"Current Time\").origin + \n// \t\t\"\\nTime horizontal align: \" + thisScene.getLayer(\"Current Time\").horizontalalign +\n// \t\t\"\\nTime vertical align: \" + thisScene.getLayer(\"Current Time\").verticalalign +\n// \t\t\"\\nTime anchor: \" + thisScene.getLayer(\"Current Time\").anchor +\n// \t\t\"\\nCamera eye: \" + thisScene.getCameraTransforms().eye + \n// \t\t\"\\nCamera center: \" + thisScene.getCameraTransforms().center +\n// \t\t\"\\nCamera zoom: \" + thisScene.getCameraTransforms().zoom +\n// \t\t\"\\nCamera up: \" + thisScene.getCameraTransforms().up +\n// \t\t\"\\nScreen Resolution: \" + engine.screenResolution +\n// \t\t\"\\nCanvas size: \" + engine.canvasSize +\n// \t\t\"\"\n// \t)\n// }\n\nlet moved = false;\n\n/**\n * @param {String} value (for property 'text')\n */\nexport function update() {\n\tthisLayer.text = (moved ? \"\" : \"not \") + \"moved\";\n\tmoved = false;\n}\n\n\n/**\n * @param {ICursorEvent} event\n */\nexport function cursorMove(event) {\n\tmoved = true;\n}",
-				"value" : "Debug Text"
-			},
-			"verticalalign" : "center",
-			"visible" : false
-		},
-		{
-			"angles" : "0.000 0.000 0.000",
+			"angles" : "0.00000 0.00000 0.00000",
 			"id" : 110,
 			"instanceoverride" : 
 			{
@@ -637,14 +632,14 @@
 			},
 			"locktransforms" : true,
 			"name" : "particles",
-			"origin" : "0.000 0.000 -40.000",
-			"parallaxDepth" : "1.000 1.000",
+			"origin" : "0.00000 0.00000 -40.00000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"particle" : "particles/particles2.json",
-			"scale" : "1.000 1.000 1.000",
+			"scale" : "1.00000 1.00000 1.00000",
 			"visible" : true
 		},
 		{
-			"angles" : "0.000 0.000 0.000",
+			"angles" : "0.00000 0.00000 0.00000",
 			"id" : 130,
 			"locktransforms" : true,
 			"maxtime" : 5.0,
@@ -654,19 +649,20 @@
 			"origin" : 
 			{
 				"script" : "'use strict';\n\nlet hasPlayed = false;\n\n/**\n * @param {Vec3} value (for property 'origin')\n */\nexport function update(value) {\n\t// Delay starting audio until the first update to prevent hiccupping\n\tif (!hasPlayed) {\n\t\tthisLayer.play();\n\t\thasPlayed = true;\n\t}\n\t\n\treturn value;\n}\n",
-				"value" : "0.000 0.000 0.000"
+				"value" : "0.00000 0.00000 0.00000"
 			},
-			"parallaxDepth" : "1.000 1.000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"playbackmode" : "single",
-			"scale" : "1.000 1.000 1.000",
+			"scale" : "1.00000 1.00000 1.00000",
 			"sound" : [ "sounds/startup.ogg" ],
 			"startsilent" : true,
-			"volume" : 0.40000000596046448
+			"volume" : 0.40000001
 		},
 		{
 			"alignment" : "center",
 			"alpha" : 1.0,
-			"color" : "1.000 1.000 1.000",
+			"brightness" : 1.0,
+			"color" : "1.00000 1.00000 1.00000",
 			"colorBlendMode" : 0,
 			"copybackground" : true,
 			"effects" : 
@@ -736,7 +732,7 @@
 			"ledsource" : false,
 			"locktransforms" : true,
 			"name" : "Post Processing",
-			"parallaxDepth" : "1.000 1.000",
+			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"solid" : true,
 			"visible" : 
@@ -744,6 +740,41 @@
 				"script" : "'use strict';\n\n/**\n * @param {Boolean} value (for property 'visible')\n */\nexport function init(value) {\n\tthisScene.sortLayer(thisLayer, 9999);\n\treturn value;\n}\n",
 				"value" : true
 			}
+		},
+		{
+			"angles" : "0.00000 0.00000 0.00000",
+			"id" : 155,
+			"instanceoverride" : null,
+			"locktransforms" : false,
+			"name" : "orb",
+			"origin" : "1000.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"particle" : "particles/orb.json",
+			"scale" : "0.00000 0.00000 0.00000",
+			"visible" : true
+		},
+		{
+			"angles" : "0.00000 0.00000 0.00000",
+			"id" : 184,
+			"locktransforms" : false,
+			"model" : "models/prism/prism.mdl",
+			"name" : "prism",
+			"origin" : "1000.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "0.00000 0.00000 0.00000"
+		},
+		{
+			"angles" : "0.00000 0.00000 0.00000",
+			"id" : 186,
+			"locktransforms" : false,
+			"model" : "models/prism/prism_back.mdl",
+			"name" : "prism_back",
+			"origin" : "0.00000 0.00000 0.00000",
+			"parallaxDepth" : "1.00000 1.00000",
+			"perspective" : false,
+			"scale" : "0.00000 0.00000 0.00000"
 		}
-	]
+	],
+	"version" : 0
 }

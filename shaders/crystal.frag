@@ -58,12 +58,12 @@ void main( )
 
     // Refraction
     vec2 screenRefractionOffset = refract( viewDir, normal, 0.5 ).xy / v_ScreenPos.z;
-#if HLSL
+// #if HLSL
     vec3 refract = texSample2D( g_Texture3, vec2(screenUV.x, 1.0 - screenUV.y) + screenRefractionOffset ).rgb;
     refract = refract * 1.75 * (0.75 + emissive * 3.0);
-#else
-    vec3 refract = CAST3(0.5);
-#endif
+// #else
+    // vec3 refract = CAST3(0.5);
+// #endif
 
     // "Reflection"
     float reflect = texSample2D( g_Texture0, normal.xy + CAST2(v_Height*0.002) ).r;
