@@ -709,12 +709,12 @@
 							},
 							"constantshadervalues" : 
 							{
-								"new_resolution" : "640 448",
+								"new_resolution" : "320 224",
 								"resolution_scale" : 
 								{
 									"script" : null,
 									"user" : "resolution_scale",
-									"value" : 1
+									"value" : 0.2
 								}
 							},
 							"id" : 99
