@@ -1,0 +1,21 @@
+{
+	"dependencies" : 
+	[
+		"materials/workshop/2078835426/effects/pixelate.json",
+		"shaders/workshop/2078835426/effects/pixelate.frag",
+		"shaders/workshop/2078835426/effects/pixelate.vert"
+	],
+	"description" : "Selectively lower the resolution of the image123.",
+	"editable" : false,
+	"group" : "blur",
+	"name" : "Pixelate",
+	"passes" : 
+	[
+		{
+			"material" : "materials/workshop/2078835426/effects/pixelate.json"
+		}
+	],
+	"preview" : "preview/project.json",
+	"replacementkey" : "Pixelate",
+	"version" : 1
+}

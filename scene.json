@@ -180,7 +180,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -205,7 +205,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -230,7 +230,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -255,7 +255,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -280,7 +280,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -305,7 +305,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -330,7 +330,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -355,7 +355,7 @@
 			"parallaxDepth" : "1.00000 1.00000",
 			"perspective" : false,
 			"scale" : "10.00000 10.00000 10.00000",
-			"size" : "256.00000 256.00000",
+			"size" : "64.00000 64.00000",
 			"solid" : true,
 			"visible" : 
 			{
@@ -696,8 +696,8 @@
 					"visible" : true
 				},
 				{
-					"file" : "effects/pixelate/effect.json",
-					"id" : 98,
+					"file" : "effects/workshop/2078835426/pixelate/effect.json",
+					"id" : 170,
 					"name" : "",
 					"passes" : 
 					[
@@ -709,15 +709,13 @@
 							},
 							"constantshadervalues" : 
 							{
-								"new_resolution" : "320 224",
 								"resolution_scale" : 
 								{
-									"script" : null,
 									"user" : "resolution_scale",
-									"value" : 0.2
+									"value" : 0.125
 								}
 							},
-							"id" : 99
+							"id" : 171
 						}
 					],
 					"visible" : 
