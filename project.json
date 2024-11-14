@@ -192,10 +192,12 @@
 		}
 	},
 	"preview" : "preview.gif",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
 	"tags" : [ "Game" ],
 	"title" : "Playstation 2 Clock",
 	"type" : "scene",
-	"version" : 3,
+	"version" : 4,
 	"visibility" : "public",
 	"workshopid" : "1979606285",
 	"workshopurl" : "steam://url/CommunityFilePage/1979606285"
